@@ -1,0 +1,36 @@
+                    /* 全局样式文件 */
+                    
+                    * {
+                        padding: 0;
+                        margin: 0;
+                    }
+                    
+                    html,
+                    body {
+                        height: 100%;
+                    }
+                    /* 媒体查询适配 */
+                    
+                    @media screen and (max-width: 1367px) {
+                        html {
+                            font-size: 10px
+                        }
+                    }
+                    
+                    @media screen and (min-width: 1368px) {
+                        html {
+                            font-size: 10px
+                        }
+                    }
+                    
+                    @media screen and (min-width: 1536px) {
+                        html {
+                            font-size: 12px;
+                        }
+                    }
+                    
+                    @media screen and (min-width: 1920px) {
+                        html {
+                            font-size: 14px;
+                        }
+                    }

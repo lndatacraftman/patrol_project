@@ -1,0 +1,8 @@
+                                @font-face {
+                                    font-family: '阿里黑体';
+                                    /* //重命名字体名 */
+                                    src: url('阿里汉仪智能黑体AliHYAiHei.ttf');
+                                    /* //引入字体 */
+                                    font-weight: normal;
+                                    font-style: normal;
+                                }
