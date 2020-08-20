@@ -480,7 +480,7 @@ export default {
   /* background: burlywood; */
 }
 /* 导航条里的文字样式 */
-.content > .menu_content > .menu > .menu_title > span {
+#citystraight > .content > .menu_content > .menu > .menu_title > span {
   color: #2bfaff;
 }
 /* 中间筛选框的框架 */
@@ -509,7 +509,7 @@ export default {
   /* background: burlywood; */
 }
 /* 筛选框的标题文字样式 */
-.content > .times_select > .selectbox > .select_title > span {
+#citystraight > .content > .times_select > .selectbox > .select_title > span {
   color: #2bfaff;
 }
 /* 筛选框 */
