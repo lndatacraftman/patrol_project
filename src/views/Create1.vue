@@ -1,129 +1,239 @@
-<!-- 评价体系组件 -->
-<!--单位生态子组件-->
+<!-- App内的首页组件，在这里面写首页内容 -->
 <!-- author by: zhaosiyuan -->
 
 <template>
-  <div id="create1">
-    <!-- 临时添加：点击确认按钮，出现市台联及相应的预览 -->
-        <div class="charts_store_container box" v-show="cityflag">
-            <!-- 左侧图形库区域 -->
-            <div class="charts_store_left left">
-                <!-- 市台联子组件 -->
-                <cityJoin
-                    @hiddenFlag="hiddenFlag_method"
-                ></cityJoin>
-            </div>
-            <!-- 右侧预览区域 -->
-            <div class="charts_store_right right">
-                <!-- 评分历程子组件 -->
-                <gradeCourse></gradeCourse>
-            </div>
-        </div>
-    <!-- 正常Create1主体区域 -->
-    <div class="container">
-      <!-- 左边区域 -->
-      <div class="container_left">
-          <!-- 引入市直子组件 -->
-        <cityStraight />
-      </div>
-      <!-- 右边区域 -->
-      <div class="container_right">
-          <!-- 引入综评曲线子组件 -->
-          <judgedBight />
-      </div>
-    </div>
+  <div id="creat4">
+    <div id="main" class="content"></div>
   </div>
 </template>
-
 <script>
-import EventBus from '@/assets/js/EventBus'
-import cityStraight from '@/views/Create1_children/cityStraight' // 引入市直子组件
-import judgedBight from '@/views/Create1_children/judgedBight' // 引入综评曲线子组件
-import cityJoin from '@/views/Create1_children/cityJoin' // 引入市台联子组件
-import gradeCourse from '@/views/Create1_children/gradeCourse' // 引入综评曲线子组件
+import Vue from 'vue'
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 
 export default {
+  name: 'Create4',
   data () {
     return {
-      cityflag: false // 市台联页面显示不显示标志位
+      dataLink: [{
+        source: '指标',
+        target: '党的意识、' + '\n' + '政治建设',
+        value: 66
+
+      },
+      {
+        source: '指标',
+        target: '担当作为、' + '\n' + '履行职责使命',
+        value: 100
+      },
+      {
+        source: '指标',
+        target: '履行全面从严治党' + '\n' + '“两个责任”',
+        value: 88
+      },
+      {
+        source: '指标',
+        target: '落实深化改革要求',
+        value: 100
+      },
+      {
+        source: '指标',
+        target: '班子建设和' + '\n' + '队伍建设',
+        value: 88
+      },
+      {
+        source: '指标',
+        target: '机关党建和' + '\n' + '基层党组织建设',
+        value: 88
+      },
+      {
+        source: '党的意识、' + '\n' + '政治建设',
+        target: '学习贯彻' + '\n' + '习近平书记' + '\n' + '重要讲话和指示' + '\n' + '批示精神情况',
+        value: 12
+      },
+      {
+        source: '党的意识、' + '\n' + '政治建设',
+        target: '执行和落实' + '\n' + '制度情况',
+        value: 18
+      },
+      {
+        source: '担当作为、' + '\n' + '履行职责使命',
+        target: '履行核心' + '\n' + '职能情况',
+        value: 50
+      },
+      {
+        source: '履行全面从严治党' + '\n' + '“两个责任”',
+        target: '党组（党委）落实' + '\n' + '全面从严治党' + '\n' + '主体责任情况',
+        value: 23
+      },
+      {
+        source: '履行全面从严治党' + '\n' + '“两个责任”',
+        target: '派驻纪检监察组' + '\n' + '（内设机关纪委）' + '\n' + '履行监督责任情况',
+        value: 19
+      },
+      {
+        source: '履行全面从严治党' + '\n' + '“两个责任”',
+        target: '整改落实情况，' + '\n' + '是否存在整改' + '\n' + '不到位，虚假' + '\n' + '整改等突出问题',
+        value: 6
+      }, {
+        source: '履行全面从严治党' + '\n' + '“两个责任”',
+        target: '机关作风建' + '\n' + '设特别是整改' + '\n' + '形式主义、' + '\n' + '官僚主义情况',
+        value: 8
+      },
+      {
+        source: '履行全面从严治党' + '\n' + '“两个责任”',
+        target: '权力监督制约和' + '\n' + '防范廉政风险情况',
+        value: 19
+      },
+      {
+        source: '落实深化改革要求',
+        target: '防范化解' + '\n' + '重大风险情况',
+        value: 6
+      }, {
+        source: '落实深化改革要求',
+        target: '落实改革情况',
+        value: 8
+      },
+      {
+        source: '班子建设和' + '\n' + '队伍建设',
+        target: '领导班子' + '\n' + '建设情况',
+        value: 19
+      },
+      {
+        source: '班子建设和' + '\n' + '队伍建设',
+        target: '选人用人和' + '\n' + '队伍建设情况',
+        value: 6
+      }, {
+        source: '班子建设和' + '\n' + '队伍建设',
+        target: '干部担当作为情况',
+        value: 8
+      },
+      {
+        source: '机关党建和' + '\n' + '基层党组织建设',
+        target: '机关党建情况',
+        value: 19
+      },
+      {
+        source: '机关党建和' + '\n' + '基层党组织建设',
+        target: '基层党组织' + '\n' + '建设情况',
+        value: 19
+      }
+      ],
+      dataSerise: [{
+        name: '指标',
+        symbolSize: 120,
+        draggable: true,
+        value: 0,
+        category: 0,
+        itemStyle: {
+          normal: {
+            borderColor: '#04f2a7',
+            borderWidth: 4,
+            shadowBlur: 10,
+            shadowColor: '#04f2a7',
+            color: '#001c43'
+          }
+        }
+      }]
     }
-  },
-  created () {
-    // 接收点击确认后，显示flag
-    EventBus.$on('showFlag', data => {
-      this.cityflag = data
-    })
   },
   methods: {
-    // 从子组件接收tab点击事件
-    tabClick1 (flag) {
-      // console.log(flag)
-      this.tab_flag = flag
-    },
-    // 点击返回按钮，隐藏
-    hiddenFlag_method (flag) {
-      // console.log(flag)
-      this.cityflag = flag
+    myEcharts () {
+      var myChart = Vue.prototype.$echarts.init(
+        document.getElementById('main')
+      )
+      for (var i = 0; i < this.dataLink.length; i++) {
+        const dataChild = {
+          name: '',
+          symbolSize: 0,
+          value: 0,
+          category: 0,
+          itemStyle: {
+            normal: {
+              borderColor: '#82dffe',
+              borderWidth: 4,
+              shadowBlur: 10,
+              shadowColor: '#04f2a7',
+              color: '#001c43'
+            }
+          }
+        }
+        dataChild.value = this.dataLink[i].value
+        dataChild.name = this.dataLink[i].target
+        if (this.dataLink[i].source === '指标') {
+          this.dataSerise[0].value += this.dataLink[i].value
+          dataChild.symbolSize = 100
+          dataChild.category = 1
+          dataChild.itemStyle.normal.borderColor = '#5BD1FF'
+        } else if (this.dataLink[i].source === '党的意识、' + '\n' + '政治建设' || this.dataLink[i].source === '担当作为、' + '\n' + '履行职责使命' || this.dataLink[i].source === '履行全面从严治党' + '\n' + '“两个责任”' || this.dataLink[i].source === '落实深化改革要求' || this.dataLink[i].source === '班子建设和' + '\n' + '队伍建设' || this.dataLink[i].source === '机关党建和' + '\n' + '基层党组织建设') {
+          dataChild.symbolSize = 80
+          dataChild.category = 2
+          dataChild.itemStyle.normal.borderColor = '#b457ff'
+        }
+        this.dataSerise.push(dataChild)
+      }
+      myChart.setOption({
+        backgroundColor: '#black',
+        tooltip: {
+          trigger: 'item',
+          formatter: (item) => {
+            return item.name + ':' + item.data.value
+          }
+        },
+        animationDurationUpdate: 1500,
+        animationEasingUpdate: 'quinticInOut',
+        color: ['#83e0ff', '#45f5ce', '#b158ff'],
+        series: [{
+          type: 'graph',
+          layout: 'force',
+          force: {
+            repulsion: 1000,
+            edgeLength: 50
+          },
+          roam: true,
+          label: {
+            normal: {
+              show: true
+            }
+          },
+          data: this.dataSerise,
+          links: this.dataLink,
+          lineStyle: {
+            normal: {
+              opacity: 0.9,
+              width: 5,
+              curveness: 0
+            }
+          },
+          categories: [{
+            name: '0'
+          },
+          {
+            name: '1'
+          },
+          {
+            name: '2'
+          }
+          ]
+        }]
+      })
     }
-    // title_input_change () {
-    // this.$emit('title-input-change1') // 通过子组件将内容变化后的新值传给父组件
-    // }
-  },
-  components: {
-    cityStraight, // 市直子组件
-    judgedBight, // 引入综评曲线子组件
-    cityJoin, // 引入市台联子组件
-    gradeCourse // 引入综评曲线子组件
   },
   mounted () {
+    this.myEcharts()
   }
 }
 </script>
 <style scoped>
-#create1 {
-  height: 100%;
-}
-/* create1主体区域 */
-#create1 > .container {
-  height: 100%;
+#creat4 {
+  background: pink;
   width: 100%;
-  display: flex;
-  float: left;
-  /* background: pink; */
-}
-/* create1左边区域 */
-#create1 > .container > .container_left {
   height: 100%;
-  width: 35%;
-  /* background: aquamarine; */
+  /* width: 600px;
+  height: 700px; */
 }
-/* create1右边区域 */
-#create1 > .container > .container_right {
-    height: 100%;
-    width: 65%;
-    /* background: cadetblue; */
-}
-/* 点开确认按钮的页面 */
-.charts_store_container {
-    width: 100%;
-    height: 100%;
-    background: #666;
-    display: flex;
-    float: left;
-    /* position: absolute; */
-    z-index: 100;
-    overflow: hidden;
-}
-/* 市台联左边区域 */
-.charts_store_left {
-    width: 35%;
-    height: 100%;
-    /* background: #ac2d2d; */
-}
-/* 市台联右边区域 */
-.charts_store_right {
-  width: 65%;
-    height: 100%;
-    background: white;
+.content {
+  width: 1000px;
+  height: 500px;
 }
 </style>

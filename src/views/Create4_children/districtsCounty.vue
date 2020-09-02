@@ -1,3 +1,5 @@
+<!-- 区县子组件 -->
+
 <template>
   <div id="districtsCounty">
     <!-- <iframe src="/bmap.html" width="100%" height="800px"></iframe> -->
@@ -14,6 +16,9 @@
           </div>
           <div class="menu_title1">
             <span>区县</span>
+          </div>
+          <div class="menu_titlebutton" @click="return_button()">
+            <span>返回</span>
           </div>
         </div>
       </div>
@@ -87,6 +92,10 @@ export default {
     }
   },
   methods: {
+    // 点击返回按钮
+    return_button () {
+      this.$emit('hiddenFlag1', false)
+    }
   },
   mounted () {
   }
@@ -96,7 +105,7 @@ export default {
 #districtsCounty {
   height: 100%;
   width: 100%;
-  /* background: cornflowerblue; */
+  background: white;
   display: flex;
   justify-content: center;
 }
@@ -133,6 +142,12 @@ export default {
   justify-content: center;
   align-items: center;
   /* background: burlywood; */
+}
+.content > .menu_content > .menu > .menu_titlebutton {
+  width: 12%;
+  height: 100%;
+  margin-left: 27rem;
+  /* background: yellowgreen; */
 }
 /* 导航条里的市直文字样式 */
 .content > .menu_content > .menu > .menu_title > span {

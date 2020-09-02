@@ -1,4 +1,4 @@
-<!-- 评分历程 子组件 -->
+<!-- 市台联评分历程 子组件 -->
 <!-- author by：zhaosiyuan -->
 
 <template>
@@ -9,7 +9,7 @@
         <span>评分历程</span>
       </div>
       <!-- 横线 -->
-      <Divider class="divider" />
+      <hr />
       <!-- 统计图像布局 -->
       <div class="statistics">
         <!-- 上面的饼图的整体框架 -->
@@ -85,7 +85,7 @@
         <span>指标详情</span>
       </div>
       <!-- 横线 -->
-      <Divider />
+      <hr />
       <!-- 两个选择器的框架 -->
       <div class="select_input">
         <!-- 左边选择器框架 -->
@@ -394,10 +394,10 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+import echarts from "echarts";
 
 export default {
-  data () {
+  data() {
     return {
       showContent: false,
       showContent1: false,
@@ -408,161 +408,161 @@ export default {
       showContent6: false,
       cityList: [
         {
-          value: 'New York',
-          label: 'New York'
+          value: "New York",
+          label: "New York"
         },
         {
-          value: 'London',
-          label: 'London'
+          value: "London",
+          label: "London"
         },
         {
-          value: 'Sydney',
-          label: 'Sydney'
+          value: "Sydney",
+          label: "Sydney"
         },
         {
-          value: 'Ottawa',
-          label: 'Ottawa'
+          value: "Ottawa",
+          label: "Ottawa"
         },
         {
-          value: 'Paris',
-          label: 'Paris'
+          value: "Paris",
+          label: "Paris"
         },
         {
-          value: 'Canberra',
-          label: 'Canberra'
+          value: "Canberra",
+          label: "Canberra"
         }
       ],
-      model1: ''
+      model1: ""
       // isCollapsed: false,
-    }
+    };
   },
-  mounted () {
+  mounted() {
     const data = {
       nodes: [
         {
-          name: '操作系统集团',
+          name: "操作系统集团",
           category: 0
         },
         {
-          name: '浏览器有限公司',
+          name: "浏览器有限公司",
           category: 0
         },
         {
-          name: 'HTML科技',
+          name: "HTML科技",
           category: 0
         },
         {
-          name: 'JavaScript科技',
+          name: "JavaScript科技",
           category: 0
         },
         {
-          name: 'CSS科技',
+          name: "CSS科技",
           category: 0
         },
         {
-          name: 'Chrome',
+          name: "Chrome",
           category: 1
         },
         {
-          name: 'IE',
+          name: "IE",
           category: 1
         },
         {
-          name: 'Firefox',
+          name: "Firefox",
           category: 1
         },
         {
-          name: 'Safari',
+          name: "Safari",
           category: 1
         }
       ],
 
       links: [
         {
-          source: '浏览器有限公司',
-          target1: '操作系统集团',
-          name: '参股'
+          source: "浏览器有限公司",
+          target1: "操作系统集团",
+          name: "参股"
         },
         {
-          source: 'HTML科技',
-          target1: '浏览器有限公司',
-          name: '参股'
+          source: "HTML科技",
+          target1: "浏览器有限公司",
+          name: "参股"
         },
         {
-          source: 'CSS科技',
-          target1: '浏览器有限公司',
-          name: '参股'
+          source: "CSS科技",
+          target1: "浏览器有限公司",
+          name: "参股"
         },
         {
-          source: 'JavaScript科技',
-          target1: '浏览器有限公司',
-          name: '参股'
+          source: "JavaScript科技",
+          target1: "浏览器有限公司",
+          name: "参股"
         },
         {
-          source: 'Chrome',
-          target1: '浏览器有限公司',
-          name: '董事'
+          source: "Chrome",
+          target1: "浏览器有限公司",
+          name: "董事"
         },
         {
-          source: 'IE',
-          target1: '浏览器有限公司',
-          name: '董事'
+          source: "IE",
+          target1: "浏览器有限公司",
+          name: "董事"
         },
         {
-          source: 'Firefox',
-          target1: '浏览器有限公司',
-          name: '董事'
+          source: "Firefox",
+          target1: "浏览器有限公司",
+          name: "董事"
         },
         {
-          source: 'Safari',
-          target1: '浏览器有限公司',
-          name: '董事'
+          source: "Safari",
+          target1: "浏览器有限公司",
+          name: "董事"
         },
         {
-          source: 'Chrome',
-          target1: 'JavaScript科技',
-          name: '法人'
+          source: "Chrome",
+          target1: "JavaScript科技",
+          name: "法人"
         }
       ]
-    }
+    };
 
-    const color1 = '#006acc'
-    const color2 = '#ff7d18'
-    const color3 = '#10a050'
+    const color1 = "#006acc";
+    const color2 = "#ff7d18";
+    const color3 = "#10a050";
 
     data.nodes.forEach(node => {
       if (node.category === 0) {
-        node.symbolSize = 40
+        node.symbolSize = 40;
         node.itemStyle = {
           color: color1
-        }
+        };
       } else if (node.category === 1) {
         node.itemStyle = {
           color: color2
-        }
+        };
       }
-    })
+    });
 
     data.links.forEach(link => {
       link.label = {
-        align: 'center',
+        align: "center",
         fontSize: 10
-      }
+      };
 
-      if (link.name === '参股') {
+      if (link.name === "参股") {
         link.lineStyle = {
           color: color2
-        }
-      } else if (link.name === '董事') {
+        };
+      } else if (link.name === "董事") {
         link.lineStyle = {
           color: color1
-        }
-      } else if (link.name === '法人') {
+        };
+      } else if (link.name === "法人") {
         link.lineStyle = {
           color: color3
-        }
+        };
       }
-    })
+    });
 
     const categories = [
       {
@@ -577,10 +577,10 @@ export default {
           color: color2
         }
       }
-    ]
+    ];
     const option6 = {
       title: {
-        text: '指标因子'
+        text: "指标因子"
       },
       legend: [
         {
@@ -591,14 +591,14 @@ export default {
       ],
       series: [
         {
-          type: 'graph',
-          layout: 'force',
+          type: "graph",
+          layout: "force",
           symbolSize: 40,
           draggable: true,
           roam: true,
           focusNodeAdjacency: true,
           categories: categories,
-          edgeSymbol: ['', 'arrow'],
+          edgeSymbol: ["", "arrow"],
           // edgeSymbolSize: [80, 10],
           edgeLabel: {
             normal: {
@@ -606,8 +606,8 @@ export default {
               textStyle: {
                 fontSize: 20
               },
-              formatter (x) {
-                return x.data.name
+              formatter(x) {
+                return x.data.name;
               }
             }
           },
@@ -622,27 +622,27 @@ export default {
           links: data.links
         }
       ]
-    }
-    this.initChart(this.$refs.chart6, option6)
+    };
+    this.initChart(this.$refs.chart6, option6);
     const option3 = {
       title: {
-        text: '80%',
-        x: 'center',
-        y: 'center',
+        text: "80%",
+        x: "center",
+        y: "center",
         textStyle: {
-          fontWeight: 'normal',
-          color: '#0580f2',
-          fontSize: '20'
+          fontWeight: "normal",
+          color: "#0580f2",
+          fontSize: "20"
         }
       },
-      color: ['rgba(176, 212, 251, 1)'],
+      color: ["rgba(176, 212, 251, 1)"],
 
       series: [
         {
-          name: 'Line 1',
-          type: 'pie',
+          name: "Line 1",
+          type: "pie",
           clockWise: true,
-          radius: ['50%', '66%'],
+          radius: ["50%", "66%"],
           itemStyle: {
             normal: {
               label: {
@@ -657,7 +657,7 @@ export default {
           data: [
             {
               value: 80,
-              name: '01',
+              name: "01",
               itemStyle: {
                 normal: {
                   color: {
@@ -665,11 +665,11 @@ export default {
                     colorStops: [
                       {
                         offset: 0,
-                        color: '#00cefc' // 0% 处的颜色
+                        color: "#00cefc" // 0% 处的颜色
                       },
                       {
                         offset: 1,
-                        color: '#367bec' // 100% 处的颜色
+                        color: "#367bec" // 100% 处的颜色
                       }
                     ]
                   },
@@ -683,43 +683,43 @@ export default {
               }
             },
             {
-              name: '02',
+              name: "02",
               value: 20
             }
           ]
         }
       ]
-    }
-    this.initChart(this.$refs.pie1, option3)
+    };
+    this.initChart(this.$refs.pie1, option3);
   },
   methods: {
-    initChart (container, option) {
-      const myChart = echarts.init(container)
-      myChart.setOption(option)
+    initChart(container, option) {
+      const myChart = echarts.init(container);
+      myChart.setOption(option);
     },
-    Click: function () {
-      this.showContent = !this.showContent
+    Click: function() {
+      this.showContent = !this.showContent;
     },
-    Click1: function () {
-      this.showContent1 = !this.showContent1
+    Click1: function() {
+      this.showContent1 = !this.showContent1;
     },
-    Click2: function () {
-      this.showContent2 = !this.showContent2
+    Click2: function() {
+      this.showContent2 = !this.showContent2;
     },
-    Click3: function () {
-      this.showContent3 = !this.showContent3
+    Click3: function() {
+      this.showContent3 = !this.showContent3;
     },
-    Click4: function () {
-      this.showContent4 = !this.showContent4
+    Click4: function() {
+      this.showContent4 = !this.showContent4;
     },
-    Click5: function () {
-      this.showContent5 = !this.showContent5
+    Click5: function() {
+      this.showContent5 = !this.showContent5;
     },
-    Click6: function () {
-      this.showContent6 = !this.showContent6
+    Click6: function() {
+      this.showContent6 = !this.showContent6;
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -755,6 +755,7 @@ export default {
   height: 60.5%;
   display: flex;
   float: left;
+  margin-top: 1rem;
   /* background: cornflowerblue; */
 }
 .statistics > .pie_tables > .pie_table {
@@ -888,7 +889,7 @@ export default {
 /* 两个选择器的整体框架 */
 .select_input {
   width: 100%;
-  height: 5%;
+  height: 10%;
   display: flex;
   float: left;
   /* background: darkkhaki; */
@@ -932,7 +933,7 @@ export default {
   height: 50%;
   display: flex;
   float: left;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   /* background: cornflowerblue; */
 }
 /* 左边指标的框架 */
@@ -1031,7 +1032,12 @@ export default {
   margin-left: 2rem;
 }
 /* 每条二级指标的文字样式 */
-.select_text > .left_text > .index_box1 > .show_index > .show_text > .show_span {
+.select_text
+  > .left_text
+  > .index_box1
+  > .show_index
+  > .show_text
+  > .show_span {
   margin-left: 1rem;
 }
 /* 右边指标的框架 */

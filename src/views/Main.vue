@@ -13,24 +13,25 @@
             <span>大数据分析评价系统</span>
           </div>
           <div class="layout-nav">
-            <MenuItem name="1" to="/home">
-              <span>分析研判</span>
-            </MenuItem>
-            <!-- <MenuItem name="2" to="/create1">
-              评价体系
-            </MenuItem> -->
+            <Submenu name="1">
+            <template slot="title">
+                分析研判
+            </template>
+                <MenuItem name="1-1" to="/create1">分析预警</MenuItem>
+                <MenuItem name="1-2" to="/create2">单位画像</MenuItem>
+                <MenuItem name="1-3" to="/create3">生态概况</MenuItem>
+            </Submenu>
             <Submenu name="2">
             <template slot="title">
                 评价体系
             </template>
-                <MenuItem name="2-1" to="/create1">单位生态</MenuItem>
-                <!-- <MenuItem name="2-1" to="/create1">单位生态</MenuItem> -->
-                <MenuItem name="2-2" to="/create2">政治聚焦</MenuItem>
+                <MenuItem name="2-1" to="/create4">单位生态</MenuItem>
+                <MenuItem name="2-2" to="/create5">政治聚焦</MenuItem>
             </Submenu>
-            <MenuItem name="3" to="/create3">
+            <MenuItem name="3" to="/create6">
               数据管理
             </MenuItem>
-            <MenuItem name="4" to="/create4">
+            <MenuItem name="4" to="/create7">
               系统管理
             </MenuItem>
           </div>
@@ -95,7 +96,7 @@ export default {
 }
 .layout-title > span {
   font-family: 阿里黑体;
-  font-size: 21pt;
+  font-size: 15pt;
 }
 /* 页面头部的整体框架 */
 .menu_head {
@@ -107,7 +108,7 @@ export default {
 }
 /* 页面头部右侧导航栏的框架 */
 .layout-nav {
-  width: 30%;
+  width: 45rem;
   height: 37pt;
   line-height: 37pt;
   margin: 0 auto;
