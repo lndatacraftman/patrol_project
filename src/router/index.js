@@ -6,12 +6,14 @@ import VueRouter from 'vue-router'
 import Main from '@/views/Main'
 
 // 导入主页组件
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
 import Create1 from '../views/Create1.vue'
 import Create2 from '../views/Create2.vue'
 import Create3 from '../views/Create3.vue'
 import Create4 from '../views/Create4.vue'
-// import Create5 from '../views/Create5.vue'
+import Create5 from '../views/Create5.vue'
+import Create6 from '../views/Create6.vue'
+import Create7 from '../views/Create7.vue'
 
 Vue.use(VueRouter)
 
@@ -24,13 +26,13 @@ const routes = [{
         path: '/',
         name: 'Main',
         component: Main,
-        redirect: '/home',
+        redirect: '/create1',
         children: [
             // “分析研判”路由配置
-            {
-                path: '/home',
-                component: Home
-            },
+            // {
+            //     path: '/home',
+            //     component: Home
+            // },
             // “评价体系中单位生态”路由配置
             {
                 path: '/create1',
@@ -50,12 +52,22 @@ const routes = [{
             {
                 path: '/create4',
                 component: Create4
+            },
+            // “巡察专项” 路由配置
+            {
+                path: '/create5',
+                component: Create5
+            },
+            // “巡察专项” 路由配置
+            {
+                path: '/create6',
+                component: Create6
+            },
+            // “巡察专项” 路由配置
+            {
+                path: '/create7',
+                component: Create7
             }
-            // “巡察专项”路由配置
-            // {
-            //     path: '/create5',
-            //     component: Create5
-            // }
             // ,
             // 设置路由配置
             // {

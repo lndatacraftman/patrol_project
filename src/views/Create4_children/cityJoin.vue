@@ -1,6 +1,9 @@
+<!-- 市台联 子组件 -->
+<!-- author by：zhaosiyuan -->
+
 <template>
-  <div id="citystraight">
-    <div class="content">
+    <div id="cityjoin">
+        <div class="content">
       <!-- 上面导航条框架 -->
       <div class="menu_content">
         <!-- 导航条 -->
@@ -8,6 +11,14 @@
           <div class="menu_title">
             <span>市直</span>
           </div>
+          <div class="menu_title">
+            <span>>>群团</span>
+          </div>
+          <div class="menu_title1">
+            <span>>>市台联</span>
+          </div>
+          <!-- 返回按钮 -->
+          <Button type="text" @click="return_click()" ghost>返回</Button>
         </div>
       </div>
       <!-- 中间筛选框的框架 -->
@@ -48,18 +59,14 @@
           </Select>
           </div>
         </div>
-        <!-- 确认按钮 -->
-        <div class="select_button">
-          <Button type="info"  @click="confirm_hidden()" ghost>确认</Button>
-        </div>
       </div>
       <!-- 下面图块框架 -->
-      <div class="info_table" id="main"></div>
+      <div class="info_table" id="main1"></div>
     </div>
-  </div>
+    </div>
 </template>
+
 <script>
-import EventBus from '@/assets/js/EventBus'
 import Vue from 'vue'
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
@@ -129,7 +136,7 @@ export default {
           children: [
             {
               name: '群团',
-              value: 6,
+              value: 5,
               itemStyle: {
                 color: new echarts.graphic.RadialGradient(
                   0.5,
@@ -153,7 +160,7 @@ export default {
               }
             },
             {
-              name: 'England',
+              name: '事业单位',
               value: 5,
               itemStyle: {
                 color: new echarts.graphic.RadialGradient(
@@ -178,8 +185,8 @@ export default {
               }
             },
             {
-              name: 'Farench',
-              value: 4,
+              name: '开发区',
+              value: 5,
               itemStyle: {
                 color: new echarts.graphic.RadialGradient(
                   0.5,
@@ -203,8 +210,8 @@ export default {
               }
             },
             {
-              name: 'Russia',
-              value: 3,
+              name: '市委单位',
+              value: 5,
               itemStyle: {
                 color: new echarts.graphic.RadialGradient(
                   0.5,
@@ -228,8 +235,8 @@ export default {
               }
             },
             {
-              name: 'R',
-              value: 1,
+              name: '大学',
+              value: 3,
               itemStyle: {
                 color: new echarts.graphic.RadialGradient(
                   0.5,
@@ -251,37 +258,12 @@ export default {
               label: {
                 color: '#77B05F'
               }
-            },
-            {
-              name: 'O',
-              value: 1,
-              itemStyle: {
-                color: new echarts.graphic.RadialGradient(
-                  0.5,
-                  0.5,
-                  1,
-                  [
-                    {
-                      offset: 0,
-                      color: '#380C30' // 0% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: '#430D3E' // 100% 处的颜色
-                    }
-                  ],
-                  false
-                )
-              },
-              label: {
-                color: '#A85599'
-              }
             }
           ]
         },
         {
           name: '企业',
-          value: 8,
+          value: 5,
           itemStyle: {
             color: new echarts.graphic.RadialGradient(
               0.5,
@@ -305,7 +287,7 @@ export default {
           }
         },
         {
-          name: '开发区',
+          name: '人大政协法院',
           value: 20,
           itemStyle: {
             color: new echarts.graphic.RadialGradient(
@@ -329,15 +311,13 @@ export default {
             color: '#00E3FE'
           }
         }
-      ],
-      formatUtil: Vue.prototype.$echarts.format
+      ]
     }
   },
+  mounted () {
+    this.myEcharts()
+  },
   methods: {
-    // 跳转页面
-    confirm_hidden () {
-      EventBus.$emit('showFlag', true)
-    },
     getLevelOption () {
       return [
         {
@@ -369,7 +349,7 @@ export default {
     colorMappingChange (value) {
       var levelOption = this.getLevelOption(value)
       var myChart = Vue.prototype.$echarts.init(
-        document.getElementById('main')
+        document.getElementById('main1')
       )
       myChart.setOption({
         series: [
@@ -382,18 +362,15 @@ export default {
     myEcharts () {
       // 基于准备好的dom，初始化echarts实例
       var myChart = Vue.prototype.$echarts.init(
-        document.getElementById('main')
+        document.getElementById('main1')
       )
-      //
-      myChart.on('click', function (params) {
-        EventBus.$emit('showFlag', true)
-      })
+      var formatUtil = Vue.prototype.$echarts.format
       // 指定图表的配置项和数据
 
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption({
         tooltip: {
-          show: false,
+          // show: false,
           formatter: function (info) {
             var value = info.value
             var treePathInfo = info.treePathInfo
@@ -405,56 +382,74 @@ export default {
 
             return [
               '<div class="tooltip-title">' +
-                this.formatUtil.encodeHTML(treePath.join('/')) +
+                formatUtil.encodeHTML(treePath.join('/')) +
                 '</div>',
-              '面积: ' + this.formatUtil.addCommas(value) + ' m²'
+              '面积: ' + formatUtil.addCommas(value) + ' m²'
             ].join('')
           }
         },
-
         series: [
           {
-            // name:'平面图',
             type: 'treemap',
             visibleMin: 300,
+            roam: false,
+            nodeClick: 'link',
             label: {
               show: true,
               formatter: '{b}',
-              fontSize: 30
+              fontSize: 30,
+              ellipsis: true // 字太多后面变省略号
             },
             itemStyle: {
               normal: {
                 // borderColor: '#fff'
+                borderColor: '',
+                borderWidth: 0.5
+              },
+              emphasis: {
+                label: {
+                  show: true
+                  // color: 'rgba(22, 90, 90)'
+                },
+                // color: 'black',
+                borderWidth: 1,
+                borderColor: '#2bfaff'
               }
             },
             levels: this.getLevelOption(),
-            data: this.testData
+            data: this.testData,
+            breadcrumb: {
+              show: false
+            } // 隐藏矩形树图下面的小黑条面包屑
           }
         ]
       })
+    },
+    // 点击返回按钮
+    return_click () {
+      this.$emit('hiddenFlag', false)
     }
-  },
-  mounted () {
-    this.myEcharts()
   }
 }
 </script>
-<style>
-#citystraight {
-  height: 100%;
-  width: 100%;
-  background-image: url("../../assets/images/阴影底.png");
-  display: flex;
-  justify-content: center;
+
+<style scoped>
+#cityjoin {
+    width: 100%;
+    height: 100%;
+    /* background: green; */
+    background-image: url("../../assets/images/阴影底.png");
+    display: flex;
+    justify-content: center;
 }
 /* 整体框架 */
-.content {
+#cityjoin > .content {
   height: 100%;
   width: 90%;
   /* background: plum; */
 }
 /* 导航条的框架 */
-.content > .menu_content {
+#cityjoin > .content > .menu_content {
   height: 10%;
   width: 100%;
   /* background: black; */
@@ -463,15 +458,18 @@ export default {
   justify-content: center;
 }
 /* 导航条 */
-.content > .menu_content > .menu {
+#cityjoin > .content > .menu_content > .menu {
   height: 40%;
   width: 100%;
   display: flex;
   float: left;
   background-image: url("../../assets/images/导航条.png");
 }
+#cityjoin > .content > .menu_content > .menu > button {
+    margin-left: 45%;
+}
 /* 导航条的文字框架 */
-.content > .menu_content > .menu > .menu_title {
+#cityjoin > .content > .menu_content > .menu > .menu_title {
   width: 12%;
   height: 100%;
   display: flex;
@@ -479,12 +477,25 @@ export default {
   align-items: center;
   /* background: burlywood; */
 }
-/* 导航条里的文字样式 */
-#citystraight > .content > .menu_content > .menu > .menu_title > span {
+/* 市台联的文字框架 */
+#cityjoin > .content > .menu_content > .menu > .menu_title1 {
+    width: 17%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: burlywood; */
+}
+/* 市台联的文字样式 */
+#cityjoin > .content > .menu_content > .menu > .menu_title1 > span {
   color: #2bfaff;
 }
+/* 导航条里的文字样式 */
+#cityjoin > .content > .menu_content > .menu > .menu_title > span {
+  color: #ffffff;
+}
 /* 中间筛选框的框架 */
-.content > .times_select {
+#cityjoin > .content > .times_select {
   width: 100%;
   height: 12%;
   display: flex;
@@ -492,7 +503,7 @@ export default {
   /* background: violet; */
 }
 /* 筛选框的整体框架 */
-.content > .times_select > .selectbox {
+#cityjoin > .content > .times_select > .selectbox {
   width: 40%;
   height: 100%;
   display: flex;
@@ -500,7 +511,7 @@ export default {
   /* background: blueviolet; */
 }
 /* 筛选框的标题框架 */
-.content > .times_select > .selectbox > .select_title {
+#cityjoin > .content > .times_select > .selectbox > .select_title {
   width: 25%;
   height: 100%;
   display: flex;
@@ -509,11 +520,11 @@ export default {
   /* background: burlywood; */
 }
 /* 筛选框的标题文字样式 */
-#citystraight > .content > .times_select > .selectbox > .select_title > span {
+#cityjoin > .content > .times_select > .selectbox > .select_title > span {
   color: #2bfaff;
 }
 /* 筛选框 */
-.content > .times_select > .selectbox > .select_input {
+#cityjoin > .content > .times_select > .selectbox > .select_input {
   width: 75%;
   height: 100%;
   display: flex;
@@ -521,19 +532,11 @@ export default {
   align-items: center;
   /* background: cornflowerblue; */
 }
-/* 确认按钮框架 */
-.content > .times_select > .select_button {
-  width: 20%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background: black; */
-}
 /* 矩形树图的整体框架 */
-.content > .info_table {
-  width: 100%;
-  height: 78%;margin-top: 4rem;
+#cityjoin > .content > .info_table {
+  width: 500px;
+  height: 600px;
+  /* margin-top: 4rem; */
   /* background: coral; */
 }
 </style>

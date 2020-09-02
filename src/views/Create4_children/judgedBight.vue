@@ -1,3 +1,5 @@
+<!-- 综评曲线子组件 -->
+
 <template>
   <div id="judgedbight">
     <!-- 整体布局 -->
@@ -9,7 +11,7 @@
           <span>综评曲线</span>
         </div>
         <!-- 分割线 -->
-        <Divider />
+        <hr>
         <!-- 图表 -->
         <div class="content_table">
           <div ref="chart1" class="up_table"></div>
@@ -22,7 +24,7 @@
           <span>指标详情</span>
         </div>
         <!-- 分割线 -->
-        <Divider />
+        <hr>
         <!-- 图表 -->
         <div class="content_table">
           <div ref="chart2" class="down_table"></div>
@@ -140,7 +142,7 @@ export default {
         }
       },
       grid: {
-        top: 100,
+        top: 5,
         containLabel: true
       },
       xAxis: [{
@@ -394,12 +396,13 @@ export default {
 }
 /* 上面图表的大小 */
 .content_table > .up_table {
+  margin-top: 5rem;
   width: 800px;
-  height: 300px;
+  height: 250px;
 }
 /* 下面图表的大小 */
 .content_table > .down_table {
   width: 800px;
-  height: 300px;
+  height: 280px;
 }
 </style>

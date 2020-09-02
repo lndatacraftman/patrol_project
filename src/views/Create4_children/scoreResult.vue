@@ -1,4 +1,4 @@
-<!-- 评分历程 子组件 -->
+<!-- 地图右侧的评分历程 子组件 -->
 <!-- author by：zhaosiyuan -->
 
 <template>
@@ -9,7 +9,7 @@
         <span>评分历程</span>
       </div>
       <!-- 横线 -->
-      <Divider class="divider" />
+      <hr>
       <!-- 统计图像布局 -->
       <div class="statistics">
         <!-- 上面的饼图的整体框架 -->
@@ -85,7 +85,7 @@
         <span>指标详情</span>
       </div>
       <!-- 横线 -->
-      <Divider />
+      <hr>
       <!-- 两个选择器的框架 -->
       <div class="select_input">
         <!-- 左边选择器框架 -->
@@ -729,6 +729,7 @@ export default {
   height: 60.5%;
   display: flex;
   float: left;
+  margin-top: 1rem;
   /* background: cornflowerblue; */
 }
 .statistics > .pie_tables > .pie_table {
@@ -749,7 +750,7 @@ export default {
 }
 /* 饼状图左边的布局 */
 .statistics > .pie_tables > .pie_table > .pie_main > .pie_left {
-  width: 33%;
+  width: 100.73px;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -828,8 +829,6 @@ export default {
   align-items: center;
   background-image: url("../../assets/images/评价中.png");
 }
-/* .statistics > .pie_tables > .evaluate_ing > .evaluate_main > span {
-} */
 /* 达标项数字的框架 */
 .rightup1 {
   width: 100%;
@@ -862,7 +861,7 @@ export default {
 /* 两个选择器的整体框架 */
 .select_input {
   width: 100%;
-  height: 5%;
+  height: 10%;
   display: flex;
   float: left;
   /* background: darkkhaki; */
@@ -906,7 +905,7 @@ export default {
   height: 50%;
   display: flex;
   float: left;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   /* background: cornflowerblue; */
 }
 /* 左边指标的框架 */
