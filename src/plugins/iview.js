@@ -1,5 +1,5 @@
 /* eslint-disable eol-last */
-import Vue from 'vue'
-import { Button } from 'view-design'
-import 'view-design/dist/styles/iview.css'
-Vue.component('Button', Button)
+import Vue from "vue";
+import { Button } from "view-design";
+import "view-design/dist/styles/iview.css";
+Vue.component("Button", Button);

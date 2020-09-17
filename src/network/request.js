@@ -13,7 +13,7 @@ const serviceHandler = () => {
   // console.log('baseurl is :', baseUrlForService)
   const service = axios.create({
     baseURL: baseUrlForService,
-    timeout: Timeout
+    timeout: Timeout,
   });
   requestIntercept(service);
   responseIntercept(service);
@@ -23,7 +23,7 @@ const serviceHandler = () => {
 // http request 拦截器
 function requestIntercept(service) {
   service.interceptors.request.use(
-    config => {
+    (config) => {
       console.log("request interceptor...");
       // console.log(config)
       if (localStorage.Authorization) {
@@ -33,7 +33,7 @@ function requestIntercept(service) {
       }
       return config;
     },
-    error => {
+    (error) => {
       Promise.reject(error);
     }
   );
@@ -42,7 +42,7 @@ function requestIntercept(service) {
 // http response 拦截器
 function responseIntercept(service) {
   service.interceptors.response.use(
-    response => {
+    (response) => {
       console.log("response interceptor...");
       // console.log(response)
       if (response.status !== 200) {
@@ -50,7 +50,7 @@ function responseIntercept(service) {
       }
       return response;
     },
-    error => {
+    (error) => {
       // 超时进行提示
       if (error.message.includes("timeout") || error.message.includes("504")) {
         ViewUI.Message.error("请求超时，请稍后重试");
@@ -69,7 +69,7 @@ export function deliverPlugins(url, data) {
   console.log("url:" + url);
   console.log("data:" + data);
   return serviceHandler().get(url, {
-    params: data
+    params: data,
   });
 }
 
@@ -87,7 +87,7 @@ export function deliverPlugins_post(url, params) {
   console.log(
     "serviceHandler().post(url, QS.stringify(params)): " +
       util.inspect(serviceHandler().post(url, QS.stringify(params)), {
-        depth: null
+        depth: null,
       })
   );
   return serviceHandler().post(url, QS.stringify(params));

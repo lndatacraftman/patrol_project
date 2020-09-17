@@ -8,36 +8,33 @@
     <div class="container5">
       <!-- 左边区域 -->
       <div class="container_left">
-          <!-- 引入政治聚焦子组件 -->
+        <!-- 引入政治聚焦子组件 -->
         <politicalFocus />
       </div>
       <!-- 右边区域 -->
       <div class="container_right">
-          <!-- 引入指标预警子组件 -->
-          <warningIndex />
+        <!-- 引入指标预警子组件 -->
+        <warningIndex />
       </div>
     </div>
   </div>
 </template>
 <script>
-import politicalFocus from '@/views/Create5_children/politicalFocus' // 引入政治聚焦子组件
-import warningIndex from '@/views/Create5_children/warningIndex' // 引入指标预警子组件
+import politicalFocus from "@/views/Create5_children/politicalFocus"; // 引入政治聚焦子组件
+import warningIndex from "@/views/Create5_children/warningIndex"; // 引入指标预警子组件
 
 export default {
-  data () {
-    return {}
+  data() {
+    return {};
   },
-  created () {
-  },
-  methods: {
-  },
+  created() {},
+  methods: {},
   components: {
     politicalFocus, // 政治聚焦子组件
-    warningIndex // 引入指标预警子组件
+    warningIndex, // 引入指标预警子组件
   },
-  mounted () {
-  }
-}
+  mounted() {},
+};
 </script>
 <style scoped>
 #create5 {
@@ -59,8 +56,8 @@ export default {
 }
 /* create5右边区域 */
 #create5 > .container5 > .container_right {
-    height: 100%;
-    width: 40%;
-    /* background: cadetblue; */
+  height: 100%;
+  width: 40%;
+  /* background: cadetblue; */
 }
 </style>

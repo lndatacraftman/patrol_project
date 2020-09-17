@@ -4,5 +4,5 @@ export default {
   // 并返回收到的结果
   getData() {
     return link.get(SERVER_BASE + "/odsQuestionCsix/list");
-  }
+  },
 };

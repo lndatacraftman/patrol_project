@@ -69,14 +69,16 @@
         </div>
       </div>
       <!-- 下面图块框架 -->
-      <div class="info_table" id="main" @click="hidden"></div>
+      <div class="info_table" id="main"></div>
       <!-- 区县按钮框架 -->
-      <div class="county_button">
+      <div class="county_button" v-show="!menu_hide">
         <div class="county_background" @click="county_show_hidden()">
           <img src="../../assets/images/区县.png" />
           <div class="county_span"><span>区县</span></div>
         </div>
       </div>
+      <!-- 被隐藏的子组件评分历程子组件 -->
+      <!-- <gradeCourse v-show="grade_hidden"></gradeCourse> -->
     </div>
   </div>
 </template>
@@ -85,12 +87,16 @@ import EventBus from "@/assets/js/EventBus";
 import Vue from "vue";
 import echarts from "echarts";
 import axios from "axios";
+import { log } from "util";
+// import gradeCourse from "@/views/Create4_children/gradeCourse"; // 引入综评曲线子组件
 Vue.prototype.$echarts = echarts;
 
 export default {
   name: "Echarts",
+  props: {},
   data() {
     return {
+      grade_hidden: false,
       menu_hide: false,
       itemStyles: [
         {
@@ -102,19 +108,19 @@ export default {
               [
                 {
                   offset: 0,
-                  color: "#23203B"
+                  color: "#23203B",
                 },
                 {
                   offset: 1,
-                  color: "#43396D"
-                }
+                  color: "#43396D",
+                },
               ],
               false
-            )
+            ),
           },
           label: {
-            color: "#9065FD"
-          }
+            color: "#9065FD",
+          },
         },
         {
           itemStyle: {
@@ -125,19 +131,19 @@ export default {
               [
                 {
                   offset: 0,
-                  color: "#463428" // 0% 处的颜色
+                  color: "#463428", // 0% 处的颜色
                 },
                 {
                   offset: 1,
-                  color: "#584133" // 100% 处的颜色
-                }
+                  color: "#584133", // 100% 处的颜色
+                },
               ],
               false
-            )
+            ),
           },
           label: {
-            color: "#D19A71"
-          }
+            color: "#D19A71",
+          },
         },
         {
           itemStyle: {
@@ -148,19 +154,19 @@ export default {
               [
                 {
                   offset: 0,
-                  color: "#502630" // 0% 处的颜色
+                  color: "#502630", // 0% 处的颜色
                 },
                 {
                   offset: 1,
-                  color: "#72353D" // 100% 处的颜色
-                }
+                  color: "#72353D", // 100% 处的颜色
+                },
               ],
               false
-            )
+            ),
           },
           label: {
-            color: "#D06168"
-          }
+            color: "#D06168",
+          },
         },
         {
           itemStyle: {
@@ -171,19 +177,19 @@ export default {
               [
                 {
                   offset: 0,
-                  color: "#2C3E42" // 0% 处的颜色
+                  color: "#2C3E42", // 0% 处的颜色
                 },
                 {
                   offset: 1,
-                  color: "#4E6170" // 100% 处的颜色
-                }
+                  color: "#4E6170", // 100% 处的颜色
+                },
               ],
               false
-            )
+            ),
           },
           label: {
-            color: "#7DA7BD"
-          }
+            color: "#7DA7BD",
+          },
         },
         {
           itemStyle: {
@@ -194,19 +200,19 @@ export default {
               [
                 {
                   offset: 0,
-                  color: "#4A450E" // 0% 处的颜色
+                  color: "#4A450E", // 0% 处的颜色
                 },
                 {
                   offset: 1,
-                  color: "#625A12" // 100% 处的颜色
-                }
+                  color: "#625A12", // 100% 处的颜色
+                },
               ],
               false
-            )
+            ),
           },
           label: {
-            color: "#ADA55C"
-          }
+            color: "#ADA55C",
+          },
         },
         {
           itemStyle: {
@@ -217,19 +223,19 @@ export default {
               [
                 {
                   offset: 0,
-                  color: "#294421" // 0% 处的颜色
+                  color: "#294421", // 0% 处的颜色
                 },
                 {
                   offset: 1,
-                  color: "#3F6B30" // 100% 处的颜色
-                }
+                  color: "#3F6B30", // 100% 处的颜色
+                },
               ],
               false
-            )
+            ),
           },
           label: {
-            color: "#77B05F"
-          }
+            color: "#77B05F",
+          },
         },
         {
           itemStyle: {
@@ -240,19 +246,19 @@ export default {
               [
                 {
                   offset: 0,
-                  color: "#051B32" // 0% 处的颜色
+                  color: "#051B32", // 0% 处的颜色
                 },
                 {
                   offset: 1,
-                  color: "#05508A" // 100% 处的颜色
-                }
+                  color: "#05508A", // 100% 处的颜色
+                },
               ],
               false
-            )
+            ),
           },
           label: {
-            color: "#0092FF"
-          }
+            color: "#0092FF",
+          },
         },
         {
           itemStyle: {
@@ -263,51 +269,42 @@ export default {
               [
                 {
                   offset: 0,
-                  color: "#051B32"
+                  color: "#051B32",
                 },
                 {
                   offset: 1,
-                  color: "#184777"
-                }
+                  color: "#184777",
+                },
               ],
               false
-            )
+            ),
           },
           label: {
-            color: "#2A7ACC"
-          }
-        }
+            color: "#2A7ACC",
+          },
+        },
       ],
       // 届次筛选框里面的值
       periodList: [],
-      // title: [],
       // 轮次筛选框里面的值
-      turnsList: [
-        // { value: "", label: "" },
-        // { value: "", label: "" },
-        // { value: "", label: "" },
-        // { value: "", label: "" },
-        // { value: "", label: "" },
-        // { value: "", label: "" },
-        // { value: "", label: "" }
-      ],
+      turnsList: [],
       model: "",
       model1: "",
-      testData: []
+      testData: [],
     };
   },
   methods: {
-    // 点击下方图片的隐藏
-    hidden() {
-      this.menu_hide = !this.menu_hide;
-    },
+    // 返回按钮的点击事件
     return_click() {
+      const _this = this;
+      // 父子组件之间的传值
+      _this.$emit("handlecancel", false);
       this.menu_hide = !this.menu_hide;
       axios({
-        url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listTypesCount"
-      }).then(res => {
-        let _this = this;
+        url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listTypesCount",
+      }).then((res) => {
         _this.initCharts(res);
+        console.log(res.data);
       });
       // alert(params.name);
     },
@@ -326,27 +323,27 @@ export default {
         {
           itemStyle: {
             normal: {
-              borderWidth: 0
+              borderWidth: 0,
               // gapWidth: 5 // 间距
-            }
-          }
+            },
+          },
         },
         {
           itemStyle: {
             normal: {
               // gapWidth: 1
-            }
-          }
+            },
+          },
         },
         {
           colorSaturation: [0.35, 0.5],
           itemStyle: {
             normal: {
               // gapWidth: 1,
-              borderColorSaturation: 0.6
-            }
-          }
-        }
+              borderColorSaturation: 0.6,
+            },
+          },
+        },
       ];
     },
     colorMappingChange(value) {
@@ -357,15 +354,16 @@ export default {
       myChart.setOption({
         series: [
           {
-            levels: levelOption
-          }
-        ]
+            levels: levelOption,
+          },
+        ],
       });
     },
+    // 封装好的方法，解析后台传的值进行渲染echarts
     initCharts(res3) {
       this.testData = [];
       let index = 0;
-      for (let key in res3.data) {
+      for (const key in res3.data) {
         if (index >= this.itemStyles.length) {
           index = 0;
         }
@@ -373,47 +371,67 @@ export default {
           name: key,
           value: res3.data[key],
           itemStyle: this.itemStyles[index].itemStyle,
-          label: this.itemStyles[index].label
+          label: this.itemStyles[index].label,
         });
         index++;
       }
       this.myEcharts();
     },
     myEcharts() {
-      let _this = this;
+      const _this = this;
       // 基于准备好的dom，初始化echarts实例
       var myChart = Vue.prototype.$echarts.init(
         document.getElementById("main")
       );
+      myChart.off("click"); //禁止一直发送请求，页面爆闪
       var formatUtil = Vue.prototype.$echarts.format;
-      //echarts图的点击事件
-      myChart.on("click", function(params) {
-        // EventBus.$emit("showFlag", true);
-        console.log("name:" + params.data.name);
+      // echarts图的点击事件
+      myChart.on("click", function (params) {
+        if (params.data.unitId) {
+          _this.$emit("onSelectedUnitId", params.data.unitId);
+          _this.$emit("onSelectedUnitId1", params.data.unitId);
+          _this.$emit("handlecancel", true);
+        }
         axios({
           url:
             "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listUnit?type=" +
-            params.data.name
-        }).then(res => {
+            params.data.name,
+        }).then((res) => {
+          // console.log(res.data);
+
+          _this.menu_hide = !_this.menu_hide;
           let isPass = false;
-          for (let r in res.data) {
+          for (const r in res.data) {
             isPass = true;
             break;
           }
           if (isPass) {
-            console.log(res);
-            _this.initCharts(res);
+            // 根据后台传的值进行遍历解析
+            _this.testData = [];
+            let index = 0;
+            for (let i = 0; i < res.data.length; i++) {
+              if (i >= _this.itemStyles.length) {
+                index = 0;
+              } else {
+                _this.testData.push({
+                  name: res.data[i].level3Name,
+                  value: res.data[i].count,
+                  unitId: res.data[i].unitId,
+                  itemStyle: _this.itemStyles[index].itemStyle,
+                  label: _this.itemStyles[index].label,
+                });
+                index++;
+              }
+            }
+            _this.myEcharts(); // 重画echarts
           }
         });
-        // alert(params.name);
       });
-      // 指定图表的配置项和数据
-
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption({
         tooltip: {
           // show: false,
-          formatter: function(info) {
+          formatter: function (info) {
             var value = info.value;
             var treePathInfo = info.treePathInfo;
             var treePath = [];
@@ -426,16 +444,16 @@ export default {
               '<div class="tooltip-title">' +
                 formatUtil.encodeHTML(treePath.join("")) +
                 "</div>",
-              "个数: " + formatUtil.addCommas(value) + "个"
+              "个数: " + formatUtil.addCommas(value) + "个",
             ].join("");
-          }
+          },
         },
         grid: {
           x: 0,
           y: 0,
           x2: 0,
           y2: 0,
-          borderWidth: 10
+          borderWidth: 10,
         },
         series: [
           {
@@ -451,86 +469,83 @@ export default {
               show: true,
               formatter: "{b}",
               fontSize: 30,
-              ellipsis: true // 字太多后面变省略号
+              ellipsis: true, // 字太多后面变省略号
             },
             itemStyle: {
               normal: {
                 borderColor: "",
-                borderWidth: 0.5
+                borderWidth: 0.5,
               },
               emphasis: {
                 label: {
-                  show: true
+                  show: true,
                   // color: 'rgba(22, 90, 90)'
                 },
                 // color: 'black',
                 borderWidth: 1,
-                borderColor: "#2bfaff"
-              }
+                borderColor: "#2bfaff",
+              },
             },
             levels: this.getLevelOption(),
             data: this.testData,
             breadcrumb: {
-              show: false
-            } // 隐藏矩形树图下面的小黑条面包屑
-          }
-        ]
+              show: false,
+            }, // 隐藏矩形树图下面的小黑条面包屑
+          },
+        ],
       });
-    }
+    },
   },
   created() {
     axios
       .all([
         axios({
-          url: "http://192.168.101.4:8080/dwRotationSession/listAscByRotation"
+          url: "http://192.168.101.4:8080/dwRotationSession/listAscByRotation",
         }),
         axios({
-          url: "http://192.168.101.4:8080/dwRotationSession/listAscByRotation"
+          url: "http://192.168.101.4:8080/dwRotationSession/listAscByRotation",
         }),
         axios({
-          url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listTypesCount"
-        })
-        // axios({
-        //   url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listUnit"
-        // })
+          url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listTypesCount",
+        }),
       ])
       .then(
         axios.spread((res1, res2, res3) => {
           // data 属性名称是固定的，用于获取后台响应的实际数据
           // 第1次请求来的数据 --界次
-          // console.log(res1.data);
-          // console.log(res1.data[0].inspectionSessionName);
-          let jc = {
+          const jc = {
             value1: res1.data[0].inspectionSessionName,
-            label1: res1.data[0].inspectionSessionName
+            label1: res1.data[0].inspectionSessionName,
           };
           this.periodList.push(jc);
           // 第2次请求来的数据 --轮次
-          // console.log(res2.data);
-          console.log(res3.data);
           for (let i = 0; i < res2.data.length; i++) {
-            console.log(res2.data[i]);
-            let lc = {
+            const lc = {
               value2: res2.data[i].inspectionRotationName,
-              label2: res2.data[i].inspectionRotationName
+              label2: res2.data[i].inspectionRotationName,
             };
             this.turnsList.push(lc);
           }
           // 第3次请求来的数据 --echarts的标题和数值
           this.initCharts(res3);
+          // console.log(res4.data);
         })
       );
   },
   mounted() {
     // this.myEcharts();
-  }
+  },
+  components: {
+    // gradeCourse // 引入综评曲线子组件
+  },
 };
 </script>
 <style>
 #citystraight {
   height: 100%;
   width: 100%;
-  background-image: url("../../assets/images/阴影底.png");
+  background: #051c3d;
+  /* background-image: url("../../assets/images/阴影底.png"); */
   display: flex;
   justify-content: center;
 }
