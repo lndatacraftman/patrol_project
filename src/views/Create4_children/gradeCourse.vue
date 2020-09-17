@@ -20,7 +20,7 @@
               <div class="pie_left" ref="pie1"></div>
               <div class="pie_center">
                 <div class="pie_centerup">
-                  <span>A-</span>
+                  <span>{{ rate.level }}</span>
                 </div>
                 <div class="pie_centerdown">
                   <span>评分级别</span>
@@ -29,7 +29,7 @@
               <div class="pie_right">
                 <div class="pie_rightup">
                   <div class="rightup1">
-                    <span>75</span>
+                    <span>{{ rate.qualifiedNumber }}</span>
                   </div>
                   <div class="rightdown">
                     <span>达标项</span>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="pie_rightdown">
                   <div class="rightup1">
-                    <span>0</span>
+                    <span>{{ rate.substandardNumber }}</span>
                   </div>
                   <div class="rightdown">
                     <span>未达标项</span>
@@ -49,7 +49,7 @@
           <!-- 右侧评价中框架 -->
           <div class="evaluate_ing">
             <div class="evaluate_main">
-              <span>评估中..</span>
+              <span>{{ rate.score }}分</span>
             </div>
           </div>
         </div>
@@ -97,11 +97,17 @@
           <!-- 选择器框架 -->
           <div class="select">
             <Select v-model="model1">
-              <Option
+              <!-- <Option
                 v-for="item in cityList"
                 :value="item.value"
                 :key="item.value"
                 >{{ item.label }}</Option
+              > -->
+              <Option
+                v-for="item in onetextList"
+                :value="item.title"
+                :key="item"
+                >{{ item.title }}</Option
               >
             </Select>
           </div>
@@ -116,9 +122,9 @@
           <div class="select">
             <Select v-model="model1">
               <Option
-                v-for="item in cityList"
+                v-for="(item, index) in cityList"
                 :value="item.value"
-                :key="item.value"
+                :key="index"
                 >{{ item.label }}</Option
               >
             </Select>
@@ -131,168 +137,33 @@
         <!-- 指标的左边框架 -->
         <div class="left_text">
           <!-- 第一条指标的整体框架 -->
-          <div class="index_box1" @click="Click1()">
+          <div
+            class="index_box1"
+            v-for="(item, index) in indexList"
+            :key="index"
+          >
             <!-- 第一条一级指标的整体框架 -->
-            <div class="index">
+            <div class="index" @click="Click1(index)">
               <!-- 数字标号 -->
               <div class="index_num">I</div>
               <!-- 一级指标的文字 -->
-              <div class="index_text">党的意识、政治建设</div>
+              <div class="index_text">{{ item.content }}</div>
+              <!-- 一级指标的评级 -->
+              <div class="index_rate">
+                {{ item.level }}
+              </div>
             </div>
             <!-- 被折叠的内容--二级指标 -->
-            <div class="show_index" v-show="showContent1">
+            <div
+              class="show_index"
+              v-for="(item, index2) in item.twoindexList"
+              :key="index2"
+              v-show="towIndesShows[index]"
+              @click="Click2(item)"
+            >
               <div class="show_text">
                 <span class="show_num">II</span>
-                <span class="show_span"
-                  >学习贯彻习近平总书记重要讲话和指示批示精神情况</span
-                >
-              </div>
-            </div>
-            <div class="show_index" v-show="showContent1">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">执行和落实制度情况</span>
-              </div>
-            </div>
-          </div>
-          <!-- 第二条指标的整体框架 -->
-          <div class="index_box1" @click="Click2()">
-            <!-- 第一条一级指标的整体框架 -->
-            <div class="index">
-              <!-- 数字标号 -->
-              <div class="index_num">I</div>
-              <!-- 一级指标的文字 -->
-              <div class="index_text">担当作为履行职责使命</div>
-            </div>
-            <!-- 被折叠的内容--二级指标 -->
-            <div class="show_index" v-show="showContent2">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">履行核心职能情况</span>
-              </div>
-            </div>
-          </div>
-          <!-- 第三条指标的整体框架 -->
-          <div class="index_box1" @click="Click3()">
-            <!-- 第一条一级指标的整体框架 -->
-            <div class="index">
-              <!-- 数字标号 -->
-              <div class="index_num">I</div>
-              <!-- 一级指标的文字 -->
-              <div class="index_text">履行全面从严治党“两个责任”</div>
-            </div>
-            <!-- 被折叠的内容--二级指标 -->
-            <div class="show_index" v-show="showContent3">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span"
-                  >党组（党委）落实全面从严治党主体责任情况</span
-                >
-              </div>
-            </div>
-            <div class="show_index" v-show="showContent3">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span"
-                  >派驻纪检监察组（内设机关纪委）履行监督责任情况</span
-                >
-              </div>
-            </div>
-            <div class="show_index" v-show="showContent3">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span"
-                  >整改落实情况，是否存在整改不到位，虚假整改等突出问题</span
-                >
-              </div>
-            </div>
-            <div class="show_index" v-show="showContent3">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span"
-                  >机关作风建设特别是整改形式主义、官僚主义情况</span
-                >
-              </div>
-            </div>
-            <div class="show_index" v-show="showContent3">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">权力监督制约和防范廉政风险情况</span>
-              </div>
-            </div>
-          </div>
-          <!-- 第四条指标的整体框架 -->
-          <div class="index_box1" @click="Click4()">
-            <!-- 第一条一级指标的整体框架 -->
-            <div class="index">
-              <!-- 数字标号 -->
-              <div class="index_num">I</div>
-              <!-- 一级指标的文字 -->
-              <div class="index_text">落实深化改革要求</div>
-            </div>
-            <!-- 被折叠的内容--二级指标 -->
-            <div class="show_index" v-show="showContent4">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">防范化解重大风险情况</span>
-              </div>
-            </div>
-            <div class="show_index" v-show="showContent4">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">落实改革情况</span>
-              </div>
-            </div>
-          </div>
-          <!-- 第五条指标的整体框架 -->
-          <div class="index_box1" @click="Click5()">
-            <!-- 第一条一级指标的整体框架 -->
-            <div class="index">
-              <!-- 数字标号 -->
-              <div class="index_num">I</div>
-              <!-- 一级指标的文字 -->
-              <div class="index_text">班子建设和队伍建设</div>
-            </div>
-            <!-- 被折叠的内容--二级指标 -->
-            <div class="show_index" v-show="showContent5">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">领导班子建设情况</span>
-              </div>
-            </div>
-            <div class="show_index" v-show="showContent5">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">选人用人和队伍建设情况 </span>
-              </div>
-            </div>
-            <div class="show_index" v-show="showContent5">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">干部担当作为情况</span>
-              </div>
-            </div>
-          </div>
-          <!-- 第六条指标的整体框架 -->
-          <div class="index_box1" @click="Click6()">
-            <!-- 第一条一级指标的整体框架 -->
-            <div class="index">
-              <!-- 数字标号 -->
-              <div class="index_num">I</div>
-              <!-- 一级指标的文字 -->
-              <div class="index_text">机关党建和基层党组织建设</div>
-            </div>
-            <!-- 被折叠的内容--二级指标 -->
-            <div class="show_index" v-show="showContent6">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">机关党建情况</span>
-              </div>
-            </div>
-            <div class="show_index" v-show="showContent6">
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">基层党组织建设情况</span>
+                <span class="show_span">{{ item.content }}</span>
               </div>
             </div>
           </div>
@@ -301,26 +172,11 @@
         <!-- 指标的右边框架 -->
         <div class="right_text">
           <!-- 三级指标的整体框架 -->
-          <div class="folding">
-            <!-- 第一条三级指标的整体框架 -->
-            <div class="target1">
-              <!-- 三级指标的数字标号 -->
-              <div class="num3">III</div>
-              <!-- 中间三级指标的框架 -->
-              <div class="target1_text">
-                1、开展党组织和党员干部党性教育不扎实，开展“不忘初心、牢记使命”主题教育不认真、走过场，对群众提出的意见建议重视不够、整改不力，效果不明显。
-              </div>
-              <!-- 因子和对应的数值的框架 -->
-              <div class="target1_divisor">
-                <!-- 因子图片框架 -->
-                <div class="change_image">
-                  <img src="../../assets/images/因子.png" />
-                </div>
-                <!-- 因子对应的数值的框架 -->
-                <div class="num">1.1</div>
-              </div>
-              <!-- 被折叠的内容 -->
-            </div>
+          <div
+            class="folding"
+            v-for="(item, index) in threeIndexList"
+            :key="index"
+          >
             <!-- 折叠的部分 -->
             <!-- <div class="show_div" v-show="showContent" ref="chart2"></div> -->
             <!-- 第二条三级指标的整体框架 -->
@@ -329,63 +185,27 @@
               <div class="num3">III</div>
               <!-- 中间三级指标的框架 -->
               <div class="target1_text">
-                2、对党的十九大关于意识形态工作的决策部署重视不够，意识形态工作观念淡薄、责任缺失、管控不力，党员领导干部理想信念淡化，不信马列信鬼神、参加宗教迷信等活动。
+                {{ item.content }}
               </div>
               <!-- 因子和对应的数值的框架 -->
               <div class="target1_divisor">
                 <!-- 因子图片框架 -->
                 <div class="change_image">
-                  <img src="../../assets/images/因子.png" @click="Click()" />
+                  <img
+                    src="../../assets/images/因子.png"
+                    @click="Click(item, index)"
+                  />
                 </div>
                 <!-- 因子对应的数值的框架 -->
-                <div class="num">1.1</div>
+                <div class="num">{{ item.level }}</div>
               </div>
-              <!-- 被折叠的内容 -->
             </div>
             <!-- 折叠的部分 -->
-            <div class="show_div" v-show="showContent" ref="chart6"></div>
-            <!-- 第三条三级指标的整体框架 -->
-            <div class="target1">
-              <!-- 三级指标的数字标号 -->
-              <div class="num3">III</div>
-              <!-- 中间三级指标的框架 -->
-              <div class="target1_text">
-                3、把“四个意识”当口号，对大是大非问题没有立场、没有态度、无动于衷、置身事外，对违反政治纪律政治规矩等错误思想和言行不报告、不抵制、不斗争，放松警惕，搞无原则一团和气。
-              </div>
-              <!-- 因子和对应的数值的框架 -->
-              <div class="target1_divisor">
-                <!-- 因子图片框架 -->
-                <div class="change_image">
-                  <img src="../../assets/images/因子.png" />
-                </div>
-                <!-- 因子对应的数值的框架 -->
-                <div class="num">1.1</div>
-              </div>
-              <!-- 被折叠的内容 -->
-            </div>
-            <!-- 折叠的部分 -->
-            <!-- <div class="show_div" v-show="showContent" ref="chart2"></div> -->
-            <!-- 第四条三级指标的整体框架 -->
-            <div class="target1">
-              <!-- 三级指标的数字标号 -->
-              <div class="num3">III</div>
-              <!-- 中间三级指标的框架 -->
-              <div class="target1_text">
-                4、越权决策、擅作主张、我行我素；存在搞非组织活动、与组织讨价还价、违背组织决定、欺骗和对抗组织等问题。
-              </div>
-              <!-- 因子和对应的数值的框架 -->
-              <div class="target1_divisor">
-                <!-- 因子图片框架 -->
-                <div class="change_image">
-                  <img src="../../assets/images/因子.png" />
-                </div>
-                <!-- 因子对应的数值的框架 -->
-                <div class="num">1.1</div>
-              </div>
-              <!-- 被折叠的内容 -->
-            </div>
-            <!-- 折叠的部分 -->
-            <!-- <div class="show_div" v-show="showContent" ref="chart2"></div> -->
+            <div
+              class="show_div"
+              v-show="threeIndesShows[index]"
+              :ref="`threeIndex_${item.uid}`"
+            ></div>
           </div>
         </div>
       </div>
@@ -394,11 +214,24 @@
 </template>
 
 <script>
+import Vue from "vue";
 import echarts from "echarts";
+import axios from "axios";
 
 export default {
+  props: {
+    selectedUnitId: String,
+  },
   data() {
     return {
+      factors: [],
+      threeIndesShows: [],
+      threeIndexList: [],
+      towIndexActiveShow: null,
+      towIndesShows: [],
+      indexList: [],
+      onetextList: [], // 一级指标的数据
+      twotextList: [], // 二级指标的数据
       showContent: false,
       showContent1: false,
       showContent2: false,
@@ -409,316 +242,534 @@ export default {
       cityList: [
         {
           value: "New York",
-          label: "New York"
+          label: "New York",
         },
         {
           value: "London",
-          label: "London"
+          label: "London",
         },
         {
           value: "Sydney",
-          label: "Sydney"
+          label: "Sydney",
         },
         {
           value: "Ottawa",
-          label: "Ottawa"
+          label: "Ottawa",
         },
         {
           value: "Paris",
-          label: "Paris"
+          label: "Paris",
         },
         {
           value: "Canberra",
-          label: "Canberra"
-        }
+          label: "Canberra",
+        },
       ],
-      model1: ""
+      model1: "",
+      rate: [], //评分级别
       // isCollapsed: false,
     };
   },
   mounted() {
-    const data = {
-      nodes: [
-        {
-          name: "操作系统集团",
-          category: 0
-        },
-        {
-          name: "浏览器有限公司",
-          category: 0
-        },
-        {
-          name: "HTML科技",
-          category: 0
-        },
-        {
-          name: "JavaScript科技",
-          category: 0
-        },
-        {
-          name: "CSS科技",
-          category: 0
-        },
-        {
-          name: "Chrome",
-          category: 1
-        },
-        {
-          name: "IE",
-          category: 1
-        },
-        {
-          name: "Firefox",
-          category: 1
-        },
-        {
-          name: "Safari",
-          category: 1
-        }
-      ],
-
-      links: [
-        {
-          source: "浏览器有限公司",
-          target1: "操作系统集团",
-          name: "参股"
-        },
-        {
-          source: "HTML科技",
-          target1: "浏览器有限公司",
-          name: "参股"
-        },
-        {
-          source: "CSS科技",
-          target1: "浏览器有限公司",
-          name: "参股"
-        },
-        {
-          source: "JavaScript科技",
-          target1: "浏览器有限公司",
-          name: "参股"
-        },
-        {
-          source: "Chrome",
-          target1: "浏览器有限公司",
-          name: "董事"
-        },
-        {
-          source: "IE",
-          target1: "浏览器有限公司",
-          name: "董事"
-        },
-        {
-          source: "Firefox",
-          target1: "浏览器有限公司",
-          name: "董事"
-        },
-        {
-          source: "Safari",
-          target1: "浏览器有限公司",
-          name: "董事"
-        },
-        {
-          source: "Chrome",
-          target1: "JavaScript科技",
-          name: "法人"
-        }
-      ]
-    };
-
-    const color1 = "#006acc";
-    const color2 = "#ff7d18";
-    const color3 = "#10a050";
-
-    data.nodes.forEach(node => {
-      if (node.category === 0) {
-        node.symbolSize = 40;
-        node.itemStyle = {
-          color: color1
-        };
-      } else if (node.category === 1) {
-        node.itemStyle = {
-          color: color2
-        };
-      }
-    });
-
-    data.links.forEach(link => {
-      link.label = {
-        align: "center",
-        fontSize: 10
-      };
-
-      if (link.name === "参股") {
-        link.lineStyle = {
-          color: color2
-        };
-      } else if (link.name === "董事") {
-        link.lineStyle = {
-          color: color1
-        };
-      } else if (link.name === "法人") {
-        link.lineStyle = {
-          color: color3
-        };
-      }
-    });
-
-    const categories = [
-      {
-        // name: '公司',
-        itemStyle: {
-          color: color1
-        }
-      },
-      {
-        // name: '董事',
-        itemStyle: {
-          color: color2
-        }
-      }
-    ];
-    const option6 = {
-      title: {
-        text: "指标因子"
-      },
-      legend: [
-        {
-          // selectedMode: 'single',
-          data: categories.map(x => x.name)
-          // icon: 'circle'
-        }
-      ],
-      series: [
-        {
-          type: "graph",
-          layout: "force",
-          symbolSize: 40,
-          draggable: true,
-          roam: true,
-          focusNodeAdjacency: true,
-          categories: categories,
-          edgeSymbol: ["", "arrow"],
-          // edgeSymbolSize: [80, 10],
-          edgeLabel: {
-            normal: {
-              show: true,
-              textStyle: {
-                fontSize: 20
-              },
-              formatter(x) {
-                return x.data.name;
-              }
-            }
-          },
-          label: {
-            show: true
-          },
-          force: {
-            repulsion: 70,
-            edgeLength: 80
-          },
-          data: data.nodes,
-          links: data.links
-        }
-      ]
-    };
-    this.initChart(this.$refs.chart6, option6);
-    const option3 = {
-      title: {
-        text: "80%",
-        x: "center",
-        y: "center",
-        textStyle: {
-          fontWeight: "normal",
-          color: "#0580f2",
-          fontSize: "20"
-        }
-      },
-      color: ["rgba(176, 212, 251, 1)"],
-
-      series: [
-        {
-          name: "Line 1",
-          type: "pie",
-          clockWise: true,
-          radius: ["50%", "66%"],
-          itemStyle: {
-            normal: {
-              label: {
-                show: false
-              },
-              labelLine: {
-                show: false
-              }
-            }
-          },
-          hoverAnimation: false,
-          data: [
-            {
-              value: 80,
-              name: "01",
-              itemStyle: {
-                normal: {
-                  color: {
-                    // 完成的圆环的颜色
-                    colorStops: [
-                      {
-                        offset: 0,
-                        color: "#00cefc" // 0% 处的颜色
-                      },
-                      {
-                        offset: 1,
-                        color: "#367bec" // 100% 处的颜色
-                      }
-                    ]
-                  },
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    show: false
-                  }
-                }
-              }
-            },
-            {
-              name: "02",
-              value: 20
-            }
-          ]
-        }
-      ]
-    };
-    this.initChart(this.$refs.pie1, option3);
+    // const data = {
+    //   nodes: [
+    //     {
+    //       name: "操作系统集团",
+    //       category: 0,
+    //     },
+    //     {
+    //       name: "浏览器有限公司",
+    //       category: 0,
+    //     },
+    //     {
+    //       name: "HTML科技",
+    //       category: 0,
+    //     },
+    //     {
+    //       name: "JavaScript科技",
+    //       category: 0,
+    //     },
+    //     {
+    //       name: "CSS科技",
+    //       category: 0,
+    //     },
+    //     {
+    //       name: "Chrome",
+    //       category: 1,
+    //     },
+    //     {
+    //       name: "IE",
+    //       category: 1,
+    //     },
+    //     {
+    //       name: "Firefox",
+    //       category: 1,
+    //     },
+    //     {
+    //       name: "Safari",
+    //       category: 1,
+    //     },
+    //   ],
+    //   links: [
+    //     {
+    //       source: "浏览器有限公司",
+    //       target1: "操作系统集团",
+    //       name: "参股",
+    //     },
+    //     {
+    //       source: "HTML科技",
+    //       target1: "浏览器有限公司",
+    //       name: "参股",
+    //     },
+    //     {
+    //       source: "CSS科技",
+    //       target1: "浏览器有限公司",
+    //       name: "参股",
+    //     },
+    //     {
+    //       source: "JavaScript科技",
+    //       target1: "浏览器有限公司",
+    //       name: "参股",
+    //     },
+    //     {
+    //       source: "Chrome",
+    //       target1: "浏览器有限公司",
+    //       name: "董事",
+    //     },
+    //     {
+    //       source: "IE",
+    //       target1: "浏览器有限公司",
+    //       name: "董事",
+    //     },
+    //     {
+    //       source: "Firefox",
+    //       target1: "浏览器有限公司",
+    //       name: "董事",
+    //     },
+    //     {
+    //       source: "Safari",
+    //       target1: "浏览器有限公司",
+    //       name: "董事",
+    //     },
+    //     {
+    //       source: "Chrome",
+    //       target1: "JavaScript科技",
+    //       name: "法人",
+    //     },
+    //   ],
+    // };
+    // const color1 = "#006acc";
+    // const color2 = "#ff7d18";
+    // const color3 = "#10a050";
+    // data.nodes.forEach((node) => {
+    //   if (node.category === 0) {
+    //     node.symbolSize = 40;
+    //     node.itemStyle = {
+    //       color: color1,
+    //     };
+    //   } else if (node.category === 1) {
+    //     node.itemStyle = {
+    //       color: color2,
+    //     };
+    //   }
+    // });
+    // data.links.forEach((link) => {
+    //   link.label = {
+    //     align: "center",
+    //     fontSize: 10,
+    //   };
+    //   if (link.name === "参股") {
+    //     link.lineStyle = {
+    //       color: color2,
+    //     };
+    //   } else if (link.name === "董事") {
+    //     link.lineStyle = {
+    //       color: color1,
+    //     };
+    //   } else if (link.name === "法人") {
+    //     link.lineStyle = {
+    //       color: color3,
+    //     };
+    //   }
+    // });
+    // const categories = [
+    //   {
+    //     // name: '公司',
+    //     itemStyle: {
+    //       color: color1,
+    //     },
+    //   },
+    //   {
+    //     // name: '董事',
+    //     itemStyle: {
+    //       color: color2,
+    //     },
+    //   },
+    // ];
+    // const option6 = {
+    //   title: {
+    //     text: "指标因子",
+    //   },
+    //   legend: [
+    //     {
+    //       // selectedMode: 'single',
+    //       data: categories.map((x) => x.name),
+    //       // icon: 'circle'
+    //     },
+    //   ],
+    //   series: [
+    //     {
+    //       type: "graph",
+    //       layout: "force",
+    //       symbolSize: 40,
+    //       draggable: true,
+    //       roam: true,
+    //       focusNodeAdjacency: true,
+    //       categories: categories,
+    //       edgeSymbol: ["", "arrow"],
+    //       edgeLabel: {
+    //         normal: {
+    //           show: true,
+    //           textStyle: {
+    //             fontSize: 20,
+    //           },
+    //           formatter(x) {
+    //             return x.data.name;
+    //           },
+    //         },
+    //       },
+    //       label: {
+    //         show: true,
+    //       },
+    //       force: {
+    //         repulsion: 70,
+    //         edgeLength: 80,
+    //       },
+    //       data: data.nodes,
+    //       links: data.links,
+    //     },
+    //   ],
+    // };
+    // this.initChart(this.$refs.chart6, option6);
   },
   methods: {
     initChart(container, option) {
       const myChart = echarts.init(container);
       myChart.setOption(option);
     },
-    Click: function() {
-      this.showContent = !this.showContent;
+    Click: function (item, index) {
+      console.log(item);
+      axios({
+        method: "get",
+        url: `http://192.168.101.4:8080/threeIndexScoreCsix/getFactor?unitId=${this.selectedUnitId}&uid=${item.uid}`,
+      }).then((res) => {
+        console.log(res.data);
+        const data = {
+          nodes: [],
+          links: [
+            {
+              source: "浏览器有限公司",
+              target1: "操作系统集团",
+              name: "参股",
+            },
+            {
+              source: "HTML科技",
+              target1: "浏览器有限公司",
+              name: "参股",
+            },
+            {
+              source: "CSS科技",
+              target1: "浏览器有限公司",
+              name: "参股",
+            },
+            {
+              source: "JavaScript科技",
+              target1: "浏览器有限公司",
+              name: "参股",
+            },
+            {
+              source: "Chrome",
+              target1: "浏览器有限公司",
+              name: "董事",
+            },
+            {
+              source: "IE",
+              target1: "浏览器有限公司",
+              name: "董事",
+            },
+            {
+              source: "Firefox",
+              target1: "浏览器有限公司",
+              name: "董事",
+            },
+            {
+              source: "Safari",
+              target1: "浏览器有限公司",
+              name: "董事",
+            },
+            {
+              source: "Chrome",
+              target1: "JavaScript科技",
+              name: "法人",
+            },
+          ],
+        };
+        res.data.forEach((o) => {
+          data.nodes.push({
+            name: o.factorName,
+            category: 0,
+          });
+        });
+        const color1 = "#006acc";
+        const color2 = "#ff7d18";
+        const color3 = "#10a050";
+
+        data.nodes.forEach((node) => {
+          if (node.category === 0) {
+            node.symbolSize = 40;
+            node.itemStyle = {
+              color: color1,
+            };
+          } else if (node.category === 1) {
+            node.itemStyle = {
+              color: color2,
+            };
+          }
+        });
+
+        data.links.forEach((link) => {
+          link.label = {
+            align: "center",
+            fontSize: 10,
+          };
+
+          if (link.name === "参股") {
+            link.lineStyle = {
+              color: color2,
+            };
+          } else if (link.name === "董事") {
+            link.lineStyle = {
+              color: color1,
+            };
+          } else if (link.name === "法人") {
+            link.lineStyle = {
+              color: color3,
+            };
+          }
+        });
+
+        const categories = [
+          {
+            // name: '公司',
+            itemStyle: {
+              color: color1,
+            },
+          },
+          {
+            // name: '董事',
+            itemStyle: {
+              color: color2,
+            },
+          },
+        ];
+        const option6 = {
+          title: {
+            text: "指标因子",
+          },
+          legend: [
+            {
+              // selectedMode: 'single',
+              data: categories.map((x) => x.name),
+              // icon: 'circle'
+            },
+          ],
+          series: [
+            {
+              type: "graph",
+              layout: "force",
+              symbolSize: 40,
+              draggable: true,
+              roam: true,
+              focusNodeAdjacency: true,
+              categories: categories,
+              edgeSymbol: ["", "arrow"],
+              edgeLabel: {
+                normal: {
+                  show: true,
+                  textStyle: {
+                    fontSize: 20,
+                  },
+                  formatter(x) {
+                    return x.data.name;
+                  },
+                },
+              },
+              label: {
+                show: true,
+              },
+              force: {
+                repulsion: 70,
+                edgeLength: 80,
+              },
+              data: data.nodes,
+              links: data.links,
+            },
+          ],
+        };
+        this.initChart(this.$refs[`threeIndex_${item.uid}`][0], option6);
+      });
+
+      let length = this.threeIndesShows.length;
+      this.threeIndesShows = [];
+      for (let i = 0; i < length; i++) {
+        this.threeIndesShows.push(false);
+      }
+      this.threeIndesShows[index] = true;
     },
-    Click1: function() {
-      this.showContent1 = !this.showContent1;
+    Click1: function (index) {
+      console.log(index);
+      let length = this.towIndesShows.length;
+      this.towIndesShows = [];
+      for (let i = 0; i < length; i++) {
+        this.towIndesShows.push(false);
+      }
+      this.towIndesShows[index] = true;
     },
-    Click2: function() {
-      this.showContent2 = !this.showContent2;
+    Click2(item) {
+      this.threeIndesShows = [];
+      let _this = this;
+      axios({
+        method: "get",
+        url: `http://192.168.101.4:8080/threeIndexScoreCsix/listThreeIndex?unitId=${this.selectedUnitId}&uid=${item.uid}`,
+      }).then((res) => {
+        _this.threeIndexList = res.data;
+        _this.threeIndexList.forEach((o) => {
+          _this.threeIndesShows.push(false);
+        });
+        console.log(_this.threeIndexList);
+      });
     },
-    Click3: function() {
-      this.showContent3 = !this.showContent3;
-    },
-    Click4: function() {
-      this.showContent4 = !this.showContent4;
-    },
-    Click5: function() {
-      this.showContent5 = !this.showContent5;
-    },
-    Click6: function() {
-      this.showContent6 = !this.showContent6;
-    }
-  }
+  },
+  created() {
+    console.log(this.selectedUnitId);
+    axios
+      .all([
+        // 默认请求后台获取一级指标和二级指标
+        axios({
+          method: "get",
+          url:
+            "http://192.168.101.4:8080/threeIndexScoreCsix/listOneTwoIndex?unitId=" +
+            this.selectedUnitId,
+        }),
+        //默认请求初始评分
+        axios({
+          method: "get",
+          url:
+            "http://192.168.101.4:8080/threeIndexScoreCsix/getUnitResultScore?unitId=" +
+            this.selectedUnitId,
+        }),
+      ])
+      .then(
+        axios.spread((res1, res2) => {
+          let _this = this;
+          _this.towIndesShows = [];
+          console.log(res1.data);
+          this.indexList = res1.data;
+          res1.data.forEach((o) => {
+            _this.towIndesShows.push(false);
+          });
+          // // 获取一级指标和对应的评级
+          // for (let i = 0; i < res1.data.length; i++) {
+          //   const zb = {
+          //     title: res1.data[i].content,
+          //     rate: res1.data[i].level,
+          //   };
+          //   this.onetextList.push(zb);
+          // }
+          // // 获取二级指标和对应的评级
+          // for (let a = 0; a < res1.data.length; a++) {
+          //   for (let b = 0; b < res1.data[a].twoindexList.length; b++) {
+          //     // console.log(res1.data[a].twoindexList[b].content);
+          //     // this.twotextList.push(res1.data[a].twoindexList[b].content);
+          //     const zb2 = {
+          //       twozb: res1.data[a].twoindexList[b].content,
+          //     };
+          //     this.twotextList.push(zb2);
+          //   }
+          // }
+          console.log(res2.data);
+          //获取初始评分
+          this.rate = res2.data;
+          const option3 = {
+            title: {
+              text: this.rate.score + "分",
+              x: "center",
+              y: "center",
+              textStyle: {
+                fontWeight: "normal",
+                color: "#0580f2",
+                fontSize: "20",
+              },
+            },
+            color: ["rgba(176, 212, 251, 1)"],
+
+            series: [
+              {
+                name: "Line 1",
+                type: "pie",
+                clockWise: true,
+                radius: ["50%", "66%"],
+                itemStyle: {
+                  normal: {
+                    label: {
+                      show: false,
+                    },
+                    labelLine: {
+                      show: false,
+                    },
+                  },
+                },
+                hoverAnimation: false,
+                data: [
+                  {
+                    value: 80,
+                    name: "01",
+                    itemStyle: {
+                      normal: {
+                        color: {
+                          // 完成的圆环的颜色
+                          colorStops: [
+                            {
+                              offset: 0,
+                              color: "#00cefc", // 0% 处的颜色
+                            },
+                            {
+                              offset: 1,
+                              color: "#367bec", // 100% 处的颜色
+                            },
+                          ],
+                        },
+                        label: {
+                          show: false,
+                        },
+                        labelLine: {
+                          show: false,
+                        },
+                      },
+                    },
+                  },
+                  {
+                    name: "02",
+                    value: 20,
+                  },
+                ],
+              },
+            ],
+          };
+          this.initChart(this.$refs.pie1, option3);
+        })
+      );
+  },
 };
 </script>
 
@@ -767,8 +818,8 @@ export default {
 }
 /* 饼状图 */
 .statistics > .pie_tables > .pie_table > .pie_main {
-  width: 26.2rem;
-  height: 8.4rem;
+  width: 22.5rem;
+  height: 7.3rem;
   display: flex;
   float: left;
   background-image: url("../../assets/images/评价框.png");
@@ -848,15 +899,16 @@ export default {
 }
 /* 评价中 */
 .statistics > .pie_tables > .evaluate_ing > .evaluate_main {
-  width: 26.2rem;
-  height: 8.4rem;
+  width: 22.5rem;
+  height: 7.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   background-image: url("../../assets/images/评价中.png");
 }
-/* .statistics > .pie_tables > .evaluate_ing > .evaluate_main > span {
-} */
+.statistics > .pie_tables > .evaluate_ing > .evaluate_main > span {
+  font-size: 1.6rem;
+}
 /* 达标项数字的框架 */
 .rightup1 {
   width: 100%;
@@ -990,16 +1042,24 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background: cornflowerblue; */
+  background: cornflowerblue;
 }
 /* 第一条一级指标的文字框架 */
 .select_text > .left_text > .index_box1 > .index > .index_text {
-  width: 90%;
+  width: 80%;
   height: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   /* background: coral; */
+}
+.select_text > .left_text > .index_box1 > .index > .index_rate {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* background: aqua; */
 }
 /* 被折叠的内容的框架 */
 .select_text > .left_text > .index_box1 > .show_index {
@@ -1044,6 +1104,7 @@ export default {
 .select_text > .right_text {
   width: 60%;
   height: 100%;
+  border: 1px solid #ccc;
   /* background: rgb(109, 206, 203); */
 }
 /* 下面说明的框架 */
@@ -1107,9 +1168,8 @@ export default {
 /* 三级指标的整体框架 */
 .folding {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   overflow: overlay;
-  border: 1px solid #ccc;
   /* background: aquamarine; */
 }
 /* 滚动条 */

@@ -9,7 +9,7 @@
         <span>评分历程</span>
       </div>
       <!-- 横线 -->
-      <hr>
+      <hr />
       <!-- 统计图像布局 -->
       <div class="statistics">
         <!-- 上面的饼图的整体框架 -->
@@ -85,7 +85,7 @@
         <span>指标详情</span>
       </div>
       <!-- 横线 -->
-      <hr>
+      <hr />
       <!-- 两个选择器的框架 -->
       <div class="select_input">
         <!-- 左边选择器框架 -->
@@ -143,13 +143,16 @@
             <div class="show_index" v-show="showContent1">
               <div class="show_text">
                 <span class="show_num">II</span>
-                <span class="show_span">学习贯彻习近平总书记重要讲话和指示批示精神情况</span>
+                <span class="show_span"
+                  >学习贯彻习近平总书记重要讲话和指示批示精神情况</span
+                >
               </div>
             </div>
             <div class="show_index" v-show="showContent1">
               <div class="show_text">
                 <span class="show_num">II</span>
-                <span class="show_span">执行和落实制度情况</span></div>
+                <span class="show_span">执行和落实制度情况</span>
+              </div>
             </div>
           </div>
           <!-- 第二条指标的整体框架 -->
@@ -166,7 +169,7 @@
               <div class="show_text">
                 <span class="show_num">II</span>
                 <span class="show_span">履行核心职能情况</span>
-                </div>
+              </div>
             </div>
           </div>
           <!-- 第三条指标的整体框架 -->
@@ -182,25 +185,33 @@
             <div class="show_index" v-show="showContent3">
               <div class="show_text">
                 <span class="show_num">II</span>
-                <span class="show_span">党组（党委）落实全面从严治党主体责任情况</span>
+                <span class="show_span"
+                  >党组（党委）落实全面从严治党主体责任情况</span
+                >
               </div>
             </div>
             <div class="show_index" v-show="showContent3">
               <div class="show_text">
                 <span class="show_num">II</span>
-                <span class="show_span">派驻纪检监察组（内设机关纪委）履行监督责任情况</span>
+                <span class="show_span"
+                  >派驻纪检监察组（内设机关纪委）履行监督责任情况</span
+                >
               </div>
             </div>
             <div class="show_index" v-show="showContent3">
               <div class="show_text">
                 <span class="show_num">II</span>
-                <span class="show_span">整改落实情况，是否存在整改不到位，虚假整改等突出问题</span>
+                <span class="show_span"
+                  >整改落实情况，是否存在整改不到位，虚假整改等突出问题</span
+                >
               </div>
             </div>
             <div class="show_index" v-show="showContent3">
               <div class="show_text">
                 <span class="show_num">II</span>
-                <span class="show_span">机关作风建设特别是整改形式主义、官僚主义情况</span>
+                <span class="show_span"
+                  >机关作风建设特别是整改形式主义、官僚主义情况</span
+                >
               </div>
             </div>
             <div class="show_index" v-show="showContent3">
@@ -252,8 +263,7 @@
             <div class="show_index" v-show="showContent5">
               <div class="show_text">
                 <span class="show_num">II</span>
-                <span class="show_span">选人用人和队伍建设情况
-                </span>
+                <span class="show_span">选人用人和队伍建设情况 </span>
               </div>
             </div>
             <div class="show_index" v-show="showContent5">
@@ -276,7 +286,8 @@
             <div class="show_index" v-show="showContent6">
               <div class="show_text">
                 <span class="show_num">II</span>
-                <span class="show_span">机关党建情况</span></div>
+                <span class="show_span">机关党建情况</span>
+              </div>
             </div>
             <div class="show_index" v-show="showContent6">
               <div class="show_text">
@@ -324,7 +335,10 @@
               <div class="target1_divisor">
                 <!-- 因子图片框架 -->
                 <div class="change_image">
-                  <img src="../../assets/images/因子.png" @click="Clickfactor()" />
+                  <img
+                    src="../../assets/images/因子.png"
+                    @click="Clickfactor()"
+                  />
                 </div>
                 <!-- 因子对应的数值的框架 -->
                 <div class="num">1.1</div>
@@ -332,7 +346,12 @@
               <!-- 被折叠的内容 -->
             </div>
             <!-- 折叠的部分 -->
-            <div class="factor_show" v-show="showContent" ref="chart5" id="chart5"></div>
+            <div
+              class="factor_show"
+              v-show="showContent"
+              ref="chart5"
+              id="chart5"
+            ></div>
             <!-- 第三条三级指标的整体框架 -->
             <div class="target1">
               <!-- 三级指标的数字标号 -->
@@ -383,10 +402,10 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+import echarts from "echarts";
 
 export default {
-  data () {
+  data() {
     return {
       showContent: false,
       showContent1: false,
@@ -397,236 +416,262 @@ export default {
       showContent6: false,
       cityList: [
         {
-          value: 'New York',
-          label: 'New York'
+          value: "New York",
+          label: "New York",
         },
         {
-          value: 'London',
-          label: 'London'
+          value: "London",
+          label: "London",
         },
         {
-          value: 'Sydney',
-          label: 'Sydney'
+          value: "Sydney",
+          label: "Sydney",
         },
         {
-          value: 'Ottawa',
-          label: 'Ottawa'
+          value: "Ottawa",
+          label: "Ottawa",
         },
         {
-          value: 'Paris',
-          label: 'Paris'
+          value: "Paris",
+          label: "Paris",
         },
         {
-          value: 'Canberra',
-          label: 'Canberra'
-        }
+          value: "Canberra",
+          label: "Canberra",
+        },
       ],
-      model1: ''
+      model1: "",
       // isCollapsed: false,
-    }
+    };
   },
-  mounted () {
+  mounted() {
     const data = {
-      nodes: [{
-        name: '操作系统集团',
-        category: 0
-      }, {
-        name: '浏览器有限公司',
-        category: 0
-      }, {
-        name: 'HTML科技',
-        category: 0
-      }, {
-        name: 'JavaScript科技',
-        category: 0
-      }, {
-        name: 'CSS科技',
-        category: 0
-      }, {
-        name: 'Chrome',
-        category: 1
-      }, {
-        name: 'IE',
-        category: 1
-      }, {
-        name: 'Firefox',
-        category: 1
-      }, {
-        name: 'Safari',
-        category: 1
-      }],
+      nodes: [
+        {
+          name: "操作系统集团",
+          category: 0,
+        },
+        {
+          name: "浏览器有限公司",
+          category: 0,
+        },
+        {
+          name: "HTML科技",
+          category: 0,
+        },
+        {
+          name: "JavaScript科技",
+          category: 0,
+        },
+        {
+          name: "CSS科技",
+          category: 0,
+        },
+        {
+          name: "Chrome",
+          category: 1,
+        },
+        {
+          name: "IE",
+          category: 1,
+        },
+        {
+          name: "Firefox",
+          category: 1,
+        },
+        {
+          name: "Safari",
+          category: 1,
+        },
+      ],
 
-      links: [{
-        source: '浏览器有限公司',
-        target: '操作系统集团',
-        name: '参股'
-      }, {
-        source: 'HTML科技',
-        target: '浏览器有限公司',
-        name: '参股'
-      }, {
-        source: 'CSS科技',
-        target: '浏览器有限公司',
-        name: '参股'
-      }, {
-        source: 'JavaScript科技',
-        target: '浏览器有限公司',
-        name: '参股'
-      }, {
-        source: 'Chrome',
-        target: '浏览器有限公司',
-        name: '董事'
-      }, {
-        source: 'IE',
-        target: '浏览器有限公司',
-        name: '董事'
-      }, {
-        source: 'Firefox',
-        target: '浏览器有限公司',
-        name: '董事'
-      }, {
-        source: 'Safari',
-        target: '浏览器有限公司',
-        name: '董事'
-      }, {
-        source: 'Chrome',
-        target: 'JavaScript科技',
-        name: '法人'
-      }]
-    }
+      links: [
+        {
+          source: "浏览器有限公司",
+          target: "操作系统集团",
+          name: "参股",
+        },
+        {
+          source: "HTML科技",
+          target: "浏览器有限公司",
+          name: "参股",
+        },
+        {
+          source: "CSS科技",
+          target: "浏览器有限公司",
+          name: "参股",
+        },
+        {
+          source: "JavaScript科技",
+          target: "浏览器有限公司",
+          name: "参股",
+        },
+        {
+          source: "Chrome",
+          target: "浏览器有限公司",
+          name: "董事",
+        },
+        {
+          source: "IE",
+          target: "浏览器有限公司",
+          name: "董事",
+        },
+        {
+          source: "Firefox",
+          target: "浏览器有限公司",
+          name: "董事",
+        },
+        {
+          source: "Safari",
+          target: "浏览器有限公司",
+          name: "董事",
+        },
+        {
+          source: "Chrome",
+          target: "JavaScript科技",
+          name: "法人",
+        },
+      ],
+    };
 
-    const color1 = '#006acc'
-    const color2 = '#ff7d18'
-    const color3 = '#10a050'
+    const color1 = "#006acc";
+    const color2 = "#ff7d18";
+    const color3 = "#10a050";
 
-    data.nodes.forEach(node => {
+    data.nodes.forEach((node) => {
       if (node.category === 0) {
-        node.symbolSize = 40
+        node.symbolSize = 40;
         node.itemStyle = {
-          color: color1
-        }
+          color: color1,
+        };
       } else if (node.category === 1) {
         node.itemStyle = {
-          color: color2
-        }
+          color: color2,
+        };
       }
-    })
+    });
 
-    data.links.forEach(link => {
+    data.links.forEach((link) => {
       link.label = {
-        align: 'center',
-        fontSize: 10
-      }
+        align: "center",
+        fontSize: 10,
+      };
 
-      if (link.name === '参股') {
+      if (link.name === "参股") {
         link.lineStyle = {
-          color: color2
-        }
-      } else if (link.name === '董事') {
+          color: color2,
+        };
+      } else if (link.name === "董事") {
         link.lineStyle = {
-          color: color1
-        }
-      } else if (link.name === '法人') {
+          color: color1,
+        };
+      } else if (link.name === "法人") {
         link.lineStyle = {
-          color: color3
-        }
+          color: color3,
+        };
       }
-    })
+    });
 
-    const categories = [{
-      // name: '公司',
-      itemStyle: {
-        color: color1
-      }
-    },
-    {
-      // name: '董事',
-      itemStyle: {
-        color: color2
-      }
-    }]
+    const categories = [
+      {
+        // name: '公司',
+        itemStyle: {
+          color: color1,
+        },
+      },
+      {
+        // name: '董事',
+        itemStyle: {
+          color: color2,
+        },
+      },
+    ];
     const option5 = {
       title: {
-        text: '指标因子'
+        text: "指标因子",
       },
-      legend: [{
-        // selectedMode: 'single',
-        data: categories.map(x => x.name)
-        // icon: 'circle'
-      }],
-      series: [{
-        type: 'graph',
-        layout: 'force',
-        symbolSize: 40,
-        draggable: true,
-        roam: true,
-        focusNodeAdjacency: true,
-        categories: categories,
-        edgeSymbol: ['', 'arrow'],
-        // edgeSymbolSize: [80, 10],
-        edgeLabel: {
-          normal: {
-            show: true,
-            textStyle: {
-              fontSize: 20
+      legend: [
+        {
+          // selectedMode: 'single',
+          data: categories.map((x) => x.name),
+          // icon: 'circle'
+        },
+      ],
+      series: [
+        {
+          type: "graph",
+          layout: "force",
+          symbolSize: 40,
+          draggable: true,
+          roam: true,
+          focusNodeAdjacency: true,
+          categories: categories,
+          edgeSymbol: ["", "arrow"],
+          // edgeSymbolSize: [80, 10],
+          edgeLabel: {
+            normal: {
+              show: true,
+              textStyle: {
+                fontSize: 20,
+              },
+              formatter(x) {
+                return x.data.name;
+              },
             },
-            formatter (x) {
-              return x.data.name
-            }
-          }
+          },
+          label: {
+            show: true,
+          },
+          force: {
+            repulsion: 70,
+            edgeLength: 80,
+          },
+          data: data.nodes,
+          links: data.links,
         },
-        label: {
-          show: true
-        },
-        force: {
-          repulsion: 70,
-          edgeLength: 80
-        },
-        data: data.nodes,
-        links: data.links
-      }]
-    }
-    this.initChart(this.$refs.chart5, option5)
-    const handred = 100
-    const point = 66
+      ],
+    };
+    this.initChart(this.$refs.chart5, option5);
+    const handred = 100;
+    const point = 66;
     const option4 = {
       title: {
-        text: point + '分',
-        x: 'center',
-        y: 'center',
+        text: point + "分",
+        x: "center",
+        y: "center",
         textStyle: {
-          fontWeight: 'normal',
-          color: '#29EEF3',
-          fontSize: '17'
-        }
+          fontWeight: "normal",
+          color: "#29EEF3",
+          fontSize: "17",
+        },
       },
       tooltip: {
         formatter: function (params) {
-          return params.name + '：' + params.percent + ' %'
-        }
+          return params.name + "：" + params.percent + " %";
+        },
       },
 
       series: [
         {
-          name: 'circle',
-          type: 'pie',
+          name: "circle",
+          type: "pie",
           clockWise: true,
-          radius: ['50%', '66%'],
+          radius: ["50%", "66%"],
           itemStyle: {
             normal: {
               label: {
-                show: false
+                show: false,
               },
               labelLine: {
-                show: false
-              }
-            }
+                show: false,
+              },
+            },
           },
           hoverAnimation: false,
           data: [
             {
               value: point,
-              name: '占比',
+              name: "占比",
               itemStyle: {
                 normal: {
                   color: {
@@ -634,66 +679,66 @@ export default {
                     colorStops: [
                       {
                         offset: 0,
-                        color: '#4FADFD' // 0% 处的颜色
+                        color: "#4FADFD", // 0% 处的颜色
                       },
                       {
                         offset: 1,
-                        color: '#28E8FA' // 100% 处的颜色1
-                      }
-                    ]
+                        color: "#28E8FA", // 100% 处的颜色1
+                      },
+                    ],
                   },
                   label: {
-                    show: false
+                    show: false,
                   },
                   labelLine: {
-                    show: false
-                  }
-                }
-              }
+                    show: false,
+                  },
+                },
+              },
             },
             {
-              name: '剩余',
+              name: "剩余",
               value: handred - point,
               itemStyle: {
                 normal: {
-                  color: '#E1E8EE'
-                }
-              }
-            }
-          ]
-        }
-      ]
-    }
-    this.initChart(this.$refs.chart4, option4)
+                  color: "#E1E8EE",
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
+    this.initChart(this.$refs.chart4, option4);
   },
   methods: {
-    initChart (container, option) {
-      const myChart = echarts.init(container)
-      myChart.setOption(option)
+    initChart(container, option) {
+      const myChart = echarts.init(container);
+      myChart.setOption(option);
     },
     Clickfactor: function () {
-      this.showContent = !this.showContent
+      this.showContent = !this.showContent;
     },
     Click1: function () {
-      this.showContent1 = !this.showContent1
+      this.showContent1 = !this.showContent1;
     },
     Click2: function () {
-      this.showContent2 = !this.showContent2
+      this.showContent2 = !this.showContent2;
     },
     Click3: function () {
-      this.showContent3 = !this.showContent3
+      this.showContent3 = !this.showContent3;
     },
     Click4: function () {
-      this.showContent4 = !this.showContent4
+      this.showContent4 = !this.showContent4;
     },
     Click5: function () {
-      this.showContent5 = !this.showContent5
+      this.showContent5 = !this.showContent5;
     },
     Click6: function () {
-      this.showContent6 = !this.showContent6
-    }
-  }
-}
+      this.showContent6 = !this.showContent6;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -741,8 +786,8 @@ export default {
 }
 /* 饼状图 */
 .statistics > .pie_tables > .pie_table > .pie_main {
-  width: 26.2rem;
-  height: 8.4rem;
+  width: 22.5rem;
+  height: 7.3rem;
   display: flex;
   float: left;
   background-image: url("../../assets/images/评价框.png");
@@ -822,8 +867,8 @@ export default {
 }
 /* 评价中 */
 .statistics > .pie_tables > .evaluate_ing > .evaluate_main {
-  width: 26.2rem;
-  height: 8.4rem;
+  width: 22.5rem;
+  height: 7.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1004,7 +1049,12 @@ export default {
   margin-left: 2rem;
 }
 /* 每条二级指标的文字样式 */
-.select_text > .left_text > .index_box1 > .show_index > .show_text > .show_span {
+.select_text
+  > .left_text
+  > .index_box1
+  > .show_index
+  > .show_text
+  > .show_span {
   margin-left: 1rem;
 }
 /* 右边指标的框架 */

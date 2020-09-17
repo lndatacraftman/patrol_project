@@ -33,24 +33,29 @@
           <!-- 筛选框 -->
           <div class="select_input">
             <Select v-model="model1" size="small">
-            <Option
-              v-for="item in periodList"
-              :value="item.value"
-              :key="item.value"
-              >{{ item.label }}</Option
-            >
-          </Select>
+              <Option
+                v-for="item in periodList"
+                :value="item.value"
+                :key="item.value"
+                >{{ item.label }}</Option
+              >
+            </Select>
           </div>
         </div>
         <!-- 筛选框2整体框架 -->
         <div class="inputbox">
-          <Input suffix="ios-search" placeholder="请输入单位名称" size="small" class="input_unit"/>
+          <Input
+            suffix="ios-search"
+            placeholder="请输入单位名称"
+            size="small"
+            class="input_unit"
+          />
         </div>
       </div>
       <!-- 下面图块框架 -->
       <div class="info_table">
         <iframe src="/bmap.html" width="100%" height="100%"></iframe>
-        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -59,47 +64,21 @@
 // import BaiduMap from 'vue-baidu-map'
 
 export default {
-  data () {
+  data() {
     return {
       // 届次筛选框里面的值
-      periodList: [
-        {
-          value: 'New York',
-          label: 'New York'
-        },
-        {
-          value: 'London',
-          label: 'London'
-        },
-        {
-          value: 'Sydney',
-          label: 'Sydney'
-        },
-        {
-          value: 'Ottawa',
-          label: 'Ottawa'
-        },
-        {
-          value: 'Paris',
-          label: 'Paris'
-        },
-        {
-          value: 'Canberra',
-          label: 'Canberra'
-        }
-      ],
-      model1: ''
-    }
+      periodList: [],
+      model1: "",
+    };
   },
   methods: {
     // 点击返回按钮
-    return_button () {
-      this.$emit('hiddenFlag1', false)
-    }
+    return_button() {
+      this.$emit("hiddenFlag1", false);
+    },
   },
-  mounted () {
-  }
-}
+  mounted() {},
+};
 </script>
 <style>
 #districtsCounty {
@@ -232,7 +211,8 @@ export default {
 /* 矩形树图的整体框架 */
 .content > .info_table {
   width: 100%;
-  height: 78%;margin-top: 4rem;
+  height: 78%;
+  margin-top: 4rem;
   /* background: coral; */
 }
 </style>

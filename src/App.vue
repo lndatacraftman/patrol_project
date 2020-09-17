@@ -11,11 +11,11 @@
 // import Main from './views/Main.vue'
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     // Main
-  }
-}
+  },
+};
 </script>
 
 <style>

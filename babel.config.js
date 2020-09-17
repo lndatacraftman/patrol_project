@@ -1,16 +1,14 @@
 /* eslint-disable indent */
 module.exports = {
-    presets: [
-        '@vue/cli-plugin-babel/preset'
+  presets: ["@vue/cli-plugin-babel/preset"],
+  plugins: [
+    [
+      "import",
+      {
+        libraryName: "view-design",
+        libraryDirectory: "src/components",
+      },
     ],
-    plugins: [
-            [
-                'import',
-                {
-                    libraryName: 'view-design',
-                    libraryDirectory: 'src/components'
-                }
-            ]
-        ]
-        // eslint-disable-next-line eol-last
-}
+  ],
+  // eslint-disable-next-line eol-last
+};

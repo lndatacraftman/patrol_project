@@ -3,45 +3,42 @@
 
 <template>
   <div id="warningindex">
-      <!-- 整体框架 -->
+    <!-- 整体框架 -->
     <div class="warningindex_content">
-        <!-- 标题框架 -->
-        <div class="warningindex_title"></div>
-        <!-- 水平线 -->
-        <hr>
-        <!-- 指标预警的内容布局 -->
-        <div class="warningindex_main">
-          <!-- 每条指标的框架 -->
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-          <div class="each_warning">,,</div>
-        </div>
+      <!-- 标题框架 -->
+      <div class="warningindex_title"></div>
+      <!-- 水平线 -->
+      <hr />
+      <!-- 指标预警的内容布局 -->
+      <div class="warningindex_main">
+        <!-- 每条指标的框架 -->
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+        <div class="each_warning">,,</div>
+      </div>
     </div>
   </div>
 </template>
 <script>
-
 export default {
-  data () {
-    return {}
+  data() {
+    return {};
   },
-  methods: {
-  },
-  mounted () {
-  }
-}
+  methods: {},
+  mounted() {},
+};
 </script>
 <style scoped>
 #warningindex {
@@ -70,15 +67,15 @@ export default {
 }
 /* 整体布局 */
 #warningindex > .warningindex_content {
-    width: 90%;
-    height: 100%;
-    /* background: pink; */
+  width: 90%;
+  height: 100%;
+  /* background: pink; */
 }
 /* 标题框架 */
 #warningindex > .warningindex_content > .warningindex_title {
-    width: 100%;
-    height: 5%;
-    /* background: chocolate; */
+  width: 100%;
+  height: 5%;
+  /* background: chocolate; */
 }
 /* 指标预警的内容框架 */
 #warningindex > .warningindex_content > .warningindex_main {

@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       x_data: [1, 2, 3, 4, 5],
-      y_data: [1, 2, 3, 4, 5]
+      y_data: [1, 2, 3, 4, 5],
     };
   },
   methods: {
@@ -29,22 +29,22 @@ export default {
       );
       myChart.setOption({
         title: {
-          text: "ECharts 入门示例"
+          text: "ECharts 入门示例",
         },
         tooltip: {},
         xAxis: {
-          data: this.x_data
+          data: this.x_data,
         },
         yAxis: {},
         series: [
           {
             name: "销量",
             type: "bar",
-            data: this.y_data
-          }
-        ]
+            data: this.y_data,
+          },
+        ],
       });
-    }
+    },
     // draw() {
     //   let that = this;
 
@@ -54,15 +54,15 @@ export default {
   },
   watch: {
     // 数据变化时自动重画，在控制台修改message,会自动重画
-    message: function() {
+    message: function () {
       this.draw();
-    }
+    },
   },
   created() {
     axios({
       url: "http://192.168.101.4:8080/odsQuestionCsix/list",
-      method: "GET" // 默认GET方法
-    }).then(ret => {
+      method: "GET", // 默认GET方法
+    }).then((ret) => {
       // data 属性名称是固定的，用于获取后台响应的实际数据
       console.log(ret.data);
       for (let i = 0; i < 5; i++) {
@@ -74,7 +74,7 @@ export default {
   mounted() {
     // 初始化
     this.myEcharts();
-  }
+  },
 };
 </script>
 <style scoped>

@@ -7,222 +7,265 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
+import Vue from "vue";
+import echarts from "echarts";
+Vue.prototype.$echarts = echarts;
 
 export default {
-  name: 'Create4',
-  data () {
+  name: "Create4",
+  data() {
     return {
-      dataLink: [{
-        source: '指标',
-        target: '党的意识、' + '\n' + '政治建设',
-        value: 66
-
-      },
-      {
-        source: '指标',
-        target: '担当作为、' + '\n' + '履行职责使命',
-        value: 100
-      },
-      {
-        source: '指标',
-        target: '履行全面从严治党' + '\n' + '“两个责任”',
-        value: 88
-      },
-      {
-        source: '指标',
-        target: '落实深化改革要求',
-        value: 100
-      },
-      {
-        source: '指标',
-        target: '班子建设和' + '\n' + '队伍建设',
-        value: 88
-      },
-      {
-        source: '指标',
-        target: '机关党建和' + '\n' + '基层党组织建设',
-        value: 88
-      },
-      {
-        source: '党的意识、' + '\n' + '政治建设',
-        target: '学习贯彻' + '\n' + '习近平书记' + '\n' + '重要讲话和指示' + '\n' + '批示精神情况',
-        value: 12
-      },
-      {
-        source: '党的意识、' + '\n' + '政治建设',
-        target: '执行和落实' + '\n' + '制度情况',
-        value: 18
-      },
-      {
-        source: '担当作为、' + '\n' + '履行职责使命',
-        target: '履行核心' + '\n' + '职能情况',
-        value: 50
-      },
-      {
-        source: '履行全面从严治党' + '\n' + '“两个责任”',
-        target: '党组（党委）落实' + '\n' + '全面从严治党' + '\n' + '主体责任情况',
-        value: 23
-      },
-      {
-        source: '履行全面从严治党' + '\n' + '“两个责任”',
-        target: '派驻纪检监察组' + '\n' + '（内设机关纪委）' + '\n' + '履行监督责任情况',
-        value: 19
-      },
-      {
-        source: '履行全面从严治党' + '\n' + '“两个责任”',
-        target: '整改落实情况，' + '\n' + '是否存在整改' + '\n' + '不到位，虚假' + '\n' + '整改等突出问题',
-        value: 6
-      }, {
-        source: '履行全面从严治党' + '\n' + '“两个责任”',
-        target: '机关作风建' + '\n' + '设特别是整改' + '\n' + '形式主义、' + '\n' + '官僚主义情况',
-        value: 8
-      },
-      {
-        source: '履行全面从严治党' + '\n' + '“两个责任”',
-        target: '权力监督制约和' + '\n' + '防范廉政风险情况',
-        value: 19
-      },
-      {
-        source: '落实深化改革要求',
-        target: '防范化解' + '\n' + '重大风险情况',
-        value: 6
-      }, {
-        source: '落实深化改革要求',
-        target: '落实改革情况',
-        value: 8
-      },
-      {
-        source: '班子建设和' + '\n' + '队伍建设',
-        target: '领导班子' + '\n' + '建设情况',
-        value: 19
-      },
-      {
-        source: '班子建设和' + '\n' + '队伍建设',
-        target: '选人用人和' + '\n' + '队伍建设情况',
-        value: 6
-      }, {
-        source: '班子建设和' + '\n' + '队伍建设',
-        target: '干部担当作为情况',
-        value: 8
-      },
-      {
-        source: '机关党建和' + '\n' + '基层党组织建设',
-        target: '机关党建情况',
-        value: 19
-      },
-      {
-        source: '机关党建和' + '\n' + '基层党组织建设',
-        target: '基层党组织' + '\n' + '建设情况',
-        value: 19
-      }
+      dataLink: [
+        {
+          source: "指标",
+          target: "党的意识、" + "\n" + "政治建设",
+          value: 66,
+        },
+        {
+          source: "指标",
+          target: "担当作为、" + "\n" + "履行职责使命",
+          value: 100,
+        },
+        {
+          source: "指标",
+          target: "履行全面从严治党" + "\n" + "“两个责任”",
+          value: 88,
+        },
+        {
+          source: "指标",
+          target: "落实深化改革要求",
+          value: 100,
+        },
+        {
+          source: "指标",
+          target: "班子建设和" + "\n" + "队伍建设",
+          value: 88,
+        },
+        {
+          source: "指标",
+          target: "机关党建和" + "\n" + "基层党组织建设",
+          value: 88,
+        },
+        {
+          source: "党的意识、" + "\n" + "政治建设",
+          target:
+            "学习贯彻" +
+            "\n" +
+            "习近平书记" +
+            "\n" +
+            "重要讲话和指示" +
+            "\n" +
+            "批示精神情况",
+          value: 12,
+        },
+        {
+          source: "党的意识、" + "\n" + "政治建设",
+          target: "执行和落实" + "\n" + "制度情况",
+          value: 18,
+        },
+        {
+          source: "担当作为、" + "\n" + "履行职责使命",
+          target: "履行核心" + "\n" + "职能情况",
+          value: 50,
+        },
+        {
+          source: "履行全面从严治党" + "\n" + "“两个责任”",
+          target:
+            "党组（党委）落实" + "\n" + "全面从严治党" + "\n" + "主体责任情况",
+          value: 23,
+        },
+        {
+          source: "履行全面从严治党" + "\n" + "“两个责任”",
+          target:
+            "派驻纪检监察组" +
+            "\n" +
+            "（内设机关纪委）" +
+            "\n" +
+            "履行监督责任情况",
+          value: 19,
+        },
+        {
+          source: "履行全面从严治党" + "\n" + "“两个责任”",
+          target:
+            "整改落实情况，" +
+            "\n" +
+            "是否存在整改" +
+            "\n" +
+            "不到位，虚假" +
+            "\n" +
+            "整改等突出问题",
+          value: 6,
+        },
+        {
+          source: "履行全面从严治党" + "\n" + "“两个责任”",
+          target:
+            "机关作风建" +
+            "\n" +
+            "设特别是整改" +
+            "\n" +
+            "形式主义、" +
+            "\n" +
+            "官僚主义情况",
+          value: 8,
+        },
+        {
+          source: "履行全面从严治党" + "\n" + "“两个责任”",
+          target: "权力监督制约和" + "\n" + "防范廉政风险情况",
+          value: 19,
+        },
+        {
+          source: "落实深化改革要求",
+          target: "防范化解" + "\n" + "重大风险情况",
+          value: 6,
+        },
+        {
+          source: "落实深化改革要求",
+          target: "落实改革情况",
+          value: 8,
+        },
+        {
+          source: "班子建设和" + "\n" + "队伍建设",
+          target: "领导班子" + "\n" + "建设情况",
+          value: 19,
+        },
+        {
+          source: "班子建设和" + "\n" + "队伍建设",
+          target: "选人用人和" + "\n" + "队伍建设情况",
+          value: 6,
+        },
+        {
+          source: "班子建设和" + "\n" + "队伍建设",
+          target: "干部担当作为情况",
+          value: 8,
+        },
+        {
+          source: "机关党建和" + "\n" + "基层党组织建设",
+          target: "机关党建情况",
+          value: 19,
+        },
+        {
+          source: "机关党建和" + "\n" + "基层党组织建设",
+          target: "基层党组织" + "\n" + "建设情况",
+          value: 19,
+        },
       ],
-      dataSerise: [{
-        name: '指标',
-        symbolSize: 120,
-        draggable: true,
-        value: 0,
-        category: 0,
-        itemStyle: {
-          normal: {
-            borderColor: '#04f2a7',
-            borderWidth: 4,
-            shadowBlur: 10,
-            shadowColor: '#04f2a7',
-            color: '#001c43'
-          }
-        }
-      }]
-    }
+      dataSerise: [
+        {
+          name: "指标",
+          symbolSize: 120,
+          draggable: true,
+          value: 0,
+          category: 0,
+          itemStyle: {
+            normal: {
+              borderColor: "#04f2a7",
+              borderWidth: 4,
+              shadowBlur: 10,
+              shadowColor: "#04f2a7",
+              color: "#001c43",
+            },
+          },
+        },
+      ],
+    };
   },
   methods: {
-    myEcharts () {
+    myEcharts() {
       var myChart = Vue.prototype.$echarts.init(
-        document.getElementById('main')
-      )
+        document.getElementById("main")
+      );
       for (var i = 0; i < this.dataLink.length; i++) {
         const dataChild = {
-          name: '',
+          name: "",
           symbolSize: 0,
           value: 0,
           category: 0,
           itemStyle: {
             normal: {
-              borderColor: '#82dffe',
+              borderColor: "#82dffe",
               borderWidth: 4,
               shadowBlur: 10,
-              shadowColor: '#04f2a7',
-              color: '#001c43'
-            }
-          }
+              shadowColor: "#04f2a7",
+              color: "#001c43",
+            },
+          },
+        };
+        dataChild.value = this.dataLink[i].value;
+        dataChild.name = this.dataLink[i].target;
+        if (this.dataLink[i].source === "指标") {
+          this.dataSerise[0].value += this.dataLink[i].value;
+          dataChild.symbolSize = 100;
+          dataChild.category = 1;
+          dataChild.itemStyle.normal.borderColor = "#5BD1FF";
+        } else if (
+          this.dataLink[i].source === "党的意识、" + "\n" + "政治建设" ||
+          this.dataLink[i].source === "担当作为、" + "\n" + "履行职责使命" ||
+          this.dataLink[i].source ===
+            "履行全面从严治党" + "\n" + "“两个责任”" ||
+          this.dataLink[i].source === "落实深化改革要求" ||
+          this.dataLink[i].source === "班子建设和" + "\n" + "队伍建设" ||
+          this.dataLink[i].source === "机关党建和" + "\n" + "基层党组织建设"
+        ) {
+          dataChild.symbolSize = 80;
+          dataChild.category = 2;
+          dataChild.itemStyle.normal.borderColor = "#b457ff";
         }
-        dataChild.value = this.dataLink[i].value
-        dataChild.name = this.dataLink[i].target
-        if (this.dataLink[i].source === '指标') {
-          this.dataSerise[0].value += this.dataLink[i].value
-          dataChild.symbolSize = 100
-          dataChild.category = 1
-          dataChild.itemStyle.normal.borderColor = '#5BD1FF'
-        } else if (this.dataLink[i].source === '党的意识、' + '\n' + '政治建设' || this.dataLink[i].source === '担当作为、' + '\n' + '履行职责使命' || this.dataLink[i].source === '履行全面从严治党' + '\n' + '“两个责任”' || this.dataLink[i].source === '落实深化改革要求' || this.dataLink[i].source === '班子建设和' + '\n' + '队伍建设' || this.dataLink[i].source === '机关党建和' + '\n' + '基层党组织建设') {
-          dataChild.symbolSize = 80
-          dataChild.category = 2
-          dataChild.itemStyle.normal.borderColor = '#b457ff'
-        }
-        this.dataSerise.push(dataChild)
+        this.dataSerise.push(dataChild);
       }
       myChart.setOption({
-        backgroundColor: '#black',
+        backgroundColor: "#black",
         tooltip: {
-          trigger: 'item',
+          trigger: "item",
           formatter: (item) => {
-            return item.name + ':' + item.data.value
-          }
+            return item.name + ":" + item.data.value;
+          },
         },
         animationDurationUpdate: 1500,
-        animationEasingUpdate: 'quinticInOut',
-        color: ['#83e0ff', '#45f5ce', '#b158ff'],
-        series: [{
-          type: 'graph',
-          layout: 'force',
-          force: {
-            repulsion: 1000,
-            edgeLength: 50
-          },
-          roam: true,
-          label: {
-            normal: {
-              show: true
-            }
-          },
-          data: this.dataSerise,
-          links: this.dataLink,
-          lineStyle: {
-            normal: {
-              opacity: 0.9,
-              width: 5,
-              curveness: 0
-            }
-          },
-          categories: [{
-            name: '0'
-          },
+        animationEasingUpdate: "quinticInOut",
+        color: ["#83e0ff", "#45f5ce", "#b158ff"],
+        series: [
           {
-            name: '1'
+            type: "graph",
+            layout: "force",
+            force: {
+              repulsion: 1000,
+              edgeLength: 50,
+            },
+            roam: true,
+            label: {
+              normal: {
+                show: true,
+              },
+            },
+            data: this.dataSerise,
+            links: this.dataLink,
+            lineStyle: {
+              normal: {
+                opacity: 0.9,
+                width: 5,
+                curveness: 0,
+              },
+            },
+            categories: [
+              {
+                name: "0",
+              },
+              {
+                name: "1",
+              },
+              {
+                name: "2",
+              },
+            ],
           },
-          {
-            name: '2'
-          }
-          ]
-        }]
-      })
-    }
+        ],
+      });
+    },
   },
-  mounted () {
-    this.myEcharts()
-  }
-}
+  mounted() {
+    this.myEcharts();
+  },
+};
 </script>
 <style scoped>
 #creat4 {
