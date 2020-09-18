@@ -45,8 +45,8 @@
                 :value="item.value1"
                 :key="item.value1"
                 selected
-                >{{ item.label1 }}</Option
-              >
+                >{{ item.label1 }}
+              </Option>
             </Select>
           </div>
         </div>
@@ -63,8 +63,8 @@
                 v-for="item in turnsList"
                 :value="item.value2"
                 :key="item.value2"
-                >{{ item.label2 }}</Option
-              >
+                >{{ item.label2 }}
+              </Option>
             </Select>
           </div>
         </div>
@@ -388,19 +388,28 @@ export default {
       var formatUtil = Vue.prototype.$echarts.format;
       // echarts图的点击事件
       myChart.on("click", function (params) {
-        if (params.data.unitId) {
-          _this.$emit("onSelectedUnitId", params.data.unitId);
-          // _this.$emit("onSelectedUnitId1", params.data.unitId);
-          _this.$emit("handlecancel", true);
-        }
+        //请求八大类对应的单位
         axios({
           url:
             "http://localhost:8080/dwUnitLevelInfoCsix/listUnit?type=" +
             params.data.name,
         }).then((res) => {
-          // console.log(res.data);
-
-          _this.menu_hide = !_this.menu_hide;
+          if (params.data.unitId) {
+            _this.$emit("onSelectedUnitId", params.data.unitId);
+            _this.$emit("handlecancel", true);
+          } else {
+            console.log(res);
+            let tep = res.data
+              .sort((a, b) => {
+                return a["count"] - b["count"];
+              })
+              .reverse();
+            console.log(tep);
+            _this.$emit("onSelectedUnitId", tep[0].unitId);
+            _this.$emit("handlecancel", true);
+          }
+          console.log(1);
+          _this.menu_hide = true;
           let isPass = false;
           for (const r in res.data) {
             isPass = true;
@@ -425,6 +434,7 @@ export default {
               }
             }
             _this.myEcharts(); // 重画echarts
+          } else {
           }
         });
       });
@@ -548,12 +558,14 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 /* 整体框架 */
 .content {
   height: 100%;
   width: 90%;
   /* background: plum; */
 }
+
 /* 导航条的框架 */
 .content > .menu_content {
   height: 10%;
@@ -563,6 +575,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 /* 导航条 */
 .content > .menu_content > .menu {
   height: 40%;
@@ -571,6 +584,7 @@ export default {
   float: left;
   background-image: url("../../assets/images/导航条.png");
 }
+
 /* 导航条的文字框架 */
 .content > .menu_content > .menu > .menu_title {
   width: 12%;
@@ -580,15 +594,18 @@ export default {
   align-items: center;
   /* background: burlywood; */
 }
+
 /* 导航条里的文字样式 */
 #citystraight > .content > .menu_content > .menu > .menu_title > span {
   color: white;
   font-family: "思源黑体";
 }
+
 /* 按钮的样式 */
 .content > .menu_content > .menu > button {
   margin-left: 45%;
 }
+
 /* 中间筛选框的框架 */
 .content > .times_select {
   width: 100%;
@@ -597,6 +614,7 @@ export default {
   float: left;
   /* background: violet; */
 }
+
 /* 筛选框的整体框架 */
 .content > .times_select > .selectbox {
   width: 40%;
@@ -605,6 +623,7 @@ export default {
   float: left;
   /* background: blueviolet; */
 }
+
 /* 筛选框的标题框架 */
 .content > .times_select > .selectbox > .select_title {
   width: 25%;
@@ -614,12 +633,14 @@ export default {
   align-items: center;
   /* background: burlywood; */
 }
+
 /* 筛选框的标题文字样式 */
 #citystraight > .content > .times_select > .selectbox > .select_title > span {
   color: #2bfaff;
   font-family: "思源黑体";
   /* font-size: 18px; */
 }
+
 /* 筛选框 */
 .content > .times_select > .selectbox > .select_input {
   width: 75%;
@@ -629,14 +650,16 @@ export default {
   align-items: center;
   /* background: cornflowerblue; */
 }
+
 /* 矩形树图的整体框架 */
 #citystraight > .content > .info_table {
   /* width: 100%;
-  height: 78%; */
+    height: 78%; */
   width: 100%;
   height: 62%;
   /* background: white; */
 }
+
 /* 区县按钮 */
 .content > .county_button {
   width: 100%;
@@ -645,21 +668,25 @@ export default {
   justify-content: flex-end;
   /* background: white; */
 }
+
 .content > .county_button > .county_background {
   width: 15rem;
   height: auto;
 }
+
 .content > .county_button > .county_background > img {
   width: 15rem;
   height: 3rem;
   margin-top: 2rem;
 }
+
 .content > .county_button > .county_background > .county_span {
   display: flex;
   position: relative;
   bottom: 3rem;
   justify-content: center;
 }
+
 .content > .county_button > .county_background > .county_span > span {
   color: #2bfaff;
   font-family: "思源黑体";

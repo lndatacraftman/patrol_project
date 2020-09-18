@@ -37,6 +37,7 @@
 import Vue from "vue";
 import echarts from "echarts";
 import axios from "axios";
+
 Vue.prototype.$echarts = echarts;
 
 export default {
@@ -72,7 +73,12 @@ export default {
         axios.spread((res1, res2) => {
           console.log(res1.data);
           for (let i = 0; i < res1.data.length; i++) {
-            _this.echarts2Data.push(res1.data[i].comprehensiveScore);
+            _this.echarts2Data.push([
+              i,
+              this.getLevel(res1.data[i].comprehensiveScore),
+              res1.data[i].comprehensiveScore,
+            ]);
+
             _this.xaxisdata.push(res1.data[i].content);
             _this.myEcharts2();
           }
@@ -80,7 +86,11 @@ export default {
           for (let a = 0; a < res2.data.length; a++) {
             const line = {
               name: res2.data[a].content,
-              value: res2.data[a].comprehensiveScore,
+              value: [
+                a,
+                this.getLevel(res2.data[a].comprehensiveScore),
+                res2.data[a].comprehensiveScore,
+              ],
             };
             _this.echartData.push(line);
             _this.myEcharts1();
@@ -90,6 +100,37 @@ export default {
     console.log(this.echarts2Data);
   },
   methods: {
+    getLevel(value) {
+      let texts = 0;
+      if (value === 0) {
+        texts = 0;
+      } else if (value <= 54) {
+        texts = 1;
+      } else if (value <= 69) {
+        texts = 2;
+      } else if (value <= 73) {
+        texts = 3;
+      } else if (value <= 77) {
+        texts = 4;
+      } else if (value === 78) {
+        texts = 5;
+      } else if (value <= 82) {
+        texts = 6;
+      } else if (value <= 84) {
+        texts = 7;
+      } else if (value <= 88) {
+        texts = 8;
+      } else if (value <= 93) {
+        texts = 9;
+      } else if (value === 94) {
+        texts = 10;
+      } else if (value <= 99) {
+        texts = 11;
+      } else if (value === 100) {
+        texts = 12;
+      }
+      return texts;
+    },
     // 上面的折线图
     myEcharts1() {
       const _this = this;
@@ -143,7 +184,7 @@ export default {
                     ${v.seriesName}.${v.name}
                     <span style="color:${
                       color[v.componentIndex]
-                    };font-weight:700;font-size: 18px">${v.value}</span>
+                    };font-weight:700;font-size: 18px">${v.value[2]}</span>
                     分`;
             });
             return html;
@@ -186,12 +227,33 @@ export default {
         ],
         yAxis: [
           {
-            type: "value",
-            name: "单位：万千瓦时",
+            data: [
+              "A++",
+              "A+",
+              "A",
+              "A-",
+              "A--",
+              "B++",
+              "B+",
+              "B",
+              "B-",
+              "B--",
+              "C",
+              "D",
+            ].reverse(),
+            // minInterval: 7,
+            type: "category",
+            splitNumber: "12",
             axisLabel: {
               textStyle: {
                 color: "#666",
               },
+              // //纵坐标显示转换 将数字转为特殊符号 这里重新定义就可以
+              // formatter: function (value) {
+              //   value = this.getLevel(value);
+              //   console.log(value);
+              //   return value;
+              // },
             },
             nameTextStyle: {
               color: "#666",
@@ -277,17 +339,18 @@ export default {
             type: "none",
           },
           formatter: function (params) {
-            return params[0].name + ": " + params[0].value;
+            return params[0].name + ": " + params[0].value[2];
           },
         },
         grid: {
           top: 20,
           right: 160,
           left: 0,
-          bottom: 0,
+          bottom: 20,
           containLabel: true,
         },
         xAxis: {
+          type: "category",
           show: true,
           data: this.xaxisdata,
           axisTick: {
@@ -301,7 +364,7 @@ export default {
             // },
           },
           axisLabel: {
-            rotate: 30, // x轴字设置倾斜
+            rotate: 18, // x轴字设置倾斜
             textStyle: {
               // color: "#999",
               fontSize: 9,
@@ -309,6 +372,21 @@ export default {
           },
         },
         yAxis: {
+          type: "category",
+          data: [
+            "A++",
+            "A+",
+            "A",
+            "A-",
+            "A--",
+            "B++",
+            "B+",
+            "B",
+            "B-",
+            "B--",
+            "C",
+            "D",
+          ].reverse(),
           splitLine: {
             show: false,
           },
@@ -378,24 +456,28 @@ export default {
   justify-content: center;
   /* background: cornflowerblue; */
 }
+
 /* 整体布局 */
 #judgedbight > .content_main {
   width: 90%;
   height: 100%;
   /* background: cyan; */
 }
+
 /* 上半布局的框架 */
 #judgedbight > .content_main > .content_up {
   width: 100%;
   height: 45%;
   /* background: cornsilk; */
 }
+
 /* 下半布局的框架 */
 #judgedbight > .content_main > .content_down {
   width: 100%;
   height: 55%;
   /* background: darkkhaki; */
 }
+
 /* 标题的框架 */
 .content_title {
   width: 100%;
@@ -405,37 +487,43 @@ export default {
   /* position: relative; */
   /* background: darkseagreen; */
 }
+
 /* .content_title > span {
-} */
+  } */
 /* 图表的框架 */
 .content_table {
   width: 100%;
   height: 80%;
   /* background: deepskyblue; */
 }
+
 /* 上面图表的大小 */
 .content_table > .up_table {
-  margin-top: 5rem;
+  /*margin-top: 5rem;*/
   width: 900px;
   height: 250px;
 }
+
 /* 下面图表的大小 */
 .content_table > .down_table {
   width: 900px;
   height: 300px;
-  margin-top: 5rem;
+  /*margin-top: 5rem;*/
   overflow: overlay;
 }
+
 .content_table > .down_table::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   background-color: #f5f5f5;
 }
+
 .content_table > .down_table::-webkit-scrollbar {
   width: 8px;
   height: 8px;
   background-color: #f5f5f5;
 }
+
 .content_table > .down_table::-webkit-scrollbar-thumb {
   border-radius: 4px;
   height: 20px;

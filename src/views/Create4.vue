@@ -67,6 +67,7 @@ export default {
   methods: {
     onSelectedUnitId(val) {
       this.selectedUnitId = val;
+      console.log(val);
     },
     onSelectedUnitId1(val) {
       this.selectedUnitId1 = val;
