@@ -44,6 +44,7 @@
                 v-for="item in periodList"
                 :value="item.value1"
                 :key="item.value1"
+                selected
                 >{{ item.label1 }}</Option
               >
             </Select>
@@ -288,8 +289,8 @@ export default {
       periodList: [],
       // 轮次筛选框里面的值
       turnsList: [],
-      model: "",
-      model1: "",
+      model: "第十三届",
+      model1: "第六轮",
       testData: [],
     };
   },
@@ -301,7 +302,7 @@ export default {
       _this.$emit("handlecancel", false);
       this.menu_hide = !this.menu_hide;
       axios({
-        url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listTypesCount",
+        url: "http://localhost:8080/dwUnitLevelInfoCsix/listTypesCount",
       }).then((res) => {
         _this.initCharts(res);
         console.log(res.data);
@@ -389,12 +390,12 @@ export default {
       myChart.on("click", function (params) {
         if (params.data.unitId) {
           _this.$emit("onSelectedUnitId", params.data.unitId);
-          _this.$emit("onSelectedUnitId1", params.data.unitId);
+          // _this.$emit("onSelectedUnitId1", params.data.unitId);
           _this.$emit("handlecancel", true);
         }
         axios({
           url:
-            "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listUnit?type=" +
+            "http://localhost:8080/dwUnitLevelInfoCsix/listUnit?type=" +
             params.data.name,
         }).then((res) => {
           // console.log(res.data);
@@ -479,9 +480,7 @@ export default {
               emphasis: {
                 label: {
                   show: true,
-                  // color: 'rgba(22, 90, 90)'
                 },
-                // color: 'black',
                 borderWidth: 1,
                 borderColor: "#2bfaff",
               },
@@ -500,13 +499,13 @@ export default {
     axios
       .all([
         axios({
-          url: "http://192.168.101.4:8080/dwRotationSession/listAscByRotation",
+          url: "http://localhost:8080/dwRotationSession/listAscByRotation",
         }),
         axios({
-          url: "http://192.168.101.4:8080/dwRotationSession/listAscByRotation",
+          url: "http://localhost:8080/dwRotationSession/listAscByRotation",
         }),
         axios({
-          url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listTypesCount",
+          url: "http://localhost:8080/dwUnitLevelInfoCsix/listTypesCount",
         }),
       ])
       .then(
