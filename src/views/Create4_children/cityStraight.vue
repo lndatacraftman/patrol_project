@@ -44,6 +44,7 @@
                 v-for="item in periodList"
                 :value="item.value1"
                 :key="item.value1"
+                selected
                 >{{ item.label1 }}</Option
               >
             </Select>
@@ -288,8 +289,8 @@ export default {
       periodList: [],
       // 轮次筛选框里面的值
       turnsList: [],
-      model: "",
-      model1: "",
+      model: "第十三届",
+      model1: "第六轮",
       testData: [],
     };
   },
@@ -389,7 +390,7 @@ export default {
       myChart.on("click", function (params) {
         if (params.data.unitId) {
           _this.$emit("onSelectedUnitId", params.data.unitId);
-          _this.$emit("onSelectedUnitId1", params.data.unitId);
+          // _this.$emit("onSelectedUnitId1", params.data.unitId);
           _this.$emit("handlecancel", true);
         }
         axios({
@@ -479,9 +480,7 @@ export default {
               emphasis: {
                 label: {
                   show: true,
-                  // color: 'rgba(22, 90, 90)'
                 },
-                // color: 'black',
                 borderWidth: 1,
                 borderColor: "#2bfaff",
               },

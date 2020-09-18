@@ -96,20 +96,17 @@
           </div>
           <!-- 选择器框架 -->
           <div class="select">
-            <Select v-model="model1">
-              <!-- <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-              > -->
+            <i-select
+              :model.sync="oneIndexSelectVal"
+              @on-change="oneIndexChange"
+            >
               <Option
-                v-for="item in onetextList"
-                :value="item.title"
-                :key="item"
-                >{{ item.title }}</Option
+                v-for="(item, index) in indexList"
+                :value="item.uid"
+                :key="index"
+                >{{ item.content }}</Option
               >
-            </Select>
+            </i-select>
           </div>
         </div>
         <!-- 右边选择器框架 -->
@@ -120,14 +117,14 @@
           </div>
           <!-- 选择器框架 -->
           <div class="select">
-            <Select v-model="model1">
+            <i-select v-model="twoIndexSelectVal">
               <Option
-                v-for="(item, index) in cityList"
-                :value="item.value"
+                v-for="(item, index) in twotextList"
+                :value="item.uid"
                 :key="index"
-                >{{ item.label }}</Option
+                >{{ item.content }}</Option
               >
-            </Select>
+            </i-select>
           </div>
         </div>
         <!-- 右边选择器 end -->
@@ -156,14 +153,15 @@
             <!-- 被折叠的内容--二级指标 -->
             <div
               class="show_index"
-              v-for="(item, index2) in item.twoindexList"
-              :key="index2"
+              v-for="item1 in item.twoindexList"
+              :key="item1.uid"
               v-show="towIndesShows[index]"
-              @click="Click2(item)"
+              @click="Click2(item1)"
             >
               <div class="show_text">
                 <span class="show_num">II</span>
-                <span class="show_span">{{ item.content }}</span>
+                <span class="show_span">{{ item1.content }}</span>
+                <span class="show_rate">{{ item1.level }}</span>
               </div>
             </div>
           </div>
@@ -175,7 +173,7 @@
           <div
             class="folding"
             v-for="(item, index) in threeIndexList"
-            :key="index"
+            :key="item.uid"
           >
             <!-- 折叠的部分 -->
             <!-- <div class="show_div" v-show="showContent" ref="chart2"></div> -->
@@ -219,11 +217,18 @@ import echarts from "echarts";
 import axios from "axios";
 
 export default {
+  watch: {
+    selectedUnitId(val, oldVal) {
+      this.init(val);
+    },
+  },
   props: {
     selectedUnitId: String,
   },
   data() {
     return {
+      oneIndexSelectVal: 0,
+      twoIndexSelectVal: 0,
       factors: [],
       threeIndesShows: [],
       threeIndexList: [],
@@ -265,194 +270,118 @@ export default {
           label: "Canberra",
         },
       ],
-      model1: "",
+      model1: "党的意识、政治建设",
+      model2: "",
       rate: [], //评分级别
       // isCollapsed: false,
     };
   },
-  mounted() {
-    // const data = {
-    //   nodes: [
-    //     {
-    //       name: "操作系统集团",
-    //       category: 0,
-    //     },
-    //     {
-    //       name: "浏览器有限公司",
-    //       category: 0,
-    //     },
-    //     {
-    //       name: "HTML科技",
-    //       category: 0,
-    //     },
-    //     {
-    //       name: "JavaScript科技",
-    //       category: 0,
-    //     },
-    //     {
-    //       name: "CSS科技",
-    //       category: 0,
-    //     },
-    //     {
-    //       name: "Chrome",
-    //       category: 1,
-    //     },
-    //     {
-    //       name: "IE",
-    //       category: 1,
-    //     },
-    //     {
-    //       name: "Firefox",
-    //       category: 1,
-    //     },
-    //     {
-    //       name: "Safari",
-    //       category: 1,
-    //     },
-    //   ],
-    //   links: [
-    //     {
-    //       source: "浏览器有限公司",
-    //       target1: "操作系统集团",
-    //       name: "参股",
-    //     },
-    //     {
-    //       source: "HTML科技",
-    //       target1: "浏览器有限公司",
-    //       name: "参股",
-    //     },
-    //     {
-    //       source: "CSS科技",
-    //       target1: "浏览器有限公司",
-    //       name: "参股",
-    //     },
-    //     {
-    //       source: "JavaScript科技",
-    //       target1: "浏览器有限公司",
-    //       name: "参股",
-    //     },
-    //     {
-    //       source: "Chrome",
-    //       target1: "浏览器有限公司",
-    //       name: "董事",
-    //     },
-    //     {
-    //       source: "IE",
-    //       target1: "浏览器有限公司",
-    //       name: "董事",
-    //     },
-    //     {
-    //       source: "Firefox",
-    //       target1: "浏览器有限公司",
-    //       name: "董事",
-    //     },
-    //     {
-    //       source: "Safari",
-    //       target1: "浏览器有限公司",
-    //       name: "董事",
-    //     },
-    //     {
-    //       source: "Chrome",
-    //       target1: "JavaScript科技",
-    //       name: "法人",
-    //     },
-    //   ],
-    // };
-    // const color1 = "#006acc";
-    // const color2 = "#ff7d18";
-    // const color3 = "#10a050";
-    // data.nodes.forEach((node) => {
-    //   if (node.category === 0) {
-    //     node.symbolSize = 40;
-    //     node.itemStyle = {
-    //       color: color1,
-    //     };
-    //   } else if (node.category === 1) {
-    //     node.itemStyle = {
-    //       color: color2,
-    //     };
-    //   }
-    // });
-    // data.links.forEach((link) => {
-    //   link.label = {
-    //     align: "center",
-    //     fontSize: 10,
-    //   };
-    //   if (link.name === "参股") {
-    //     link.lineStyle = {
-    //       color: color2,
-    //     };
-    //   } else if (link.name === "董事") {
-    //     link.lineStyle = {
-    //       color: color1,
-    //     };
-    //   } else if (link.name === "法人") {
-    //     link.lineStyle = {
-    //       color: color3,
-    //     };
-    //   }
-    // });
-    // const categories = [
-    //   {
-    //     // name: '公司',
-    //     itemStyle: {
-    //       color: color1,
-    //     },
-    //   },
-    //   {
-    //     // name: '董事',
-    //     itemStyle: {
-    //       color: color2,
-    //     },
-    //   },
-    // ];
-    // const option6 = {
-    //   title: {
-    //     text: "指标因子",
-    //   },
-    //   legend: [
-    //     {
-    //       // selectedMode: 'single',
-    //       data: categories.map((x) => x.name),
-    //       // icon: 'circle'
-    //     },
-    //   ],
-    //   series: [
-    //     {
-    //       type: "graph",
-    //       layout: "force",
-    //       symbolSize: 40,
-    //       draggable: true,
-    //       roam: true,
-    //       focusNodeAdjacency: true,
-    //       categories: categories,
-    //       edgeSymbol: ["", "arrow"],
-    //       edgeLabel: {
-    //         normal: {
-    //           show: true,
-    //           textStyle: {
-    //             fontSize: 20,
-    //           },
-    //           formatter(x) {
-    //             return x.data.name;
-    //           },
-    //         },
-    //       },
-    //       label: {
-    //         show: true,
-    //       },
-    //       force: {
-    //         repulsion: 70,
-    //         edgeLength: 80,
-    //       },
-    //       data: data.nodes,
-    //       links: data.links,
-    //     },
-    //   ],
-    // };
-    // this.initChart(this.$refs.chart6, option6);
-  },
+  mounted() {},
   methods: {
+    init(val) {
+      axios
+        .all([
+          // 默认请求后台获取一级指标和二级指标
+          axios({
+            method: "get",
+            url:
+              "http://192.168.101.4:8080/threeIndexScoreCsix/listOneTwoIndex?unitId=" +
+              val,
+          }),
+          //默认请求初始评分
+          axios({
+            method: "get",
+            url:
+              "http://192.168.101.4:8080/threeIndexScoreCsix/getUnitResultScore?unitId=" +
+              val,
+          }),
+        ])
+        .then(
+          axios.spread((res1, res2) => {
+            let _this = this;
+            _this.towIndesShows = [];
+            console.log(res1.data);
+            this.indexList = res1.data;
+            res1.data.forEach((o) => {
+              _this.towIndesShows.push(false);
+            });
+            console.log(res2.data);
+            //获取初始评分
+            this.rate = res2.data;
+            const option3 = {
+              title: {
+                text: this.rate.score + "%",
+                x: "center",
+                y: "center",
+                textStyle: {
+                  fontWeight: "normal",
+                  color: "#0580f2",
+                  fontSize: "20",
+                },
+              },
+              color: ["rgba(176, 212, 251, 1)"],
+
+              series: [
+                {
+                  name: "Line 1",
+                  type: "pie",
+                  clockWise: true,
+                  radius: ["50%", "66%"],
+                  itemStyle: {
+                    normal: {
+                      label: {
+                        show: false,
+                      },
+                      labelLine: {
+                        show: false,
+                      },
+                    },
+                  },
+                  hoverAnimation: false,
+                  data: [
+                    {
+                      value: 80,
+                      name: "01",
+                      itemStyle: {
+                        normal: {
+                          color: {
+                            // 完成的圆环的颜色
+                            colorStops: [
+                              {
+                                offset: 0,
+                                color: "#00cefc", // 0% 处的颜色
+                              },
+                              {
+                                offset: 1,
+                                color: "#367bec", // 100% 处的颜色
+                              },
+                            ],
+                          },
+                          label: {
+                            show: false,
+                          },
+                          labelLine: {
+                            show: false,
+                          },
+                        },
+                      },
+                    },
+                    {
+                      name: "02",
+                      value: 20,
+                    },
+                  ],
+                },
+              ],
+            };
+            this.initChart(this.$refs.pie1, option3);
+          })
+        );
+    },
+    oneIndexChange(val) {
+      this.twotextList = this.indexList.find((o) => o.uid == val).twoindexList;
+      console.log(this.twotextList);
+    },
     initChart(container, option) {
       const myChart = echarts.init(container);
       myChart.setOption(option);
@@ -652,123 +581,7 @@ export default {
   },
   created() {
     console.log(this.selectedUnitId);
-    axios
-      .all([
-        // 默认请求后台获取一级指标和二级指标
-        axios({
-          method: "get",
-          url:
-            "http://192.168.101.4:8080/threeIndexScoreCsix/listOneTwoIndex?unitId=" +
-            this.selectedUnitId,
-        }),
-        //默认请求初始评分
-        axios({
-          method: "get",
-          url:
-            "http://192.168.101.4:8080/threeIndexScoreCsix/getUnitResultScore?unitId=" +
-            this.selectedUnitId,
-        }),
-      ])
-      .then(
-        axios.spread((res1, res2) => {
-          let _this = this;
-          _this.towIndesShows = [];
-          console.log(res1.data);
-          this.indexList = res1.data;
-          res1.data.forEach((o) => {
-            _this.towIndesShows.push(false);
-          });
-          // // 获取一级指标和对应的评级
-          // for (let i = 0; i < res1.data.length; i++) {
-          //   const zb = {
-          //     title: res1.data[i].content,
-          //     rate: res1.data[i].level,
-          //   };
-          //   this.onetextList.push(zb);
-          // }
-          // // 获取二级指标和对应的评级
-          // for (let a = 0; a < res1.data.length; a++) {
-          //   for (let b = 0; b < res1.data[a].twoindexList.length; b++) {
-          //     // console.log(res1.data[a].twoindexList[b].content);
-          //     // this.twotextList.push(res1.data[a].twoindexList[b].content);
-          //     const zb2 = {
-          //       twozb: res1.data[a].twoindexList[b].content,
-          //     };
-          //     this.twotextList.push(zb2);
-          //   }
-          // }
-          console.log(res2.data);
-          //获取初始评分
-          this.rate = res2.data;
-          const option3 = {
-            title: {
-              text: this.rate.score + "分",
-              x: "center",
-              y: "center",
-              textStyle: {
-                fontWeight: "normal",
-                color: "#0580f2",
-                fontSize: "20",
-              },
-            },
-            color: ["rgba(176, 212, 251, 1)"],
-
-            series: [
-              {
-                name: "Line 1",
-                type: "pie",
-                clockWise: true,
-                radius: ["50%", "66%"],
-                itemStyle: {
-                  normal: {
-                    label: {
-                      show: false,
-                    },
-                    labelLine: {
-                      show: false,
-                    },
-                  },
-                },
-                hoverAnimation: false,
-                data: [
-                  {
-                    value: 80,
-                    name: "01",
-                    itemStyle: {
-                      normal: {
-                        color: {
-                          // 完成的圆环的颜色
-                          colorStops: [
-                            {
-                              offset: 0,
-                              color: "#00cefc", // 0% 处的颜色
-                            },
-                            {
-                              offset: 1,
-                              color: "#367bec", // 100% 处的颜色
-                            },
-                          ],
-                        },
-                        label: {
-                          show: false,
-                        },
-                        labelLine: {
-                          show: false,
-                        },
-                      },
-                    },
-                  },
-                  {
-                    name: "02",
-                    value: 20,
-                  },
-                ],
-              },
-            ],
-          };
-          this.initChart(this.$refs.pie1, option3);
-        })
-      );
+    this.init(this.selectedUnitId);
   },
 };
 </script>
@@ -822,7 +635,8 @@ export default {
   height: 7.3rem;
   display: flex;
   float: left;
-  background-image: url("../../assets/images/评价框.png");
+  background: url("../../assets/images/评价框.png") no-repeat;
+  background-size: 100% 100%;
   /* background: yellowgreen; */
 }
 /* 饼状图左边的布局 */
@@ -904,7 +718,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../../assets/images/评价中.png");
+  background: url("../../assets/images/评价中.png") no-repeat;
+  background-size: 100% 100%;
 }
 .statistics > .pie_tables > .evaluate_ing > .evaluate_main > span {
   font-size: 1.6rem;
@@ -1098,7 +913,9 @@ export default {
   > .show_index
   > .show_text
   > .show_span {
+  width: 20.5rem;
   margin-left: 1rem;
+  font-size: 0.85rem;
 }
 /* 右边指标的框架 */
 .select_text > .right_text {
@@ -1206,6 +1023,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 0.85rem;
 }
 /* 中间三级指标的框架 */
 .folding > .target1 > .target1_text {
@@ -1215,6 +1033,7 @@ export default {
   justify-content: center;
   align-items: center;
   background: rgb(243, 243, 243);
+  font-size: 0.85rem;
 }
 /* 因子和对应的数值的框架 */
 .folding > .target1 > .target1_divisor {
