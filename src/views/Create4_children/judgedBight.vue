@@ -61,11 +61,11 @@ export default {
         //默认请求山图数据
         axios({
           method: "get",
-          url: "http://192.168.101.4:8080/threeIndexScoreCsix/lineCharIndex",
+          url: "http://localhost:8080/threeIndexScoreCsix/lineCharIndex",
         }),
         axios({
           method: "get",
-          url: "http://192.168.101.4:8080/threeIndexScoreCsix/lineChar",
+          url: "http://localhost:8080/threeIndexScoreCsix/lineChar",
         }),
       ])
       .then(
