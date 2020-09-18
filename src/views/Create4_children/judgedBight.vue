@@ -424,5 +424,22 @@ export default {
   width: 900px;
   height: 300px;
   margin-top: 5rem;
+  overflow: overlay;
+}
+.content_table > .down_table::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  background-color: #f5f5f5;
+}
+.content_table > .down_table::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #f5f5f5;
+}
+.content_table > .down_table::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  height: 20px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f2f2f2;
 }
 </style>
