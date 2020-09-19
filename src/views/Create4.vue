@@ -25,7 +25,6 @@
         <cityStraight
           @handlecancel="handleCancel"
           @onSelectedUnitId="onSelectedUnitId"
-          @onSelectedUnitId1="onSelectedUnitId1"
         />
       </div>
       <!-- 右边区域 -->
@@ -68,9 +67,9 @@ export default {
     onSelectedUnitId(val) {
       this.selectedUnitId = val;
     },
-    onSelectedUnitId1(val) {
-      this.selectedUnitId1 = val;
-    },
+    // onSelectedUnitId1(val) {
+    //   this.selectedUnitId1 = val;
+    // },
     handleCancel(val) {
       this.visible = val;
     },

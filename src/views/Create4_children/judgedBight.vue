@@ -61,18 +61,23 @@ export default {
         //默认请求山图数据
         axios({
           method: "get",
-          url: "http://localhost:8080/threeIndexScoreCsix/lineCharIndex",
+          url: "http://192.168.101.4:8080/threeIndexScoreCsix/lineCharIndex",
         }),
         axios({
           method: "get",
-          url: "http://localhost:8080/threeIndexScoreCsix/lineChar",
+          url: "http://192.168.101.4:8080/threeIndexScoreCsix/lineChar",
         }),
       ])
       .then(
         axios.spread((res1, res2) => {
           console.log(res1.data);
           for (let i = 0; i < res1.data.length; i++) {
-            _this.echarts2Data.push(res1.data[i].comprehensiveScore);
+            _this.echarts2Data.push([
+              i,
+              this.getLevel(res1.data[i].comprehensiveScore),
+              res1.data[i].comprehensiveScore,
+            ]);
+
             _this.xaxisdata.push(res1.data[i].content);
             _this.myEcharts2();
           }
@@ -80,16 +85,67 @@ export default {
           for (let a = 0; a < res2.data.length; a++) {
             const line = {
               name: res2.data[a].content,
-              value: res2.data[a].comprehensiveScore,
+              value: [
+                a,
+                this.getLevel(res2.data[a].comprehensiveScore),
+                res2.data[a].comprehensiveScore,
+              ],
             };
             _this.echartData.push(line);
             _this.myEcharts1();
           }
         })
       );
+    //     for (let i = 0; i < res1.data.length; i++) {
+    //       _this.echarts2Data.push(res1.data[i].comprehensiveScore);
+    //       _this.xaxisdata.push(res1.data[i].content);
+    //       _this.myEcharts2();
+    //     }
+    //     console.log(res2.data);
+    //     for (let a = 0; a < res2.data.length; a++) {
+    //       const line = {
+    //         name: res2.data[a].content,
+    //         value: res2.data[a].comprehensiveScore,
+    //       };
+    //       _this.echartData.push(line);
+    //       _this.myEcharts1();
+    //     }
+    //   })
+    // );
     console.log(this.echarts2Data);
   },
   methods: {
+    getLevel(value) {
+      let texts = 0;
+      if (value === 0) {
+        texts = 0;
+      } else if (value <= 54) {
+        texts = 1;
+      } else if (value <= 69) {
+        texts = 2;
+      } else if (value <= 73) {
+        texts = 3;
+      } else if (value <= 77) {
+        texts = 4;
+      } else if (value === 78) {
+        texts = 5;
+      } else if (value <= 82) {
+        texts = 6;
+      } else if (value <= 84) {
+        texts = 7;
+      } else if (value <= 88) {
+        texts = 8;
+      } else if (value <= 93) {
+        texts = 9;
+      } else if (value === 94) {
+        texts = 10;
+      } else if (value <= 99) {
+        texts = 11;
+      } else if (value === 100) {
+        texts = 12;
+      }
+      return texts;
+    },
     // 上面的折线图
     myEcharts1() {
       const _this = this;
@@ -143,7 +199,7 @@ export default {
                     ${v.seriesName}.${v.name}
                     <span style="color:${
                       color[v.componentIndex]
-                    };font-weight:700;font-size: 18px">${v.value}</span>
+                    };font-weight:700;font-size: 18px">${v.value[2]}</span>
                     分`;
             });
             return html;
@@ -186,8 +242,22 @@ export default {
         ],
         yAxis: [
           {
-            type: "value",
-            name: "单位：万千瓦时",
+            data: [
+              "A++",
+              "A+",
+              "A",
+              "A-",
+              "A--",
+              "B++",
+              "B+",
+              "B",
+              "B-",
+              "B--",
+              "C",
+              "D",
+            ].reverse(),
+            type: "category",
+            splitNumber: "12",
             axisLabel: {
               textStyle: {
                 color: "#666",
@@ -277,17 +347,18 @@ export default {
             type: "none",
           },
           formatter: function (params) {
-            return params[0].name + ": " + params[0].value;
+            return params[0].name + ": " + params[0].value[2];
           },
         },
         grid: {
           top: 20,
           right: 160,
           left: 0,
-          bottom: 0,
+          bottom: 20,
           containLabel: true,
         },
         xAxis: {
+          type: "category",
           show: true,
           data: this.xaxisdata,
           axisTick: {
@@ -301,7 +372,7 @@ export default {
             // },
           },
           axisLabel: {
-            rotate: 30, // x轴字设置倾斜
+            rotate: 18, // x轴字设置倾斜
             textStyle: {
               // color: "#999",
               fontSize: 9,
@@ -309,6 +380,21 @@ export default {
           },
         },
         yAxis: {
+          type: "category",
+          data: [
+            "A++",
+            "A+",
+            "A",
+            "A-",
+            "A--",
+            "B++",
+            "B+",
+            "B",
+            "B-",
+            "B--",
+            "C",
+            "D",
+          ].reverse(),
           splitLine: {
             show: false,
           },

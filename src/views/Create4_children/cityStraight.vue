@@ -302,7 +302,7 @@ export default {
       _this.$emit("handlecancel", false);
       this.menu_hide = !this.menu_hide;
       axios({
-        url: "http://localhost:8080/dwUnitLevelInfoCsix/listTypesCount",
+        url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listTypesCount",
       }).then((res) => {
         _this.initCharts(res);
         console.log(res.data);
@@ -388,19 +388,26 @@ export default {
       var formatUtil = Vue.prototype.$echarts.format;
       // echarts图的点击事件
       myChart.on("click", function (params) {
-        if (params.data.unitId) {
-          _this.$emit("onSelectedUnitId", params.data.unitId);
-          // _this.$emit("onSelectedUnitId1", params.data.unitId);
-          _this.$emit("handlecancel", true);
-        }
         axios({
           url:
-            "http://localhost:8080/dwUnitLevelInfoCsix/listUnit?type=" +
+            "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listUnit?type=" +
             params.data.name,
         }).then((res) => {
           // console.log(res.data);
-
-          _this.menu_hide = !_this.menu_hide;
+          if (params.data.unitId) {
+            _this.$emit("onSelectedUnitId", params.data.unitId);
+            _this.$emit("handlecancel", true);
+          } else {
+            let tep = res.data
+              .sort((a, b) => {
+                return a["count"] - b["count"];
+              })
+              .reverse();
+            _this.$emit("onSelectedUnitId", tep[0].unitId);
+            _this.$emit("handlecancel", true);
+          }
+          // _this.menu_hide = !_this.menu_hide;
+          _this.menu_hide = true;
           let isPass = false;
           for (const r in res.data) {
             isPass = true;
@@ -499,13 +506,13 @@ export default {
     axios
       .all([
         axios({
-          url: "http://localhost:8080/dwRotationSession/listAscByRotation",
+          url: "http://192.168.101.4:8080/dwRotationSession/listAscByRotation",
         }),
         axios({
-          url: "http://localhost:8080/dwRotationSession/listAscByRotation",
+          url: "http://192.168.101.4:8080/dwRotationSession/listAscByRotation",
         }),
         axios({
-          url: "http://localhost:8080/dwUnitLevelInfoCsix/listTypesCount",
+          url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listTypesCount",
         }),
       ])
       .then(

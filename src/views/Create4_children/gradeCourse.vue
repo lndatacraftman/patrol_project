@@ -47,9 +47,35 @@
             </div>
           </div>
           <!-- 右侧评价中框架 -->
-          <div class="evaluate_ing">
-            <div class="evaluate_main">
-              <span>{{ rate.score }}分</span>
+          <div class="pie_table">
+            <div class="pie_main">
+              <div class="pie_left" ref="pie2"></div>
+              <div class="pie_center">
+                <div class="pie_centerup">
+                  <span>{{ rateResult.level }}</span>
+                </div>
+                <div class="pie_centerdown">
+                  <span>评分级别</span>
+                </div>
+              </div>
+              <div class="pie_right">
+                <div class="pie_rightup">
+                  <div class="rightup1">
+                    <span>{{ rateResult.qualifiedNumber }}</span>
+                  </div>
+                  <div class="rightdown">
+                    <span>达标项</span>
+                  </div>
+                </div>
+                <div class="pie_rightdown">
+                  <div class="rightup1">
+                    <span>{{ rateResult.substandardNumber }}</span>
+                  </div>
+                  <div class="rightdown">
+                    <span>未达标项</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -190,6 +216,7 @@
                 <!-- 因子图片框架 -->
                 <div class="change_image">
                   <img
+                    v-if="item.level != 'A++'"
                     src="../../assets/images/因子.png"
                     @click="Click(item, index)"
                   />
@@ -237,43 +264,10 @@ export default {
       indexList: [],
       onetextList: [], // 一级指标的数据
       twotextList: [], // 二级指标的数据
-      showContent: false,
-      showContent1: false,
-      showContent2: false,
-      showContent3: false,
-      showContent4: false,
-      showContent5: false,
-      showContent6: false,
-      cityList: [
-        {
-          value: "New York",
-          label: "New York",
-        },
-        {
-          value: "London",
-          label: "London",
-        },
-        {
-          value: "Sydney",
-          label: "Sydney",
-        },
-        {
-          value: "Ottawa",
-          label: "Ottawa",
-        },
-        {
-          value: "Paris",
-          label: "Paris",
-        },
-        {
-          value: "Canberra",
-          label: "Canberra",
-        },
-      ],
       model1: "党的意识、政治建设",
       model2: "",
       rate: [], //评分级别
-      // isCollapsed: false,
+      rateResult: [],
     };
   },
   mounted() {},
@@ -285,19 +279,25 @@ export default {
           axios({
             method: "get",
             url:
-              "http://localhost:8080/threeIndexScoreCsix/listOneTwoIndex?unitId=" +
+              "http://192.168.101.4:8080/threeIndexScoreCsix/listOneTwoIndex?unitId=" +
               val,
           }),
           //默认请求初始评分
           axios({
             method: "get",
             url:
-              "http://localhost:8080/threeIndexScoreCsix/getUnitResultScore?unitId=" +
+              "http://192.168.101.4:8080/threeIndexScoreCsix/getUnitInitScore?unitId=" +
+              val,
+          }),
+          axios({
+            method: "get",
+            url:
+              "http://192.168.101.4:8080/threeIndexScoreCsix/getUnitResultScore?unitId=" +
               val,
           }),
         ])
         .then(
-          axios.spread((res1, res2) => {
+          axios.spread((res1, res2, res3) => {
             let _this = this;
             _this.towIndesShows = [];
             console.log(res1.data);
@@ -308,6 +308,7 @@ export default {
             console.log(res2.data);
             //获取初始评分
             this.rate = res2.data;
+            this.rateResult = res3.data;
             const option3 = {
               title: {
                 text: this.rate.score + "%",
@@ -375,6 +376,73 @@ export default {
               ],
             };
             this.initChart(this.$refs.pie1, option3);
+            const option4 = {
+              title: {
+                text: this.rateResult.score + "%",
+                x: "center",
+                y: "center",
+                textStyle: {
+                  fontWeight: "normal",
+                  color: "#0580f2",
+                  fontSize: "20",
+                },
+              },
+              color: ["rgba(176, 212, 251, 1)"],
+
+              series: [
+                {
+                  name: "Line 1",
+                  type: "pie",
+                  clockWise: true,
+                  radius: ["50%", "66%"],
+                  itemStyle: {
+                    normal: {
+                      label: {
+                        show: false,
+                      },
+                      labelLine: {
+                        show: false,
+                      },
+                    },
+                  },
+                  hoverAnimation: false,
+                  data: [
+                    {
+                      value: 80,
+                      name: "01",
+                      itemStyle: {
+                        normal: {
+                          color: {
+                            // 完成的圆环的颜色
+                            colorStops: [
+                              {
+                                offset: 0,
+                                color: "#00cefc", // 0% 处的颜色
+                              },
+                              {
+                                offset: 1,
+                                color: "#367bec", // 100% 处的颜色
+                              },
+                            ],
+                          },
+                          label: {
+                            show: false,
+                          },
+                          labelLine: {
+                            show: false,
+                          },
+                        },
+                      },
+                    },
+                    {
+                      name: "02",
+                      value: 20,
+                    },
+                  ],
+                },
+              ],
+            };
+            this.initChart(this.$refs.pie2, option4);
           })
         );
     },
@@ -390,7 +458,7 @@ export default {
       console.log(item);
       axios({
         method: "get",
-        url: `http://localhost:8080/threeIndexScoreCsix/getFactor?unitId=${this.selectedUnitId}&uid=${item.uid}`,
+        url: `http://192.168.101.4:8080/threeIndexScoreCsix/getFactor?unitId=${this.selectedUnitId}&uid=${item.uid}`,
       }).then((res) => {
         console.log(res.data);
         const data = {
@@ -449,6 +517,7 @@ export default {
             category: 0,
           });
         });
+        console.log(data);
         const color1 = "#006acc";
         const color2 = "#ff7d18";
         const color3 = "#10a050";
@@ -549,27 +618,37 @@ export default {
       });
 
       let length = this.threeIndesShows.length;
+      let tepShow = this.threeIndesShows[index];
       this.threeIndesShows = [];
       for (let i = 0; i < length; i++) {
-        this.threeIndesShows.push(false);
+        if (i != index) {
+          this.threeIndesShows.push(false);
+        } else {
+          this.threeIndesShows.push(tepShow);
+        }
       }
-      this.threeIndesShows[index] = true;
+      this.threeIndesShows[index] = !this.threeIndesShows[index];
     },
     Click1: function (index) {
       console.log(index);
       let length = this.towIndesShows.length;
+      let tepShow = this.towIndesShows[index];
       this.towIndesShows = [];
       for (let i = 0; i < length; i++) {
-        this.towIndesShows.push(false);
+        if (i != index) {
+          this.towIndesShows.push(false);
+        } else {
+          this.towIndesShows.push(tepShow);
+        }
       }
-      this.towIndesShows[index] = true;
+      this.towIndesShows[index] = !this.towIndesShows[index];
     },
     Click2(item) {
       this.threeIndesShows = [];
       let _this = this;
       axios({
         method: "get",
-        url: `http://localhost:8080/threeIndexScoreCsix/listThreeIndex?unitId=${this.selectedUnitId}&uid=${item.uid}`,
+        url: `http://192.168.101.4:8080/threeIndexScoreCsix/listThreeIndex?unitId=${this.selectedUnitId}&uid=${item.uid}`,
       }).then((res) => {
         _this.threeIndexList = res.data;
         _this.threeIndexList.forEach((o) => {
@@ -922,7 +1001,24 @@ export default {
   width: 60%;
   height: 100%;
   border: 1px solid #ccc;
+  overflow: overlay;
   /* background: rgb(109, 206, 203); */
+}
+.select_text > .right_text::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  background-color: #f5f5f5;
+}
+.select_text > .right_text::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #f5f5f5;
+}
+.select_text > .right_text::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  height: 20px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f2f2f2;
 }
 /* 下面说明的框架 */
 .statistics > .pie_title {
