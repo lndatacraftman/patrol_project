@@ -37,6 +37,7 @@
 import Vue from "vue";
 import echarts from "echarts";
 import axios from "axios";
+
 Vue.prototype.$echarts = echarts;
 
 export default {
@@ -262,6 +263,12 @@ export default {
               textStyle: {
                 color: "#666",
               },
+              // //纵坐标显示转换 将数字转为特殊符号 这里重新定义就可以
+              // formatter: function (value) {
+              //   value = this.getLevel(value);
+              //   console.log(value);
+              //   return value;
+              // },
             },
             nameTextStyle: {
               color: "#666",
@@ -464,24 +471,28 @@ export default {
   justify-content: center;
   /* background: cornflowerblue; */
 }
+
 /* 整体布局 */
 #judgedbight > .content_main {
   width: 90%;
   height: 100%;
   /* background: cyan; */
 }
+
 /* 上半布局的框架 */
 #judgedbight > .content_main > .content_up {
   width: 100%;
   height: 45%;
   /* background: cornsilk; */
 }
+
 /* 下半布局的框架 */
 #judgedbight > .content_main > .content_down {
   width: 100%;
   height: 55%;
   /* background: darkkhaki; */
 }
+
 /* 标题的框架 */
 .content_title {
   width: 100%;
@@ -491,37 +502,43 @@ export default {
   /* position: relative; */
   /* background: darkseagreen; */
 }
+
 /* .content_title > span {
-} */
+  } */
 /* 图表的框架 */
 .content_table {
   width: 100%;
   height: 80%;
   /* background: deepskyblue; */
 }
+
 /* 上面图表的大小 */
 .content_table > .up_table {
-  margin-top: 5rem;
+  /*margin-top: 5rem;*/
   width: 900px;
   height: 250px;
 }
+
 /* 下面图表的大小 */
 .content_table > .down_table {
   width: 900px;
   height: 300px;
-  margin-top: 5rem;
+  /*margin-top: 5rem;*/
   overflow: overlay;
 }
+
 .content_table > .down_table::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   background-color: #f5f5f5;
 }
+
 .content_table > .down_table::-webkit-scrollbar {
   width: 8px;
   height: 8px;
   background-color: #f5f5f5;
 }
+
 .content_table > .down_table::-webkit-scrollbar-thumb {
   border-radius: 4px;
   height: 20px;

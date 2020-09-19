@@ -246,6 +246,7 @@ import axios from "axios";
 export default {
   watch: {
     selectedUnitId(val, oldVal) {
+      console.log(val);
       this.init(val);
     },
   },
