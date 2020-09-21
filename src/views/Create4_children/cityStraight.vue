@@ -21,13 +21,13 @@
               <span>市直</span>
             </div>
             <div class="menu_title2">
-              <span style="margin-left: 1rem; font-size: 1.1rem">>></span>
+              <span style="font-size: 1.1rem">>></span>
+            </div>
+            <div class="menu_title4">
+              <span>{{ selectedData.name }}</span>
             </div>
             <div class="menu_title2">
-              <span>群团</span>
-            </div>
-            <div class="menu_title2">
-              <span style="margin-left: 1rem; font-size: 1.1rem">>></span>
+              <span style="font-size: 1.1rem">>></span>
             </div>
             <div class="menu_title3">
               <span
@@ -36,7 +36,7 @@
                   font-family: 思源黑体normal;
                   font-size: 1.416666rem;
                 "
-                >市台联</span
+                >{{ selectedData2 }}</span
               >
             </div>
             <!-- 返回按钮 -->
@@ -313,6 +313,8 @@ export default {
       model: "第十三届",
       model1: "第六轮",
       testData: [],
+      selectedData: {},
+      selectedData2: "",
     };
   },
   methods: {
@@ -419,6 +421,7 @@ export default {
             _this.$emit("onSelectedUnitId", params.data.unitId);
             _this.$emit("onSelectedUnitName", params.data.name);
             _this.$emit("handlecancel", true);
+            _this.selectedData2 = params.data.name;
           } else {
             let tep = res.data
               .sort((a, b) => {
@@ -428,6 +431,8 @@ export default {
             _this.$emit("onSelectedUnitId", tep[0].unitId);
             _this.$emit("onSelectedUnitName", tep[0].level3Name);
             _this.$emit("handlecancel", true);
+            _this.selectedData2 = tep[0].level3Name;
+            _this.selectedData = params.data;
           }
           // _this.menu_hide = !_this.menu_hide;
           _this.menu_hide = true;
@@ -615,19 +620,35 @@ export default {
 }
 /* 导航条的文字框架 */
 .content > .menu_content > .menu > .menu_body > .menu_title2 {
-  width: 6%;
+  width: 15%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   /* background: burlywood; */
 }
-.menu_body > .menu_title3 {
-  width: 10%;
+.content > .menu_content > .menu > .menu_body > .menu_title4 {
+  width: 20%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  /* background: burlywood; */
+}
+.content > .menu_content > .menu > .menu_body > .menu_title4 > span {
+  color: white;
+  /* width: 3rem; */
+  /* background: blueviolet; */
+  font-size: 1.416666rem;
+  font-family: "思源黑体normal";
+}
+.menu_body > .menu_title3 {
+  width: 85%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* background: aquamarine; */
 }
 .content > .menu_content > .menu > .menu_title {
   width: 5rem;
@@ -646,7 +667,7 @@ export default {
   > .menu_title2
   > span {
   color: white;
-  width: 3rem;
+  /* width: 3rem; */
   /* background: blueviolet; */
   font-size: 1.416666rem;
   font-family: "思源黑体normal";
@@ -662,7 +683,7 @@ export default {
 }
 /* 按钮的样式 */
 .content > .menu_content > .menu > .menu_body > button {
-  margin-left: 29rem;
+  /* margin-left: 10rem; */
   font-size: 1.2rem;
   position: relative;
   left: 5rem;

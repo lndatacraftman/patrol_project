@@ -42,8 +42,11 @@
               <div class="pie_title">
                 <div class="title_down">
                   <div class="arrows_title">
-                    <div class="title_image1">
-                      <span style="color: #828282">初始生态</span>
+                    <div
+                      class="title_image"
+                      style="position: relative; right: 2rem; top: 1rem"
+                    >
+                      <span style="color: #828282">初始生态评价</span>
                     </div>
                   </div>
                 </div>
@@ -57,9 +60,9 @@
                   <div class="arrows_title">
                     <div
                       class="title_image"
-                      style="position: relative; left: 2rem"
+                      style="position: relative; left: 1.5rem; top: 1rem"
                     >
-                      <span style="color: #828282">整改后生态评价</span>
+                      <span style="color: #828282">生态评价结果</span>
                     </div>
                   </div>
                 </div>
@@ -72,52 +75,7 @@
             <!-- 横线 -->
             <hr />
             <!-- 两个选择器的框架 -->
-            <div class="select_input">
-              <!-- 左边选择器框架 -->
-              <div class="select_left">
-                <!-- 选择器前面的文字框架 -->
-                <div class="input_span">
-                  <span>一级指标</span>
-                </div>
-                <!-- 选择器框架 -->
-                <div class="select">
-                  <i-select
-                    :model.sync="oneIndexSelectVal"
-                    @on-change="oneIndexChange"
-                    placeholder="党的意识、政治建设"
-                  >
-                    <Option
-                      v-for="(item, index) in indexList"
-                      :value="item.uid"
-                      :key="index"
-                      >{{ item.content }}</Option
-                    >
-                  </i-select>
-                </div>
-              </div>
-              <!-- 右边选择器框架 -->
-              <div class="select_right">
-                <!-- 选择器前面的文字框架 -->
-                <div class="input_span">
-                  <span>二级指标</span>
-                </div>
-                <!-- 选择器框架 -->
-                <div class="select">
-                  <i-select
-                    v-model="twoIndexSelectVal"
-                    placeholder="学习贯彻习近平总书记重要讲话和指示批示精神情况"
-                  >
-                    <Option
-                      v-for="(item, index) in twotextList"
-                      :value="item.uid"
-                      :key="index"
-                      >{{ item.content }}</Option
-                    >
-                  </i-select>
-                </div>
-              </div>
-              <!-- 右边选择器 end -->
-            </div>
+
             <!-- 选择器下面的指标框架 -->
             <div class="select_text">
               <!-- 指标的左边框架 -->
@@ -249,8 +207,8 @@ export default {
   },
   data() {
     return {
-      oneIndexSelectVal: 0,
-      twoIndexSelectVal: 0,
+      // oneIndexSelectVal: 0,
+      // twoIndexSelectVal: 0,
       factors: [],
       threeIndesShows: [],
       threeIndexList: [], //sanjizhibiao
@@ -682,8 +640,8 @@ export default {
 }
 /* 饼状图 */
 .statistics > .pie_tables > .pie_table > .pie_main {
-  width: 12rem;
-  height: 12rem;
+  width: 13rem;
+  height: 13rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -693,7 +651,7 @@ export default {
 }
 .statistics > .pie_tables > .pie_table > .pie_main > span {
   font-family: Helvetica Neue;
-  font-size: 3.333333rem;
+  font-size: 3rem;
   color: #409eff;
 }
 .statistics > .pie_tables > .pie_table > .pie_main > .colorheihei1 {
@@ -1006,7 +964,8 @@ export default {
   height: 2rem;
   border-radius: 8px;
   /* -moz-border-radius: 15px; */
-  background: #e6e6e6;
+  /* background: #e6e6e6; */
+  background: #ffd385;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1019,7 +978,9 @@ export default {
   height: 2rem;
   border-radius: 8px;
   /* -moz-border-radius: 15px; */
-  background: #e6e6e6;
+  /* background: #e6e6e6;
+   */
+  background: #ffd385;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1091,7 +1052,7 @@ export default {
   width: 75%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background: #f9f9f9;
   font-size: 0.85rem;
