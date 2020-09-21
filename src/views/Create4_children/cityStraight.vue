@@ -325,7 +325,7 @@ export default {
       _this.$emit("handlecancel", false);
       this.menu_hide = !this.menu_hide;
       axios({
-        url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listTypesCount",
+        url: "http://localhost:8080/dwUnitLevelInfoCsix/listTypesCount",
       }).then((res) => {
         _this.initCharts(res);
         console.log(res.data);
@@ -413,7 +413,7 @@ export default {
       myChart.on("click", function (params) {
         axios({
           url:
-            "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listUnit?type=" +
+            "http://localhost:8080/dwUnitLevelInfoCsix/listUnit?type=" +
             params.data.name,
         }).then((res) => {
           console.log(res.data);
@@ -535,13 +535,13 @@ export default {
     axios
       .all([
         axios({
-          url: "http://192.168.101.4:8080/dwRotationSession/listAscByRotation",
+          url: "http://localhost:8080/dwRotationSession/listAscByRotation",
         }),
         axios({
-          url: "http://192.168.101.4:8080/dwRotationSession/listAscByRotation",
+          url: "http://localhost:8080/dwRotationSession/listAscByRotation",
         }),
         axios({
-          url: "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listTypesCount",
+          url: "http://localhost:8080/dwUnitLevelInfoCsix/listTypesCount",
         }),
       ])
       .then(

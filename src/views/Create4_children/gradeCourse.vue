@@ -338,7 +338,7 @@ export default {
       let _this = this;
       axios({
         method: "get",
-        url: `http://192.168.101.4:8080/threeIndexScoreCsix/listThreeIndex?unitId=${uid}&uid=${uid2}`,
+        url: `http://localhost:8080/threeIndexScoreCsix/listThreeIndex?unitId=${uid}&uid=${uid2}`,
       }).then((res) => {
         _this.threeIndexList = res.data;
         _this.threeIndexList.forEach((o) => {
@@ -354,20 +354,20 @@ export default {
           axios({
             method: "get",
             url:
-              "http://192.168.101.4:8080/threeIndexScoreCsix/listOneTwoIndex?unitId=" +
+              "http://localhost:8080/threeIndexScoreCsix/listOneTwoIndex?unitId=" +
               val,
           }),
           //默认请求初始评分
           axios({
             method: "get",
             url:
-              "http://192.168.101.4:8080/threeIndexScoreCsix/getUnitInitScore?unitId=" +
+              "http://localhost:8080/threeIndexScoreCsix/getUnitInitScore?unitId=" +
               val,
           }),
           axios({
             method: "get",
             url:
-              "http://192.168.101.4:8080/threeIndexScoreCsix/getUnitResultScore?unitId=" +
+              "http://localhost:8080/threeIndexScoreCsix/getUnitResultScore?unitId=" +
               val,
           }),
         ])
@@ -402,7 +402,7 @@ export default {
       console.log(item.level);
       axios({
         method: "get",
-        url: `http://192.168.101.4:8080/threeIndexScoreCsix/getFactor?unitId=${this.selectedUnitId}&uid=${item.uid}`,
+        url: `http://localhost:8080/threeIndexScoreCsix/getFactor?unitId=${this.selectedUnitId}&uid=${item.uid}`,
       }).then((res) => {
         console.log(res.data);
         const data = {
@@ -543,7 +543,7 @@ export default {
       let _this = this;
       axios({
         method: "get",
-        url: `http://192.168.101.4:8080/threeIndexScoreCsix/listThreeIndex?unitId=${this.selectedUnitId}&uid=${item.uid}`,
+        url: `http://localhost:8080/threeIndexScoreCsix/listThreeIndex?unitId=${this.selectedUnitId}&uid=${item.uid}`,
       }).then((res) => {
         _this.threeIndexList = res.data;
         _this.threeIndexList.forEach((o) => {
