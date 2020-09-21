@@ -8,7 +8,7 @@
         <!-- 导航条 -->
         <div class="menu">
           <div class="menu_title">
-            <span>市直</span>
+            <span style="color: #2bfaff">市直</span>
           </div>
         </div>
       </div>
@@ -16,17 +16,38 @@
       <div class="menu_content" v-show="menu_hide">
         <!-- 导航条 -->
         <div class="menu">
-          <div class="menu_title">
-            <span>市直</span>
+          <div class="menu_body">
+            <div class="menu_title2">
+              <span>市直</span>
+            </div>
+            <div class="menu_title2">
+              <span style="margin-left: 1rem; font-size: 1.1rem">>></span>
+            </div>
+            <div class="menu_title2">
+              <span>群团</span>
+            </div>
+            <div class="menu_title2">
+              <span style="margin-left: 1rem; font-size: 1.1rem">>></span>
+            </div>
+            <div class="menu_title3">
+              <span
+                style="
+                  color: #2bfaff;
+                  font-family: 思源黑体normal;
+                  font-size: 1.416666rem;
+                "
+                >市台联</span
+              >
+            </div>
+            <!-- 返回按钮 -->
+            <Button type="text" @click="return_click()" ghost>
+              <img
+                src="../../assets/images/返回浅.png"
+                style="width: 1.5rem; height: 1.1rem"
+              />
+              返回</Button
+            >
           </div>
-          <div class="menu_title">
-            <span>>>群团</span>
-          </div>
-          <div class="menu_title1">
-            <span>>>市台联</span>
-          </div>
-          <!-- 返回按钮 -->
-          <Button type="text" @click="return_click()" ghost>返回</Button>
         </div>
       </div>
       <!-- 中间筛选框的框架 -->
@@ -121,7 +142,7 @@ export default {
           },
           label: {
             color: "#9065FD",
-          },
+          }, // 紫色
         },
         {
           itemStyle: {
@@ -144,99 +165,7 @@ export default {
           },
           label: {
             color: "#D19A71",
-          },
-        },
-        {
-          itemStyle: {
-            color: new echarts.graphic.RadialGradient(
-              0.5,
-              0.5,
-              1,
-              [
-                {
-                  offset: 0,
-                  color: "#502630", // 0% 处的颜色
-                },
-                {
-                  offset: 1,
-                  color: "#72353D", // 100% 处的颜色
-                },
-              ],
-              false
-            ),
-          },
-          label: {
-            color: "#D06168",
-          },
-        },
-        {
-          itemStyle: {
-            color: new echarts.graphic.RadialGradient(
-              0.5,
-              0.5,
-              1,
-              [
-                {
-                  offset: 0,
-                  color: "#2C3E42", // 0% 处的颜色
-                },
-                {
-                  offset: 1,
-                  color: "#4E6170", // 100% 处的颜色
-                },
-              ],
-              false
-            ),
-          },
-          label: {
-            color: "#7DA7BD",
-          },
-        },
-        {
-          itemStyle: {
-            color: new echarts.graphic.RadialGradient(
-              0.5,
-              0.5,
-              1,
-              [
-                {
-                  offset: 0,
-                  color: "#4A450E", // 0% 处的颜色
-                },
-                {
-                  offset: 1,
-                  color: "#625A12", // 100% 处的颜色
-                },
-              ],
-              false
-            ),
-          },
-          label: {
-            color: "#ADA55C",
-          },
-        },
-        {
-          itemStyle: {
-            color: new echarts.graphic.RadialGradient(
-              0.5,
-              0.5,
-              1,
-              [
-                {
-                  offset: 0,
-                  color: "#294421", // 0% 处的颜色
-                },
-                {
-                  offset: 1,
-                  color: "#3F6B30", // 100% 处的颜色
-                },
-              ],
-              false
-            ),
-          },
-          label: {
-            color: "#77B05F",
-          },
+          }, // 土色
         },
         {
           itemStyle: {
@@ -259,7 +188,76 @@ export default {
           },
           label: {
             color: "#0092FF",
+          }, //天蓝
+        },
+        {
+          itemStyle: {
+            color: new echarts.graphic.RadialGradient(
+              0.5,
+              0.5,
+              1,
+              [
+                {
+                  offset: 0,
+                  color: "#2C3E42", // 0% 处的颜色
+                },
+                {
+                  offset: 1,
+                  color: "#4E6170", // 100% 处的颜色
+                },
+              ],
+              false
+            ),
           },
+          label: {
+            color: "#7DA7BD",
+          }, // 灰蓝色
+        },
+        {
+          itemStyle: {
+            color: new echarts.graphic.RadialGradient(
+              0.5,
+              0.5,
+              1,
+              [
+                {
+                  offset: 0,
+                  color: "#502630", // 0% 处的颜色
+                },
+                {
+                  offset: 1,
+                  color: "#72353D", // 100% 处的颜色
+                },
+              ],
+              false
+            ),
+          },
+          label: {
+            color: "#D06168",
+          }, // 红色
+        },
+        {
+          itemStyle: {
+            color: new echarts.graphic.RadialGradient(
+              0.5,
+              0.5,
+              1,
+              [
+                {
+                  offset: 0,
+                  color: "#4A450E", // 0% 处的颜色
+                },
+                {
+                  offset: 1,
+                  color: "#625A12", // 100% 处的颜色
+                },
+              ],
+              false
+            ),
+          },
+          label: {
+            color: "#ADA55C",
+          }, //黄
         },
         {
           itemStyle: {
@@ -282,7 +280,30 @@ export default {
           },
           label: {
             color: "#2A7ACC",
+          }, //深蓝
+        },
+        {
+          itemStyle: {
+            color: new echarts.graphic.RadialGradient(
+              0.5,
+              0.5,
+              1,
+              [
+                {
+                  offset: 0,
+                  color: "#294421", // 0% 处的颜色
+                },
+                {
+                  offset: 1,
+                  color: "#3F6B30", // 100% 处的颜色
+                },
+              ],
+              false
+            ),
           },
+          label: {
+            color: "#77B05F",
+          }, //绿色
         },
       ],
       // 届次筛选框里面的值
@@ -393,9 +414,10 @@ export default {
             "http://192.168.101.4:8080/dwUnitLevelInfoCsix/listUnit?type=" +
             params.data.name,
         }).then((res) => {
-          // console.log(res.data);
+          console.log(res.data);
           if (params.data.unitId) {
             _this.$emit("onSelectedUnitId", params.data.unitId);
+            _this.$emit("onSelectedUnitName", params.data.name);
             _this.$emit("handlecancel", true);
           } else {
             let tep = res.data
@@ -404,6 +426,7 @@ export default {
               })
               .reverse();
             _this.$emit("onSelectedUnitId", tep[0].unitId);
+            _this.$emit("onSelectedUnitName", tep[0].level3Name);
             _this.$emit("handlecancel", true);
           }
           // _this.menu_hide = !_this.menu_hide;
@@ -453,7 +476,7 @@ export default {
               '<div class="tooltip-title">' +
                 formatUtil.encodeHTML(treePath.join("")) +
                 "</div>",
-              "个数: " + formatUtil.addCommas(value) + "个",
+              // "个数: " + formatUtil.addCommas(value) + "个",
             ].join("");
           },
         },
@@ -477,7 +500,7 @@ export default {
             label: {
               show: true,
               formatter: "{b}",
-              fontSize: 30,
+              fontSize: 20,
               ellipsis: true, // 字太多后面变省略号
             },
             itemStyle: {
@@ -582,28 +605,68 @@ export default {
   float: left;
   background-image: url("../../assets/images/导航条.png");
 }
-
+.content > .menu_content > .menu > .menu_body {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  float: left;
+  margin-left: 1rem;
+  /* background: cadetblue; */
+}
 /* 导航条的文字框架 */
-.content > .menu_content > .menu > .menu_title {
-  width: 12%;
+.content > .menu_content > .menu > .menu_body > .menu_title2 {
+  width: 6%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   /* background: burlywood; */
 }
+.menu_body > .menu_title3 {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content > .menu_content > .menu > .menu_title {
+  width: 5rem;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: burlywood; */
+}
+/* 导航条里的文字样式 */
+#citystraight
+  > .content
+  > .menu_content
+  > .menu
+  > .menu_body
+  > .menu_title2
+  > span {
+  color: white;
+  width: 3rem;
+  /* background: blueviolet; */
+  font-size: 1.416666rem;
+  font-family: "思源黑体normal";
+}
 
 /* 导航条里的文字样式 */
 #citystraight > .content > .menu_content > .menu > .menu_title > span {
   color: white;
-  font-family: "思源黑体";
+  width: 5rem;
+  /* background: blueviolet; */
+  font-size: 1.416666rem;
+  font-family: "思源黑体normal";
 }
-
 /* 按钮的样式 */
-.content > .menu_content > .menu > button {
-  margin-left: 45%;
+.content > .menu_content > .menu > .menu_body > button {
+  margin-left: 29rem;
+  font-size: 1.2rem;
+  position: relative;
+  left: 5rem;
 }
-
 /* 中间筛选框的框架 */
 .content > .times_select {
   width: 100%;
@@ -635,7 +698,7 @@ export default {
 /* 筛选框的标题文字样式 */
 #citystraight > .content > .times_select > .selectbox > .select_title > span {
   color: #2bfaff;
-  font-family: "思源黑体";
+  font-family: "思源黑体normal";
   /* font-size: 18px; */
 }
 
@@ -687,6 +750,6 @@ export default {
 
 .content > .county_button > .county_background > .county_span > span {
   color: #2bfaff;
-  font-family: "思源黑体";
+  font-family: "思源黑体normal";
 }
 </style>

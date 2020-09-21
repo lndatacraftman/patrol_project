@@ -90,6 +90,7 @@ export default {
 .layout-title > span {
   font-family: 阿里黑体;
   font-size: 15pt;
+  margin-left: 3rem;
 }
 /* 页面头部的整体框架 */
 .menu_head {

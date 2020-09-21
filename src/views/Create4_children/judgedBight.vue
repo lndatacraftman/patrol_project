@@ -11,7 +11,7 @@
           <span>综评曲线</span>
         </div>
         <!-- 分割线 -->
-        <hr />
+        <hr style="hetght: 2px" />
         <!-- 图表 -->
         <div class="content_table">
           <div id="chart1" class="up_table"></div>
@@ -24,7 +24,7 @@
           <span>指标详情</span>
         </div>
         <!-- 分割线 -->
-        <hr />
+        <hr style="hetght: 0.5px" />
         <!-- 图表 -->
         <div class="content_table">
           <div id="chart2" class="down_table"></div>
@@ -78,7 +78,6 @@ export default {
               this.getLevel(res1.data[i].comprehensiveScore),
               res1.data[i].comprehensiveScore,
             ]);
-
             _this.xaxisdata.push(res1.data[i].content);
             _this.myEcharts2();
           }
@@ -89,7 +88,7 @@ export default {
               value: [
                 a,
                 this.getLevel(res2.data[a].comprehensiveScore),
-                res2.data[a].comprehensiveScore,
+                res2.data[a].level,
               ],
             };
             _this.echartData.push(line);
@@ -97,22 +96,6 @@ export default {
           }
         })
       );
-    //     for (let i = 0; i < res1.data.length; i++) {
-    //       _this.echarts2Data.push(res1.data[i].comprehensiveScore);
-    //       _this.xaxisdata.push(res1.data[i].content);
-    //       _this.myEcharts2();
-    //     }
-    //     console.log(res2.data);
-    //     for (let a = 0; a < res2.data.length; a++) {
-    //       const line = {
-    //         name: res2.data[a].content,
-    //         value: res2.data[a].comprehensiveScore,
-    //       };
-    //       _this.echartData.push(line);
-    //       _this.myEcharts1();
-    //     }
-    //   })
-    // );
     console.log(this.echarts2Data);
   },
   methods: {
@@ -155,8 +138,8 @@ export default {
         document.getElementById("chart1")
       );
       const color = [
-        "#0090FF",
-        "#36CE9E",
+        "#3D8BF0",
+        "#CCE2FF",
         "#FFC005",
         "#FF515A",
         "#8B5CFF",
@@ -176,17 +159,8 @@ export default {
       };
       myChart1.setOption({
         backgroundColor: this.bgColor,
-        grid: {
-          left: "0%",
-          top: "0%",
-          bottom: "0%",
-          right: "0%",
-        },
+
         color: color,
-        legend: {
-          right: 0,
-          top: 0,
-        },
         tooltip: {
           trigger: "axis",
           formatter: function (params) {
@@ -197,18 +171,18 @@ export default {
                     <span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
                       color[v.componentIndex]
                     };"></span>
-                    ${v.seriesName}.${v.name}
+                    ${v.name}
                     <span style="color:${
                       color[v.componentIndex]
                     };font-weight:700;font-size: 18px">${v.value[2]}</span>
-                    分`;
+                    `;
             });
             return html;
           },
           extraCssText:
             "background: #fff; border-radius: 0;box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);color: #333;",
           axisPointer: {
-            type: "shadow",
+            type: "line",
             shadowStyle: {
               color: "#ffffff",
               shadowColor: "rgba(225,225,225,1)",
@@ -217,10 +191,10 @@ export default {
           },
         },
         grid: {
-          top: 15,
-          left: 0,
-          right: 160,
-          bottom: 0,
+          top: 10,
+          left: 20,
+          right: 95,
+          bottom: 10,
           containLabel: true,
         },
         xAxis: [
@@ -260,15 +234,11 @@ export default {
             type: "category",
             splitNumber: "12",
             axisLabel: {
+              align: "left",
+              margin: 50,
               textStyle: {
                 color: "#666",
               },
-              // //纵坐标显示转换 将数字转为特殊符号 这里重新定义就可以
-              // formatter: function (value) {
-              //   value = this.getLevel(value);
-              //   console.log(value);
-              //   return value;
-              // },
             },
             nameTextStyle: {
               color: "#666",
@@ -291,8 +261,23 @@ export default {
         ],
         series: [
           {
-            name: "2020",
+            name: "",
             type: "line",
+            markLine: {
+              lineStyle: {
+                color: "grey",
+              },
+              data: [
+                {
+                  type: "average",
+                  color: "red",
+                },
+              ],
+              silent: false,
+              label: {
+                show: false,
+              },
+            },
             smooth: true,
             symbolSize: 8,
             zlevel: 3,
@@ -314,11 +299,11 @@ export default {
                   [
                     {
                       offset: 0,
-                      color: hexToRgba(color[1], 0.3),
+                      color: hexToRgba(color[0], 1),
                     },
                     {
                       offset: 1,
-                      color: hexToRgba(color[1], 0.1),
+                      color: hexToRgba(color[1], 0),
                     },
                   ],
                   false
@@ -332,130 +317,118 @@ export default {
         ],
       });
     },
-    // 下面的山图
+    // 下面的bar
     myEcharts2() {
       //初始化
       var myChart2 = Vue.prototype.$echarts.init(
         document.getElementById("chart2")
       );
-      var obj = {
-        0: "2.25%",
-        1: "41.54%",
-        2: "32.88%",
-        3: "16.77%",
-        4: "5.43%",
-        5: "0.36%",
-        6: "0.03%",
-      };
+      let showLegend = false;
       myChart2.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "none",
-          },
-          formatter: function (params) {
-            return params[0].name + ": " + params[0].value[2];
-          },
-        },
         grid: {
-          top: 20,
-          right: 160,
-          left: 0,
-          bottom: 20,
-          containLabel: true,
+          top: 50,
+          left: 56,
+          bottom: 100,
+          right: 60,
         },
         xAxis: {
           type: "category",
-          show: true,
+          axisTick: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            color: "#4D4D4D",
+            rotate: 16,
+            align: "center",
+            padding: [20, 0, 0, 15],
+          },
           data: this.xaxisdata,
-          axisTick: {
-            show: false,
-          }, // 刻度不显示，默认是显示的
-          axisLine: {
-            show: false, //横坐标的线不显示
-            // lineStyle: {
-            //   color: "rgba(255, 129, 109,.1)",
-            //   width: 1, //这里是为了突出显示加上的
-            // },
-          },
-          axisLabel: {
-            rotate: 18, // x轴字设置倾斜
-            textStyle: {
-              // color: "#999",
-              fontSize: 9,
-            }, // 设置横坐标的字体样式
+        },
+        tooltip: {
+          trigger: "none",
+          axisPointer: {
+            type: "none",
           },
         },
-        yAxis: {
-          type: "category",
-          data: [
-            "A++",
-            "A+",
-            "A",
-            "A-",
-            "A--",
-            "B++",
-            "B+",
-            "B",
-            "B-",
-            "B--",
-            "C",
-            "D",
-          ].reverse(),
-          splitLine: {
-            show: false,
+        yAxis: [
+          {
+            data: [
+              "A++",
+              "A+",
+              "A",
+              "A-",
+              "A--",
+              "B++",
+              "B+",
+              "B",
+              "B-",
+              "B--",
+              "C",
+              "D",
+            ].reverse(),
+            type: "category",
+            splitNumber: "12",
+            axisLabel: {
+              align: "left",
+              margin: 15,
+              textStyle: {
+                color: "#666",
+              },
+            },
+            nameTextStyle: {
+              color: "#666",
+              fontSize: 12,
+              lineHeight: 40,
+            },
+            splitLine: {
+              lineStyle: {
+                type: "dashed",
+                color: "#E9E9E9",
+              },
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+            },
           },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            show: false,
-          },
-          axisLabel: {
-            show: true,
-          },
-        },
-        color: ["#e54035"],
-        legend: {},
+        ],
         series: [
           {
-            type: "pictorialBar",
-            barCategoryGap: "0%",
-            symbol:
-              "path://M0,10 L10,10 C5.5,10 5.5,5 5,0 C4.5,5 4.5,10 0,10 z",
             label: {
               show: true,
               position: "top",
-              distance: 4,
-              color: "#fff",
-              // fontWeight: 'bolder',
-              fontSize: 12,
-              formatter: function (params) {
-                return obj[params.dataIndex];
-              },
+              fontSize: 14,
+              color: "#3D8BF0",
+              fontWeight: "bold",
             },
+            barMaxWidth: 60,
             itemStyle: {
-              normal: {
-                color: function (params) {
-                  const colorList = [
-                    "rgba(55, 112, 255,0.7)",
-                    "rgba(79, 116, 255,0.7)",
-                    "rgba(83, 116, 255,0.7)",
-                    "rgba(85, 125, 255,0.7)",
-                    "rgba(101, 191, 255,0.7)",
-                    "rgba(96, 227, 255,0.7)",
-                    "rgba(25, 255, 224,0.7)",
-                  ];
-                  return colorList[params.dataIndex];
-                },
-              },
-              emphasis: {
-                opacity: 1,
+              barBorderRadius: [6, 6, 0, 0],
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "#3D8BF0", // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#CCE2FF", // 100% 处的颜色
+                  },
+                ],
               },
             },
-            // 数值
             data: this.echarts2Data,
-            z: 10,
+            type: "bar",
           },
         ],
       });
@@ -499,6 +472,8 @@ export default {
   height: 15%;
   display: flex;
   align-items: flex-end;
+  font-size: 18px;
+  font-family: "思源黑体medium";
   /* position: relative; */
   /* background: darkseagreen; */
 }
@@ -508,7 +483,7 @@ export default {
 /* 图表的框架 */
 .content_table {
   width: 100%;
-  height: 80%;
+  height: 60%;
   /* background: deepskyblue; */
 }
 
@@ -516,13 +491,13 @@ export default {
 .content_table > .up_table {
   /*margin-top: 5rem;*/
   width: 900px;
-  height: 250px;
+  height: 300px;
 }
 
 /* 下面图表的大小 */
 .content_table > .down_table {
   width: 900px;
-  height: 300px;
+  height: 350px;
   /*margin-top: 5rem;*/
   overflow: overlay;
 }
@@ -541,7 +516,7 @@ export default {
 
 .content_table > .down_table::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  height: 20px;
+  height: 30px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #f2f2f2;
 }

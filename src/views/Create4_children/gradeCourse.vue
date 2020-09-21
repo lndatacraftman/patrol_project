@@ -3,237 +3,227 @@
 
 <template>
   <div id="gradecourse">
-    <div class="grademain">
-      <!-- 标题布局 -->
-      <div class="content_title">
-        <span>评分历程</span>
-      </div>
-      <!-- 横线 -->
-      <hr />
-      <!-- 统计图像布局 -->
-      <div class="statistics">
-        <!-- 上面的饼图的整体框架 -->
-        <div class="pie_tables">
-          <!-- 饼图1框架 -->
-          <div class="pie_table">
-            <div class="pie_main">
-              <div class="pie_left" ref="pie1"></div>
-              <div class="pie_center">
-                <div class="pie_centerup">
-                  <span>{{ rate.level }}</span>
-                </div>
-                <div class="pie_centerdown">
-                  <span>评分级别</span>
-                </div>
-              </div>
-              <div class="pie_right">
-                <div class="pie_rightup">
-                  <div class="rightup1">
-                    <span>{{ rate.qualifiedNumber }}</span>
-                  </div>
-                  <div class="rightdown">
-                    <span>达标项</span>
+    <div class="title">
+      <img src="../../assets/images/new_picture/919-08.png" />
+      <span>{{ selectedUnitName }}</span>
+    </div>
+    <div class="tab_body">
+      <Tabs active-key="key1" class="tabs" style="height: 100%">
+        <Tab-pane label="生态评价" key="key1" style="height: 100%">
+          <div class="grademain" style="height: 100%">
+            <!-- 横线 -->
+            <!-- <hr /> -->
+            <!-- 统计图像布局 -->
+            <div class="statistics">
+              <!-- 上面的饼图的整体框架 -->
+              <div class="pie_tables">
+                <!-- 左侧框架 -->
+                <div class="pie_table">
+                  <div class="pie_main">
+                    <span
+                      class="colorheihei1"
+                      :class="followcolor(rate.level)"
+                      >{{ rate.level }}</span
+                    >
                   </div>
                 </div>
-                <div class="pie_rightdown">
-                  <div class="rightup1">
-                    <span>{{ rate.substandardNumber }}</span>
-                  </div>
-                  <div class="rightdown">
-                    <span>未达标项</span>
+                <!-- 右侧评价中框架 -->
+                <div class="pie_table" style="position: relative; left: 2rem">
+                  <div class="pie_main">
+                    <span
+                      class="colorheihei1"
+                      :class="followcolor(rateResult.level)"
+                      >{{ rateResult.level }}</span
+                    >
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <!-- 右侧评价中框架 -->
-          <div class="pie_table">
-            <div class="pie_main">
-              <div class="pie_left" ref="pie2"></div>
-              <div class="pie_center">
-                <div class="pie_centerup">
-                  <span>{{ rateResult.level }}</span>
-                </div>
-                <div class="pie_centerdown">
-                  <span>评分级别</span>
-                </div>
-              </div>
-              <div class="pie_right">
-                <div class="pie_rightup">
-                  <div class="rightup1">
-                    <span>{{ rateResult.qualifiedNumber }}</span>
-                  </div>
-                  <div class="rightdown">
-                    <span>达标项</span>
+              <!-- 下面说明的整体框架 -->
+              <div class="pie_title">
+                <div class="title_down">
+                  <div class="arrows_title">
+                    <div class="title_image1">
+                      <span style="color: #828282">初始生态</span>
+                    </div>
                   </div>
                 </div>
-                <div class="pie_rightdown">
-                  <div class="rightup1">
-                    <span>{{ rateResult.substandardNumber }}</span>
-                  </div>
-                  <div class="rightdown">
-                    <span>未达标项</span>
+                <div
+                  class="title_center"
+                  style="position: relative; left: 2rem"
+                >
+                  <img src="../../assets/images/过程箭头.png" />
+                </div>
+                <div class="title_down">
+                  <div class="arrows_title">
+                    <div
+                      class="title_image"
+                      style="position: relative; left: 2rem"
+                    >
+                      <span style="color: #828282">整改后生态评价</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <!-- 下面说明的整体框架 -->
-        <div class="pie_title">
-          <div class="title_down">
-            <div class="arrows_image">
-              <img src="../../assets/images/三角块.png" />
+            <!-- 标题框架 -->
+            <div class="content_title">
+              <span>指标详情</span>
             </div>
-            <div class="arrows_title">
-              <div class="title_image">
-                <span>初始评分</span>
-              </div>
-            </div>
-          </div>
-          <div class="title_center">
-            <img src="../../assets/images/过程箭头.png" />
-          </div>
-          <div class="title_down">
-            <div class="arrows_image">
-              <img src="../../assets/images/三角块.png" />
-            </div>
-            <div class="arrows_title">
-              <div class="title_image">
-                <span>评价结果</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 标题框架 -->
-      <div class="content_title">
-        <span>指标详情</span>
-      </div>
-      <!-- 横线 -->
-      <hr />
-      <!-- 两个选择器的框架 -->
-      <div class="select_input">
-        <!-- 左边选择器框架 -->
-        <div class="select_left">
-          <!-- 选择器前面的文字框架 -->
-          <div class="input_span">
-            <span>一级指标</span>
-          </div>
-          <!-- 选择器框架 -->
-          <div class="select">
-            <i-select
-              :model.sync="oneIndexSelectVal"
-              @on-change="oneIndexChange"
-            >
-              <Option
-                v-for="(item, index) in indexList"
-                :value="item.uid"
-                :key="index"
-                >{{ item.content }}</Option
-              >
-            </i-select>
-          </div>
-        </div>
-        <!-- 右边选择器框架 -->
-        <div class="select_right">
-          <!-- 选择器前面的文字框架 -->
-          <div class="input_span">
-            <span>二级指标</span>
-          </div>
-          <!-- 选择器框架 -->
-          <div class="select">
-            <i-select v-model="twoIndexSelectVal">
-              <Option
-                v-for="(item, index) in twotextList"
-                :value="item.uid"
-                :key="index"
-                >{{ item.content }}</Option
-              >
-            </i-select>
-          </div>
-        </div>
-        <!-- 右边选择器 end -->
-      </div>
-      <!-- 选择器下面的指标框架 -->
-      <div class="select_text">
-        <!-- 指标的左边框架 -->
-        <div class="left_text">
-          <!-- 第一条指标的整体框架 -->
-          <div
-            class="index_box1"
-            v-for="(item, index) in indexList"
-            :key="index"
-          >
-            <!-- 第一条一级指标的整体框架 -->
-            <div class="index" @click="Click1(index)">
-              <!-- 数字标号 -->
-              <div class="index_num">I</div>
-              <!-- 一级指标的文字 -->
-              <div class="index_text">{{ item.content }}</div>
-              <!-- 一级指标的评级 -->
-              <div class="index_rate">
-                {{ item.level }}
-              </div>
-            </div>
-            <!-- 被折叠的内容--二级指标 -->
-            <div
-              class="show_index"
-              v-for="item1 in item.twoindexList"
-              :key="item1.uid"
-              v-show="towIndesShows[index]"
-              @click="Click2(item1)"
-            >
-              <div class="show_text">
-                <span class="show_num">II</span>
-                <span class="show_span">{{ item1.content }}</span>
-                <span class="show_rate">{{ item1.level }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="center_background"></div>
-        <!-- 指标的右边框架 -->
-        <div class="right_text">
-          <!-- 三级指标的整体框架 -->
-          <div
-            class="folding"
-            v-for="(item, index) in threeIndexList"
-            :key="item.uid"
-          >
-            <!-- 折叠的部分 -->
-            <!-- <div class="show_div" v-show="showContent" ref="chart2"></div> -->
-            <!-- 第二条三级指标的整体框架 -->
-            <div class="target1">
-              <!-- 三级指标的数字标号 -->
-              <div class="num3">III</div>
-              <!-- 中间三级指标的框架 -->
-              <div class="target1_text">
-                {{ item.content }}
-              </div>
-              <!-- 因子和对应的数值的框架 -->
-              <div class="target1_divisor">
-                <!-- 因子图片框架 -->
-                <div class="change_image">
-                  <img
-                    v-if="item.level != 'A++'"
-                    src="../../assets/images/因子.png"
-                    @click="Click(item, index)"
-                  />
+            <!-- 横线 -->
+            <hr />
+            <!-- 两个选择器的框架 -->
+            <div class="select_input">
+              <!-- 左边选择器框架 -->
+              <div class="select_left">
+                <!-- 选择器前面的文字框架 -->
+                <div class="input_span">
+                  <span>一级指标</span>
                 </div>
-                <!-- 因子对应的数值的框架 -->
-                <div class="num">{{ item.level }}</div>
+                <!-- 选择器框架 -->
+                <div class="select">
+                  <i-select
+                    :model.sync="oneIndexSelectVal"
+                    @on-change="oneIndexChange"
+                    placeholder="党的意识、政治建设"
+                  >
+                    <Option
+                      v-for="(item, index) in indexList"
+                      :value="item.uid"
+                      :key="index"
+                      >{{ item.content }}</Option
+                    >
+                  </i-select>
+                </div>
               </div>
+              <!-- 右边选择器框架 -->
+              <div class="select_right">
+                <!-- 选择器前面的文字框架 -->
+                <div class="input_span">
+                  <span>二级指标</span>
+                </div>
+                <!-- 选择器框架 -->
+                <div class="select">
+                  <i-select
+                    v-model="twoIndexSelectVal"
+                    placeholder="学习贯彻习近平总书记重要讲话和指示批示精神情况"
+                  >
+                    <Option
+                      v-for="(item, index) in twotextList"
+                      :value="item.uid"
+                      :key="index"
+                      >{{ item.content }}</Option
+                    >
+                  </i-select>
+                </div>
+              </div>
+              <!-- 右边选择器 end -->
             </div>
-            <!-- 折叠的部分 -->
-            <div
-              class="show_div"
-              v-show="threeIndesShows[index]"
-              :ref="`threeIndex_${item.uid}`"
-            ></div>
-          </div>
-        </div>
-      </div>
+            <!-- 选择器下面的指标框架 -->
+            <div class="select_text">
+              <!-- 指标的左边框架 -->
+              <div class="left_text">
+                <!-- 第一条指标的整体框架 -->
+                <div
+                  class="index_box1"
+                  v-for="(item, index) in indexList"
+                  :key="index"
+                >
+                  <!-- 第一条一级指标的整体框架 -->
+                  <div class="index" @click="Click1(index)">
+                    <!-- 数字标号 -->
+                    <div class="index_num">I</div>
+                    <!-- 一级指标的文字 -->
+                    <div class="index_text">{{ item.content }}</div>
+                    <!-- 一级指标的评级 -->
+                    <div class="index_rate">
+                      <Tooltip
+                        class="rate_span"
+                        :class="followcolor2(item.level)"
+                        :content="item.queCount"
+                        >{{ item.level }}</Tooltip
+                      >
+                    </div>
+                  </div>
+                  <!-- 被折叠的内容--二级指标 -->
+                  <div
+                    class="show_index"
+                    v-for="item1 in item.twoindexList"
+                    :key="item1.uid"
+                    v-show="towIndesShows[index]"
+                    @click="Click2(item1)"
+                  >
+                    <div class="show_text">
+                      <div class="show_main">
+                        <div class="show_num">II</div>
+                        <div class="show_span">
+                          {{ item1.content }}
+                        </div>
+                      </div>
+                      <div class="show_rate">
+                        <Tooltip
+                          class="span_color"
+                          :class="followcolor3(item1.level)"
+                          :content="item1.queCount"
+                          >{{ item1.level }}</Tooltip
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="center_background"></div>
+              <!-- 指标的右边框架 -->
+              <div class="right_text">
+                <!-- 三级指标的整体框架 -->
+                <div
+                  class="folding"
+                  v-for="(item, index) in threeIndexList"
+                  :key="item.uid"
+                >
+                  <!-- 第二条三级指标的整体框架 -->
+                  <div class="target1">
+                    <!-- 三级指标的数字标号 -->
+                    <div class="num3">III</div>
+                    <!-- 中间三级指标的框架 -->
+                    <div class="target1_text">
+                      <span>{{ item.content }}</span>
+                    </div>
+                    <!-- 因子和对应的数值的框架 -->
+                    <div class="target1_divisor">
+                      <!-- 因子图片框架 -->
+                      <div class="change_image">
+                        <img
+                          :src="getIcon(item)"
+                          @click="
+                            item.level == 'A++' ? null : Click(item, index)
+                          "
+                        />
+                      </div>
+                      <!-- 因子对应的数值的框架 -->
+                      <div class="num">
+                        <Tooltip
+                          class="num_color"
+                          :class="followcolor4(item.level)"
+                          :content="item.queCount"
+                          >{{ item.level }}</Tooltip
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 折叠的部分 -->
+                  <div
+                    class="show_div"
+                    v-show="threeIndesShows[index]"
+                    :ref="`threeIndex_${item.uid}`"
+                  ></div>
+                </div>
+              </div>
+            </div></div
+        ></Tab-pane>
+        <Tab-pane label="党组成员" key="key2">标签二的内容</Tab-pane>
+        <Tab-pane label="权责清单" key="key3">标签三的内容</Tab-pane>
+        <Tab-pane label="三重一大" key="key4">标签四的内容</Tab-pane>
+      </Tabs>
     </div>
   </div>
 </template>
@@ -242,16 +232,20 @@
 import Vue from "vue";
 import echarts from "echarts";
 import axios from "axios";
+import { log } from "util";
+import iconY from "../../assets/images/因子.png";
+import iconB from "../../assets/images/new_picture/919-06.png";
 
 export default {
   watch: {
     selectedUnitId(val, oldVal) {
-      console.log(val);
+      console.log("val:11111111111111111111111111");
       this.init(val);
     },
   },
   props: {
     selectedUnitId: String,
+    selectedUnitName: String,
   },
   data() {
     return {
@@ -259,7 +253,7 @@ export default {
       twoIndexSelectVal: 0,
       factors: [],
       threeIndesShows: [],
-      threeIndexList: [],
+      threeIndexList: [], //sanjizhibiao
       towIndexActiveShow: null,
       towIndesShows: [],
       indexList: [],
@@ -269,10 +263,132 @@ export default {
       model2: "",
       rate: [], //评分级别
       rateResult: [],
+      twoid: 0,
     };
   },
   mounted() {},
   methods: {
+    getIcon(item) {
+      return item.level == "A++" ? iconB : iconY;
+    },
+    followcolor: function (rate) {
+      if (
+        rate == "A++" ||
+        rate == "A+" ||
+        rate == "A" ||
+        rate == "A-" ||
+        rate == "A--"
+      ) {
+        return "colorheihei1";
+      }
+      if (
+        rate == "B++" ||
+        rate == "B+" ||
+        rate == "B" ||
+        rate == "B-" ||
+        rate == "B--"
+      ) {
+        return "colorheihei2";
+      }
+      if (rate == "C++" || rate == "C+" || rate == "C" || rate == "C-") {
+        return "colorheihei3";
+      }
+      if (rate == "D+" || rate == "D" || rate == "D-") {
+        return "colorheihei4";
+      }
+    },
+    followcolor2: function (rate) {
+      if (
+        rate == "A++" ||
+        rate == "A+" ||
+        rate == "A" ||
+        rate == "A-" ||
+        rate == "A--"
+      ) {
+        return "rate_span1";
+      }
+      if (
+        rate == "B++" ||
+        rate == "B+" ||
+        rate == "B" ||
+        rate == "B-" ||
+        rate == "B--"
+      ) {
+        return "rate_span2";
+      }
+      if (rate == "C++" || rate == "C+" || rate == "C" || rate == "C-") {
+        return "rate_span3";
+      }
+      if (rate == "D+" || rate == "D" || rate == "D-") {
+        return "rate_span4";
+      }
+    },
+    followcolor3: function (rate) {
+      if (
+        rate == "A++" ||
+        rate == "A+" ||
+        rate == "A" ||
+        rate == "A-" ||
+        rate == "A--"
+      ) {
+        return "span_color1";
+      }
+      if (
+        rate == "B++" ||
+        rate == "B+" ||
+        rate == "B" ||
+        rate == "B-" ||
+        rate == "B--"
+      ) {
+        return "span_color2";
+      }
+      if (rate == "C++" || rate == "C+" || rate == "C" || rate == "C-") {
+        return "span_color3";
+      }
+      if (rate == "D+" || rate == "D" || rate == "D-") {
+        return "span_color4";
+      }
+    },
+    followcolor4: function (rate) {
+      if (
+        rate == "A++" ||
+        rate == "A+" ||
+        rate == "A" ||
+        rate == "A-" ||
+        rate == "A--"
+      ) {
+        return "num_color1";
+      }
+      if (
+        rate == "B++" ||
+        rate == "B+" ||
+        rate == "B" ||
+        rate == "B-" ||
+        rate == "B--"
+      ) {
+        return "num_color2";
+      }
+      if (rate == "C++" || rate == "C+" || rate == "C" || rate == "C-") {
+        return "num_color3";
+      }
+      if (rate == "D+" || rate == "D" || rate == "D-") {
+        return "num_color4";
+      }
+    },
+    Click3: function (uid, uid2) {
+      this.threeIndesShows = [];
+      let _this = this;
+      axios({
+        method: "get",
+        url: `http://192.168.101.4:8080/threeIndexScoreCsix/listThreeIndex?unitId=${uid}&uid=${uid2}`,
+      }).then((res) => {
+        _this.threeIndexList = res.data;
+        _this.threeIndexList.forEach((o) => {
+          _this.threeIndesShows.push(false);
+        });
+        console.log(_this.threeIndexList);
+      });
+    },
     init(val) {
       axios
         .all([
@@ -298,152 +414,21 @@ export default {
           }),
         ])
         .then(
-          axios.spread((res1, res2, res3) => {
+          axios.spread((res1, res2, res3, res4) => {
             let _this = this;
             _this.towIndesShows = [];
-            console.log(res1.data);
+            this.twoid = res1.data[0].twoindexList[0].id;
             this.indexList = res1.data;
             res1.data.forEach((o) => {
               _this.towIndesShows.push(false);
             });
-            console.log(res2.data);
+            console.log(res1.data);
+
+            this.Click3(val, res1.data[0].twoindexList[0].uid);
             //获取初始评分
             this.rate = res2.data;
             this.rateResult = res3.data;
-            const option3 = {
-              title: {
-                text: this.rate.score + "%",
-                x: "center",
-                y: "center",
-                textStyle: {
-                  fontWeight: "normal",
-                  color: "#0580f2",
-                  fontSize: "20",
-                },
-              },
-              color: ["rgba(176, 212, 251, 1)"],
-
-              series: [
-                {
-                  name: "Line 1",
-                  type: "pie",
-                  clockWise: true,
-                  radius: ["50%", "66%"],
-                  itemStyle: {
-                    normal: {
-                      label: {
-                        show: false,
-                      },
-                      labelLine: {
-                        show: false,
-                      },
-                    },
-                  },
-                  hoverAnimation: false,
-                  data: [
-                    {
-                      value: 80,
-                      name: "01",
-                      itemStyle: {
-                        normal: {
-                          color: {
-                            // 完成的圆环的颜色
-                            colorStops: [
-                              {
-                                offset: 0,
-                                color: "#00cefc", // 0% 处的颜色
-                              },
-                              {
-                                offset: 1,
-                                color: "#367bec", // 100% 处的颜色
-                              },
-                            ],
-                          },
-                          label: {
-                            show: false,
-                          },
-                          labelLine: {
-                            show: false,
-                          },
-                        },
-                      },
-                    },
-                    {
-                      name: "02",
-                      value: 20,
-                    },
-                  ],
-                },
-              ],
-            };
-            this.initChart(this.$refs.pie1, option3);
-            const option4 = {
-              title: {
-                text: this.rateResult.score + "%",
-                x: "center",
-                y: "center",
-                textStyle: {
-                  fontWeight: "normal",
-                  color: "#0580f2",
-                  fontSize: "20",
-                },
-              },
-              color: ["rgba(176, 212, 251, 1)"],
-
-              series: [
-                {
-                  name: "Line 1",
-                  type: "pie",
-                  clockWise: true,
-                  radius: ["50%", "66%"],
-                  itemStyle: {
-                    normal: {
-                      label: {
-                        show: false,
-                      },
-                      labelLine: {
-                        show: false,
-                      },
-                    },
-                  },
-                  hoverAnimation: false,
-                  data: [
-                    {
-                      value: 80,
-                      name: "01",
-                      itemStyle: {
-                        normal: {
-                          color: {
-                            // 完成的圆环的颜色
-                            colorStops: [
-                              {
-                                offset: 0,
-                                color: "#00cefc", // 0% 处的颜色
-                              },
-                              {
-                                offset: 1,
-                                color: "#367bec", // 100% 处的颜色
-                              },
-                            ],
-                          },
-                          label: {
-                            show: false,
-                          },
-                          labelLine: {
-                            show: false,
-                          },
-                        },
-                      },
-                    },
-                    {
-                      name: "02",
-                      value: 20,
-                    },
-                  ],
-                },
-              ],
-            };
-            this.initChart(this.$refs.pie2, option4);
+            //console.log(res4.data);
           })
         );
     },
@@ -456,147 +441,99 @@ export default {
       myChart.setOption(option);
     },
     Click: function (item, index) {
-      console.log(item);
+      console.log(item.level);
       axios({
         method: "get",
         url: `http://192.168.101.4:8080/threeIndexScoreCsix/getFactor?unitId=${this.selectedUnitId}&uid=${item.uid}`,
       }).then((res) => {
         console.log(res.data);
         const data = {
-          nodes: [],
-          links: [
+          nodes: [
             {
-              source: "浏览器有限公司",
-              target1: "操作系统集团",
-              name: "参股",
-            },
-            {
-              source: "HTML科技",
-              target1: "浏览器有限公司",
-              name: "参股",
-            },
-            {
-              source: "CSS科技",
-              target1: "浏览器有限公司",
-              name: "参股",
-            },
-            {
-              source: "JavaScript科技",
-              target1: "浏览器有限公司",
-              name: "参股",
-            },
-            {
-              source: "Chrome",
-              target1: "浏览器有限公司",
-              name: "董事",
-            },
-            {
-              source: "IE",
-              target1: "浏览器有限公司",
-              name: "董事",
-            },
-            {
-              source: "Firefox",
-              target1: "浏览器有限公司",
-              name: "董事",
-            },
-            {
-              source: "Safari",
-              target1: "浏览器有限公司",
-              name: "董事",
-            },
-            {
-              source: "Chrome",
-              target1: "JavaScript科技",
-              name: "法人",
+              name: "因子",
+              category: 0,
+              // name: o.factorName,
+              // category: o.type,
             },
           ],
+          links: [],
         };
         res.data.forEach((o) => {
+          console.log(o.type);
+          data.links.push({
+            source: o.factorName,
+            target: "因子",
+            category: o.type,
+            name: o.type == 0 ? "问题" : "线索",
+          });
           data.nodes.push({
             name: o.factorName,
-            category: 0,
+            category: o.type,
           });
         });
         console.log(data);
-        const color1 = "#006acc";
-        const color2 = "#ff7d18";
-        const color3 = "#10a050";
+        const color1 = "#006acc"; //蓝色
+        const color2 = "#ff7d18"; //橙色
+        const color3 = "#10a050"; // 绿色
 
         data.nodes.forEach((node) => {
-          if (node.category === 0) {
+          console.log(node);
+          if (node.category == 1) {
             node.symbolSize = 40;
-            node.itemStyle = {
-              color: color1,
-            };
-          } else if (node.category === 1) {
             node.itemStyle = {
               color: color2,
             };
+          } else if (node.category == 0) {
+            node.symbolSize = 50;
+            node.itemStyle = {
+              color: color1,
+            };
+          } else if (node.category == 3) {
+            //node.symbolSize = 30;
+            node.itemStyle = {
+              color: color3,
+            };
           }
         });
-
         data.links.forEach((link) => {
           link.label = {
             align: "center",
             fontSize: 10,
-          };
-
-          if (link.name === "参股") {
-            link.lineStyle = {
-              color: color2,
-            };
-          } else if (link.name === "董事") {
+          }; //关系线
+          if (link.category == 0) {
             link.lineStyle = {
               color: color1,
             };
-          } else if (link.name === "法人") {
+          } else if (link.category == 1) {
+            link.lineStyle = {
+              color: color2,
+            };
+          } else if (link.category == 2) {
             link.lineStyle = {
               color: color3,
             };
           }
         });
-
-        const categories = [
-          {
-            // name: '公司',
-            itemStyle: {
-              color: color1,
-            },
-          },
-          {
-            // name: '董事',
-            itemStyle: {
-              color: color2,
-            },
-          },
-        ];
         const option6 = {
           title: {
             text: "指标因子",
+            textStyle: { fontSize: "15" },
+            left: 20,
           },
-          legend: [
-            {
-              // selectedMode: 'single',
-              data: categories.map((x) => x.name),
-              // icon: 'circle'
-            },
-          ],
           series: [
             {
               type: "graph",
               layout: "force",
-              symbolSize: 40,
+              symbolSize: 55,
               draggable: true,
               roam: true,
               focusNodeAdjacency: true,
-              categories: categories,
               edgeSymbol: ["", "arrow"],
               edgeLabel: {
                 normal: {
                   show: true,
                   textStyle: {
-                    fontSize: 20,
+                    fontSize: 12,
                   },
                   formatter(x) {
                     return x.data.name;
@@ -608,7 +545,7 @@ export default {
               },
               force: {
                 repulsion: 70,
-                edgeLength: 80,
+                edgeLength: 100,
               },
               data: data.nodes,
               links: data.links,
@@ -617,7 +554,6 @@ export default {
         };
         this.initChart(this.$refs[`threeIndex_${item.uid}`][0], option6);
       });
-
       let length = this.threeIndesShows.length;
       let tepShow = this.threeIndesShows[index];
       this.threeIndesShows = [];
@@ -656,6 +592,7 @@ export default {
           _this.threeIndesShows.push(false);
         });
         console.log(_this.threeIndexList);
+        console.log(res.data);
       });
     },
   },
@@ -665,13 +602,44 @@ export default {
   },
 };
 </script>
-
+<style lang="scss">
+.ivu-tabs-content {
+  height: 100%;
+}
+</style>
 <style scoped>
 #gradecourse {
   width: 100%;
   height: 100%;
+  /* display: flex;
+  justify-content: center; */
+}
+#gradecourse > .title {
+  width: 100%;
+  height: 5%;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  background: #f2f2f2;
+}
+.title > img {
+  margin-left: 5rem;
+  /* width: 0.6rem;
+  height: 1.2rem; */
+}
+.title > span {
+  font-size: 1.416666rem;
+  margin-left: 0.5rem;
+  color: black;
+  font-family: "思源黑体medium";
+}
+#gradecourse > .tab_body {
+  width: 90%;
+  height: 100%;
+  margin-left: 5rem;
+}
+#gradecourse > .tab_body > .tabs {
+  width: 100%;
+  height: 95%;
 }
 .expand-row {
   margin-bottom: 16px;
@@ -684,7 +652,10 @@ export default {
 /* 标题框架 */
 .content_title {
   width: 100%;
-  height: 5%;
+  height: 3%;
+  font-size: 1.416666rem;
+  font-family: "思源黑体normal";
+  font-weight: bolder;
   /* background: pink; */
 }
 /* 统计图像的框架 */
@@ -703,7 +674,7 @@ export default {
   /* background: cornflowerblue; */
 }
 .statistics > .pie_tables > .pie_table {
-  width: 50%;
+  width: 45%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -711,67 +682,31 @@ export default {
 }
 /* 饼状图 */
 .statistics > .pie_tables > .pie_table > .pie_main {
-  width: 22.5rem;
-  height: 7.3rem;
+  width: 12rem;
+  height: 12rem;
   display: flex;
-  float: left;
-  background: url("../../assets/images/评价框.png") no-repeat;
+  justify-content: center;
+  align-items: center;
+  background: url("../../assets/images/new_picture/评级圆框底 .png") no-repeat;
   background-size: 100% 100%;
   /* background: yellowgreen; */
 }
-/* 饼状图左边的布局 */
-.statistics > .pie_tables > .pie_table > .pie_main > .pie_left {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background: #409eff; */
-}
-/* 饼状图中间布局 */
-.statistics > .pie_tables > .pie_table > .pie_main > .pie_center {
-  width: 33%;
-  height: 100%;
-}
-/* 评分级别的框架 */
-.statistics
-  > .pie_tables
-  > .pie_table
-  > .pie_main
-  > .pie_center
-  > .pie_centerup {
-  width: 100%;
-  height: 70%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-/* 评分A样式 */
-.statistics
-  > .pie_tables
-  > .pie_table
-  > .pie_main
-  > .pie_center
-  > .pie_centerup
-  > span {
-  font-family: "Helvetica Neue";
-  font-size: 40px;
+.statistics > .pie_tables > .pie_table > .pie_main > span {
+  font-family: Helvetica Neue;
+  font-size: 3.333333rem;
   color: #409eff;
-  /* background: coral; */
 }
-/* 评分级别的框架 */
-.statistics
-  > .pie_tables
-  > .pie_table
-  > .pie_main
-  > .pie_center
-  > .pie_centerdown {
-  width: 100%;
-  height: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background: cornflowerblue; */
+.statistics > .pie_tables > .pie_table > .pie_main > .colorheihei1 {
+  color: #37b546;
+}
+.statistics > .pie_tables > .pie_table > .pie_main > .colorheihei2 {
+  color: #268ce8;
+}
+.statistics > .pie_tables > .pie_table > .pie_main > .colorheihei3 {
+  color: orange;
+}
+.statistics > .pie_tables > .pie_table > .pie_main > .colorheihei4 {
+  color: #f04f15;
 }
 /* 达标项和未达标项的整体框架 */
 .statistics > .pie_tables > .pie_table > .pie_main > .pie_right {
@@ -791,54 +726,13 @@ export default {
   height: 100%;
   /* background: cornflowerblue; */
 }
-/* 评价中 */
-.statistics > .pie_tables > .evaluate_ing > .evaluate_main {
-  width: 22.5rem;
-  height: 7.3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: url("../../assets/images/评价中.png") no-repeat;
-  background-size: 100% 100%;
-}
-.statistics > .pie_tables > .evaluate_ing > .evaluate_main > span {
-  font-size: 1.6rem;
-}
-/* 达标项数字的框架 */
-.rightup1 {
-  width: 100%;
-  height: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background: darkgray; */
-}
-/* 达标项文字的框架 */
-.rightdown {
-  width: 100%;
-  height: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background: pink; */
-}
-/* 未达标项的框架 */
-.statistics
-  > .pie_tables
-  > .pie_table
-  > .pie_main
-  > .pie_right
-  > .pie_rightdown {
-  width: 100%;
-  height: 50%;
-  /* background: cyan; */
-}
 /* 两个选择器的整体框架 */
 .select_input {
   width: 100%;
-  height: 10%;
+  height: 5%;
   display: flex;
   float: left;
+  margin-top: 1rem;
   /* background: darkkhaki; */
 }
 /* 左边选择器的框架 */
@@ -847,6 +741,7 @@ export default {
   height: 100%;
   display: flex;
   float: left;
+  align-items: center;
   /* background: cornflowerblue; */
 }
 /* 选择器的文字框架 */
@@ -871,7 +766,9 @@ export default {
   height: 100%;
   display: flex;
   float: left;
+  align-items: center;
   margin-left: 5%;
+
   /* background: cornflowerblue; */
 }
 /* 指标文字部分框架 */
@@ -880,7 +777,7 @@ export default {
   height: 50%;
   display: flex;
   float: left;
-  /* margin-top: 1rem; */
+  margin-top: 1.5rem;
   /* background: cornflowerblue; */
 }
 /* 左边指标的框架 */
@@ -909,7 +806,7 @@ export default {
 }
 /* 中间的阴影条 */
 .select_text > .center_background {
-  width: 0.5%;
+  width: %;
   height: 100%;
   background-image: url("../../assets/images/阴影条.png");
 }
@@ -927,7 +824,8 @@ export default {
   display: flex;
   float: left;
   cursor: pointer;
-  background: #409eff;
+  font-size: 1.2rem;
+  background: #2a8de8;
   /* background-color: darkcyan; */
 }
 /* 第一条一级指标的数字标号 */
@@ -937,7 +835,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: cornflowerblue;
+  /* background: cornflowerblue; */
+  font-family: "Roma";
 }
 /* 第一条一级指标的文字框架 */
 .select_text > .left_text > .index_box1 > .index > .index_text {
@@ -952,24 +851,36 @@ export default {
   width: 10%;
   height: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  /* background: aqua; */
+  background: #efefef;
+}
+.select_text > .left_text > .index_box1 > .index > .index_rate > .rate_span1 {
+  color: #37b546;
+}
+.select_text > .left_text > .index_box1 > .index > .index_rate > .rate_span2 {
+  color: #268ce8;
+}
+.select_text > .left_text > .index_box1 > .index > .index_rate > .rate_span3 {
+  color: #f04f15;
+}
+.select_text > .left_text > .index_box1 > .index > .index_rate > .rate_span4 {
+  color: red;
 }
 /* 被折叠的内容的框架 */
 .select_text > .left_text > .index_box1 > .show_index {
   width: 100%;
   height: 3rem;
-  font-size: 1rem;
+  font-size: 1.08rem;
   margin-bottom: 0.3rem;
   /* background: cornflowerblue; */
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f2f2f2;
+  background: #f0f5f8;
 }
 /* 鼠标划到被折叠的内容的样式 */
-.select_text > .left_text > .index_box1 > .show_index :hover {
+.show_index :hover {
   background-color: #ffd385;
   cursor: pointer;
 }
@@ -977,25 +888,58 @@ export default {
 .select_text > .left_text > .index_box1 > .show_index > .show_text {
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  float: left;
+  height: 100%;
+}
+.show_text > .show_main {
+  display: flex;
+  float: left;
+  width: 23.5rem;
   height: 100%;
 }
 /* 每条二级指标的数字样式 */
-.select_text > .left_text > .index_box1 > .show_index > .show_text > .show_num {
+.show_num {
   color: #409eff;
   margin-left: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roma";
+  /* background: powderblue; */
 }
 /* 每条二级指标的文字样式 */
-.select_text
-  > .left_text
-  > .index_box1
-  > .show_index
-  > .show_text
-  > .show_span {
-  width: 20.5rem;
+.show_main > .show_span {
+  width: 21.5rem;
+  height: 100%;
+  /* background: cornflowerblue; */
   margin-left: 1rem;
-  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  font-family: "Roma";
+}
+.show_text > .show_rate {
+  margin-left: 2rem;
+  width: 3rem;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #efefef;
+}
+.show_text > .show_rate :hover {
+  background: #efefef;
+}
+.show_text > .show_rate > .span_color1 {
+  color: #37b546;
+}
+.show_text > .show_rate > .span_color2 {
+  color: #268ce8;
+}
+.show_text > .show_rate > .span_color3 {
+  color: #f04f15;
+}
+.show_text > .show_rate > .span_color4 {
+  color: red;
 }
 /* 右边指标的框架 */
 .select_text > .right_text {
@@ -1024,8 +968,9 @@ export default {
 /* 下面说明的框架 */
 .statistics > .pie_title {
   width: 77.5%;
-  height: 39.5%;
+  height: 20%;
   margin-left: 4.3rem;
+  margin-top: 3rem;
   display: flex;
   float: left;
   /* background: darkseagreen; */
@@ -1038,6 +983,7 @@ export default {
 .pie_title > .title_down > .arrows_image {
   width: 100%;
   height: 50%;
+  /* margin-top: -2rem; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1056,15 +1002,29 @@ export default {
   align-items: center;
 }
 .pie_title > .title_down > .arrows_title > .title_image {
-  width: 6rem;
-  height: 1.5rem;
-  border-radius: 15px;
-  -moz-border-radius: 15px;
+  width: 9.5rem;
+  height: 2rem;
+  border-radius: 8px;
+  /* -moz-border-radius: 15px; */
   background: #e6e6e6;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 3rem;
+  margin-top: 0.9rem;
+  font-weight: bolder;
+}
+.pie_title > .title_down > .arrows_title > .title_image1 {
+  width: 6rem;
+  height: 2rem;
+  border-radius: 8px;
+  /* -moz-border-radius: 15px; */
+  background: #e6e6e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.9rem;
+  font-weight: bolder;
 }
 .statistics > .pie_title > .title_center {
   width: 10%;
@@ -1072,22 +1032,24 @@ export default {
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  margin-left: 1rem;
   /* background: goldenrod; */
 }
 .statistics > .pie_title > .title_center > img {
-  width: 2rem;
-  height: 1rem;
-  margin-bottom: 0.3rem;
+  width: 4.5rem;
+  height: 2rem;
+  position: relative;
+  bottom: 10rem;
 }
 /* 三级指标的整体框架 */
 .folding {
   width: 100%;
   /* height: 100%; */
-  overflow: overlay;
+  /* overflow: overlay; */
   /* background: aquamarine; */
 }
 /* 滚动条 */
-.folding::-webkit-scrollbar-track {
+/* .folding::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   background-color: #f5f5f5;
@@ -1102,7 +1064,7 @@ export default {
   height: 20px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #f2f2f2;
-}
+} */
 /* 第一条三级指标的整体框架 */
 .folding > .target1 {
   width: 100%;
@@ -1116,11 +1078,13 @@ export default {
 .folding > .target1 > .num3 {
   width: 6%;
   height: 100%;
-  background: #cecece;
+  background: #efefef;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.85rem;
+  font-size: 1.2rem;
+  font-family: "Roma";
+  color: #409eff;
 }
 /* 中间三级指标的框架 */
 .folding > .target1 > .target1_text {
@@ -1129,8 +1093,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgb(243, 243, 243);
+  background: #f9f9f9;
   font-size: 0.85rem;
+}
+.target1_text > span {
+  margin-left: 2rem;
 }
 /* 因子和对应的数值的框架 */
 .folding > .target1 > .target1_divisor {
@@ -1161,14 +1128,34 @@ export default {
   align-items: center;
   /* background: plum; */
 }
+.folding > .target1 > .target1_divisor > .num > .num_color1 {
+  font-size: 1.41666rem;
+  color: #37b546;
+}
+.folding > .target1 > .target1_divisor > .num > .num_color2 {
+  font-size: 1.41666rem;
+  color: #268ce8;
+}
+.folding > .target1 > .target1_divisor > .num > .num_color3 {
+  font-size: 1.41666rem;
+  color: #f04f15;
+}
+.folding > .target1 > .target1_divisor > .num > .num_color4 {
+  font-size: 1.41666rem;
+  color: red;
+}
 /* 被折叠的内容 */
 .show_div {
   width: 530px;
-  height: 200px;
+  height: 250px;
   /* background: chocolate; */
   display: flex;
   justify-content: center;
   align-items: center;
   /* min-height: 200px; */
+}
+.folding > .target1 :hover {
+  background: white;
+  cursor: pointer;
 }
 </style>

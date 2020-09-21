@@ -25,6 +25,7 @@
         <cityStraight
           @handlecancel="handleCancel"
           @onSelectedUnitId="onSelectedUnitId"
+          @onSelectedUnitName="onSelectedUnitName"
         />
       </div>
       <!-- 右边区域 -->
@@ -35,6 +36,7 @@
         <gradeCourse
           v-if="visible"
           :selectedUnitId="selectedUnitId"
+          :selectedUnitName="selectedUnitName"
         ></gradeCourse>
       </div>
     </div>
@@ -53,7 +55,7 @@ export default {
   data() {
     return {
       selectedUnitId: null,
-      selectedUnitId1: null,
+      selectedUnitName: null,
       visible: false, // 综评曲线显示不显示标志位
       cityflag1: false, // 区县页面显示不显示标志位
     };
@@ -64,6 +66,9 @@ export default {
     });
   },
   methods: {
+    onSelectedUnitName(val) {
+      this.selectedUnitName = val;
+    },
     onSelectedUnitId(val) {
       this.selectedUnitId = val;
       console.log(val);
