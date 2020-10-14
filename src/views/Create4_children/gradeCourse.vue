@@ -75,7 +75,48 @@
             <!-- 横线 -->
             <hr />
             <!-- 两个选择器的框架 -->
-
+            <div class="select_input">
+              <!-- 左边选择器框架 -->
+              <div class="select_left">
+                <!-- 选择器前面的文字框架 -->
+                <div class="input_span">
+                  <span>一级指标</span>
+                </div>
+                <!-- 选择器框架 -->
+                <div class="select">
+                  <i-select
+                    :model.sync="oneIndexSelectVal"
+                    @on-change="oneIndexChange"
+                  >
+                    <i-option
+                      v-for="(item, index) in indexList"
+                      :value="item.uid"
+                      :key="index"
+                      >{{ item.content }}</i-option
+                    >
+                  </i-select>
+                </div>
+              </div>
+              <!-- 右边选择器框架 -->
+              <div class="select_right">
+                <!-- 选择器前面的文字框架 -->
+                <div class="input_span">
+                  <span>二级指标</span>
+                </div>
+                <!-- 选择器框架 -->
+                <div class="select">
+                  <i-select v-model="twoIndexSelectVal">
+                    <Option
+                      v-for="(item, index) in twotextList"
+                      :value="item.uid"
+                      :key="index"
+                      >{{ item.content }}</Option
+                    >
+                  </i-select>
+                </div>
+              </div>
+              <!-- 右边选择器 end -->
+            </div>
             <!-- 选择器下面的指标框架 -->
             <div class="select_text">
               <!-- 指标的左边框架 -->
@@ -207,8 +248,8 @@ export default {
   },
   data() {
     return {
-      // oneIndexSelectVal: 0,
-      // twoIndexSelectVal: 0,
+      oneIndexSelectVal: 0,
+      twoIndexSelectVal: 0,
       factors: [],
       threeIndesShows: [],
       threeIndexList: [], //sanjizhibiao
@@ -338,7 +379,7 @@ export default {
       let _this = this;
       axios({
         method: "get",
-        url: `http://localhost:8080/threeIndexScoreCsix/listThreeIndex?unitId=${uid}&uid=${uid2}`,
+        url: `http://192.168.101.91:8080/threeIndexScoreCsix/listThreeIndex?unitId=${uid}&uid=${uid2}`,
       }).then((res) => {
         _this.threeIndexList = res.data;
         _this.threeIndexList.forEach((o) => {
@@ -354,20 +395,20 @@ export default {
           axios({
             method: "get",
             url:
-              "http://localhost:8080/threeIndexScoreCsix/listOneTwoIndex?unitId=" +
+              "http://192.168.101.91:8080/threeIndexScoreCsix/listOneTwoIndex?unitId=" +
               val,
           }),
           //默认请求初始评分
           axios({
             method: "get",
             url:
-              "http://localhost:8080/threeIndexScoreCsix/getUnitInitScore?unitId=" +
+              "http://192.168.101.91:8080/threeIndexScoreCsix/getUnitInitScore?unitId=" +
               val,
           }),
           axios({
             method: "get",
             url:
-              "http://localhost:8080/threeIndexScoreCsix/getUnitResultScore?unitId=" +
+              "http://192.168.101.91:8080/threeIndexScoreCsix/getUnitResultScore?unitId=" +
               val,
           }),
         ])
@@ -402,7 +443,7 @@ export default {
       console.log(item.level);
       axios({
         method: "get",
-        url: `http://localhost:8080/threeIndexScoreCsix/getFactor?unitId=${this.selectedUnitId}&uid=${item.uid}`,
+        url: `http://192.168.101.91:8080/threeIndexScoreCsix/getFactor?unitId=${this.selectedUnitId}&uid=${item.uid}`,
       }).then((res) => {
         console.log(res.data);
         const data = {
@@ -543,7 +584,7 @@ export default {
       let _this = this;
       axios({
         method: "get",
-        url: `http://localhost:8080/threeIndexScoreCsix/listThreeIndex?unitId=${this.selectedUnitId}&uid=${item.uid}`,
+        url: `http://192.168.101.91:8080/threeIndexScoreCsix/listThreeIndex?unitId=${this.selectedUnitId}&uid=${item.uid}`,
       }).then((res) => {
         _this.threeIndexList = res.data;
         _this.threeIndexList.forEach((o) => {

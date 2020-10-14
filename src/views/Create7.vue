@@ -60,7 +60,7 @@ export default {
   },
   created() {
     axios({
-      url: "http://localhost:8080/odsQuestionCsix/list",
+      url: "http://192.168.101.91:8080/odsQuestionCsix/list",
       method: "GET", // 默认GET方法
     }).then((ret) => {
       // data 属性名称是固定的，用于获取后台响应的实际数据

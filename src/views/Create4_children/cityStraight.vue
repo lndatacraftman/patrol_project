@@ -325,7 +325,7 @@ export default {
       _this.$emit("handlecancel", false);
       this.menu_hide = !this.menu_hide;
       axios({
-        url: "http://localhost:8080/dwUnitLevelInfoCsix/listTypesCount",
+        url: "http://192.168.101.91:8080/dwUnitLevelInfoCsix/listTypesCount",
       }).then((res) => {
         _this.initCharts(res);
         console.log(res.data);
@@ -399,6 +399,7 @@ export default {
         });
         index++;
       }
+
       this.myEcharts();
     },
     myEcharts() {
@@ -413,7 +414,7 @@ export default {
       myChart.on("click", function (params) {
         axios({
           url:
-            "http://localhost:8080/dwUnitLevelInfoCsix/listUnit?type=" +
+            "http://192.168.101.91:8080/dwUnitLevelInfoCsix/listUnit?type=" +
             params.data.name,
         }).then((res) => {
           console.log(res.data);
@@ -437,6 +438,7 @@ export default {
           // _this.menu_hide = !_this.menu_hide;
           _this.menu_hide = true;
           let isPass = false;
+
           for (const r in res.data) {
             isPass = true;
             break;
@@ -445,19 +447,20 @@ export default {
             // 根据后台传的值进行遍历解析
             _this.testData = [];
             let index = 0;
+
             for (let i = 0; i < res.data.length; i++) {
-              if (i >= _this.itemStyles.length) {
+              if (index >= _this.itemStyles.length - 1) {
                 index = 0;
               } else {
-                _this.testData.push({
-                  name: res.data[i].level3Name,
-                  value: res.data[i].count,
-                  unitId: res.data[i].unitId,
-                  itemStyle: _this.itemStyles[index].itemStyle,
-                  label: _this.itemStyles[index].label,
-                });
                 index++;
               }
+              _this.testData.push({
+                name: res.data[i].level3Name,
+                value: res.data[i].count,
+                unitId: res.data[i].unitId,
+                itemStyle: _this.itemStyles[index].itemStyle,
+                label: _this.itemStyles[index].label,
+              });
             }
             _this.myEcharts(); // 重画echarts
           } else {
@@ -535,13 +538,13 @@ export default {
     axios
       .all([
         axios({
-          url: "http://localhost:8080/dwRotationSession/listAscByRotation",
+          url: "http://192.168.101.91:8080/dwRotationSession/listAscByRotation",
         }),
         axios({
-          url: "http://localhost:8080/dwRotationSession/listAscByRotation",
+          url: "http://192.168.101.91:8080/dwRotationSession/listAscByRotation",
         }),
         axios({
-          url: "http://localhost:8080/dwUnitLevelInfoCsix/listTypesCount",
+          url: "http://192.168.101.91:8080/dwUnitLevelInfoCsix/listTypesCount",
         }),
       ])
       .then(
@@ -637,8 +640,6 @@ export default {
 }
 .content > .menu_content > .menu > .menu_body > .menu_title4 > span {
   color: white;
-  /* width: 3rem; */
-  /* background: blueviolet; */
   font-size: 1.416666rem;
   font-family: "思源黑体normal";
 }
